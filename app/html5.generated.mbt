@@ -377,17 +377,21 @@ pub fn Html5FetchRequest::set_user_data(
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sapp_html5_ask_leave_site(ask : Bool) -> Unit = "mb_app_sapp_html5_ask_leave_site"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn html5_ask_leave_site(ask : Bool) -> Unit {
   sapp_html5_ask_leave_site(ask)
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sapp_html5_get_dropped_file_size(index : Int32) -> UInt32 = "sapp_html5_get_dropped_file_size"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn html5_get_dropped_file_size(index : Int32) -> UInt32 {
   sapp_html5_get_dropped_file_size(index)
 }

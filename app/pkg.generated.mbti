@@ -43,8 +43,6 @@ pub fn color_format() -> PixelFormat
 
 pub fn consume_event() -> Unit
 
-pub fn d3d11_get_swap_chain() -> @native.Handle
-
 pub fn depth_format() -> PixelFormat
 
 pub fn dpi_scale() -> Float
@@ -136,8 +134,6 @@ pub fn userdata() -> @native.Handle
 pub fn width() -> Int32
 
 pub fn widthf() -> Float
-
-pub fn win32_get_hwnd() -> @native.Handle
 
 pub fn x11_get_display() -> @native.Handle
 

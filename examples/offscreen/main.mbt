@@ -1,7 +1,9 @@
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn device_ffi() -> @native.Handle = "mb_test_metal_device"
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn pixel_ffi(
   texture : @native.Handle,
   queue : @native.Handle,
@@ -10,6 +12,7 @@ extern "c" fn pixel_ffi(
 ) -> UInt32 = "mb_test_pixel"
 
 ///|
+#cfg(not(platform="windows"))
 fn main {
   let device = device_ffi()
   guard !device.is_null() && !@gfx.is_headless() else {
@@ -118,12 +121,14 @@ fn main {
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn buffer_ffi(
   buffer : @native.Handle,
   queue : @native.Handle,
 ) -> Bytes = "mb_test_buffer"
 
 ///|
+#cfg(not(platform="windows"))
 fn verify_compute() -> Unit {
   let source =
     #|#include <metal_stdlib>
@@ -195,6 +200,7 @@ fn verify_compute() -> Unit {
 }
 
 ///|
+#cfg(not(platform="windows"))
 fn verify_image_copy() -> Unit {
   let src = @gfx.make_image(
     @gfx.ImageDesc::new()
@@ -230,4 +236,10 @@ fn verify_image_copy() -> Unit {
   println("Metal texture upload and image copy verified")
   @gfx.destroy_image(src)
   @gfx.destroy_image(dst)
+}
+
+///|
+#cfg(platform="windows")
+fn main {
+  abort("offscreen validation requires macOS Metal")
 }

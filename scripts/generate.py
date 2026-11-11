@@ -17,6 +17,7 @@ from pathlib import Path
 
 from callbacks import generate as generate_callbacks
 from layout import section_for
+from platforms import platform_condition
 
 ROOT = Path(__file__).resolve().parents[1]
 API = json.loads((ROOT / "scripts/api.json").read_text())
@@ -245,9 +246,11 @@ class ModuleBindings:
     def emit(self, text):
         self.moon.extend(["", "///|", text])
 
-    def extern(self, name, params, result, c_result, body=None, symbol=None):
+    def extern(self, name, params, result, c_result, body=None, symbol=None, cfg=None):
         symbol = symbol or f"mb_{self.module}_{name}"
         attributes = []
+        if cfg is not None:
+            attributes.append(f"#cfg({cfg})")
         for ownership in ["borrow", "owned"]:
             names = [
                 "object_" if name == "self" else name
@@ -617,6 +620,7 @@ self
 
     def emit_function(self, declaration):
         name = declaration["name"]
+        cfg = platform_condition(self.module, name)
         params, signature, arguments, native_arguments = [], [], [], []
         for parameter in declaration["params"]:
             parameter_name = identifier(parameter["name"])
@@ -667,6 +671,7 @@ self
             bridge_type(result),
             body=None if direct else body,
             symbol=name if direct else None,
+            cfg=cfg,
         )
         if direct:
             self.direct.append(name)
@@ -682,7 +687,8 @@ self
             )
         public_name = identifier(name.removeprefix(PREFIX[self.module]))
         self.emit(
-            f"pub fn {public_name}({', '.join(signature)}) -> {moon_type(result, self.module)} {{\n{call}\n}}"
+            (f"#cfg({cfg})\n" if cfg is not None else "")
+            + f"pub fn {public_name}({', '.join(signature)}) -> {moon_type(result, self.module)} {{\n{call}\n}}"
         )
 
     def write(self):

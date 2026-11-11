@@ -1041,65 +1041,81 @@ pub fn D3d11ViewInfo::set_dsv(
 }
 
 ///|
+#cfg(platform="windows")
 extern "c" fn sg_d3d11_device() -> @native.Handle = "sg_d3d11_device"
 
 ///|
+#cfg(platform="windows")
 pub fn d3d11_device() -> @native.Handle {
   sg_d3d11_device()
 }
 
 ///|
+#cfg(platform="windows")
 extern "c" fn sg_d3d11_device_context() -> @native.Handle = "sg_d3d11_device_context"
 
 ///|
+#cfg(platform="windows")
 pub fn d3d11_device_context() -> @native.Handle {
   sg_d3d11_device_context()
 }
 
 ///|
+#cfg(platform="windows")
 extern "c" fn sg_d3d11_query_buffer_info(buf : UInt32) -> D3d11BufferInfo = "mb_gfx_sg_d3d11_query_buffer_info"
 
 ///|
+#cfg(platform="windows")
 pub fn d3d11_query_buffer_info(buf : Buffer) -> D3d11BufferInfo {
   sg_d3d11_query_buffer_info(buf.0)
 }
 
 ///|
+#cfg(platform="windows")
 extern "c" fn sg_d3d11_query_image_info(img : UInt32) -> D3d11ImageInfo = "mb_gfx_sg_d3d11_query_image_info"
 
 ///|
+#cfg(platform="windows")
 pub fn d3d11_query_image_info(img : Image) -> D3d11ImageInfo {
   sg_d3d11_query_image_info(img.0)
 }
 
 ///|
+#cfg(platform="windows")
 extern "c" fn sg_d3d11_query_sampler_info(smp : UInt32) -> D3d11SamplerInfo = "mb_gfx_sg_d3d11_query_sampler_info"
 
 ///|
+#cfg(platform="windows")
 pub fn d3d11_query_sampler_info(smp : Sampler) -> D3d11SamplerInfo {
   sg_d3d11_query_sampler_info(smp.0)
 }
 
 ///|
+#cfg(platform="windows")
 extern "c" fn sg_d3d11_query_shader_info(shd : UInt32) -> D3d11ShaderInfo = "mb_gfx_sg_d3d11_query_shader_info"
 
 ///|
+#cfg(platform="windows")
 pub fn d3d11_query_shader_info(shd : Shader) -> D3d11ShaderInfo {
   sg_d3d11_query_shader_info(shd.0)
 }
 
 ///|
+#cfg(platform="windows")
 extern "c" fn sg_d3d11_query_pipeline_info(pip : UInt32) -> D3d11PipelineInfo = "mb_gfx_sg_d3d11_query_pipeline_info"
 
 ///|
+#cfg(platform="windows")
 pub fn d3d11_query_pipeline_info(pip : Pipeline) -> D3d11PipelineInfo {
   sg_d3d11_query_pipeline_info(pip.0)
 }
 
 ///|
+#cfg(platform="windows")
 extern "c" fn sg_d3d11_query_view_info(view : UInt32) -> D3d11ViewInfo = "mb_gfx_sg_d3d11_query_view_info"
 
 ///|
+#cfg(platform="windows")
 pub fn d3d11_query_view_info(view : View) -> D3d11ViewInfo {
   sg_d3d11_query_view_info(view.0)
 }

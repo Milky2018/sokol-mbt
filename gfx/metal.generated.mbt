@@ -856,73 +856,91 @@ pub fn MtlPipelineInfo::set_dss(
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sg_mtl_device() -> @native.Handle = "sg_mtl_device"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn mtl_device() -> @native.Handle {
   sg_mtl_device()
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sg_mtl_render_command_encoder() -> @native.Handle = "sg_mtl_render_command_encoder"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn mtl_render_command_encoder() -> @native.Handle {
   sg_mtl_render_command_encoder()
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sg_mtl_compute_command_encoder() -> @native.Handle = "sg_mtl_compute_command_encoder"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn mtl_compute_command_encoder() -> @native.Handle {
   sg_mtl_compute_command_encoder()
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sg_mtl_command_queue() -> @native.Handle = "sg_mtl_command_queue"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn mtl_command_queue() -> @native.Handle {
   sg_mtl_command_queue()
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sg_mtl_query_buffer_info(buf : UInt32) -> MtlBufferInfo = "mb_gfx_sg_mtl_query_buffer_info"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn mtl_query_buffer_info(buf : Buffer) -> MtlBufferInfo {
   sg_mtl_query_buffer_info(buf.0)
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sg_mtl_query_image_info(img : UInt32) -> MtlImageInfo = "mb_gfx_sg_mtl_query_image_info"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn mtl_query_image_info(img : Image) -> MtlImageInfo {
   sg_mtl_query_image_info(img.0)
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sg_mtl_query_sampler_info(smp : UInt32) -> MtlSamplerInfo = "mb_gfx_sg_mtl_query_sampler_info"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn mtl_query_sampler_info(smp : Sampler) -> MtlSamplerInfo {
   sg_mtl_query_sampler_info(smp.0)
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sg_mtl_query_shader_info(shd : UInt32) -> MtlShaderInfo = "mb_gfx_sg_mtl_query_shader_info"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn mtl_query_shader_info(shd : Shader) -> MtlShaderInfo {
   sg_mtl_query_shader_info(shd.0)
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sg_mtl_query_pipeline_info(pip : UInt32) -> MtlPipelineInfo = "mb_gfx_sg_mtl_query_pipeline_info"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn mtl_query_pipeline_info(pip : Pipeline) -> MtlPipelineInfo {
   sg_mtl_query_pipeline_info(pip.0)
 }

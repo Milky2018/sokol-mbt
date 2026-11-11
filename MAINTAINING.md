@@ -18,6 +18,7 @@ same namespace; the file split does not change import paths or public APIs.
 | Package imports, native compiler options | Each package's `moon.pkg` | That manifest; the generator does not overwrite it |
 | Build/platform selection | `build.mbtx` | That MoonBit script |
 | Generated file organization | `scripts/layout.py` | The explicit type groups or function routing there; routing never determines ownership |
+| Windows/non-Windows API availability | `scripts/platforms.py` | The explicit app entry points and D3D11/Metal function groups; keep both public and private declarations guarded |
 
 Generated MoonBit files put a private `extern "c"` declaration immediately
 before the public method that uses it. The matching C feature file contains its
@@ -94,6 +95,7 @@ the formatter executable on each platform. C formatting is configured in
 python scripts/prepare.py --check
 python scripts/check_bindings.py
 python scripts/generate.py --check
+python scripts/check_platform_api.py
 moon check --target all --warn-list +73
 SOKOL_HEADLESS=1 moon test --target native
 SOKOL_HEADLESS=1 moon test --target native --release
@@ -103,7 +105,17 @@ moon info && moon fmt
 `generate.py --check` generates in a temporary tree and compares the output. It
 does not rewrite the working tree, handwritten files or manifests. Regeneration
 formats only generated files. For a structural refactor, interface files and
-`scripts/coverage.json` should be unchanged.
+`scripts/coverage.json` should be unchanged. Platform availability changes update
+the relevant interface snapshots: tracked `app`/`gfx` interfaces describe
+non-Windows exports, while Windows CI checks its conditional interfaces using
+the compiler probes instead of comparing them to that snapshot.
+
+`check_platform_api.py` compiles both Windows and non-Windows package interfaces,
+then checks consumers that must compile or must fail for unavailable functions.
+It uses compiler configuration flags for these visibility checks; it does not
+claim to cross-compile or run a Windows binary on the host. Restrict only with
+`platform="windows"` or its negation. Backend and native-object lifetime
+requirements still apply on a platform where a function is exported.
 
 For native lifetime changes, also run:
 

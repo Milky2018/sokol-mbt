@@ -47,6 +47,8 @@ jobs:
           python scripts/prepare.py --check
           python scripts/check_bindings.py
           python scripts/generate.py --check
+      - name: Verify Windows and non-Windows API visibility
+        run: python scripts/check_platform_api.py
       - name: Check, test and verify generated interfaces
         run: |
           moon version --all
@@ -56,7 +58,13 @@ jobs:
           moon info
           moon fmt --check
           moon fmt --check build.mbtx
-          git diff --exit-code
+      - name: Verify generated files on non-Windows
+        if: runner.os != 'Windows'
+        run: git diff --exit-code
+      - name: Verify generated files on Windows
+        if: runner.os == 'Windows'
+        # These interfaces intentionally differ from the tracked non-Windows snapshot.
+        run: git diff --exit-code -- . ':!app/pkg.generated.mbti' ':!gfx/pkg.generated.mbti'
       - name: Compile the production backend
         env:
           SOKOL_HEADLESS: "0"

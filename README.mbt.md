@@ -86,6 +86,26 @@ native interoperability lifetime discipline. Generated `pkg.generated.mbti`
 files document every public signature. `scripts/coverage.json` records all 261 interfaces: 80 direct native calls,
 aggregate/bool/width adapters, and the explicit callback/IO bridges.
 
+Platform-specific entry points are checked at compile time. Win32 and D3D11
+functions use `#cfg(platform="windows")`; native macOS/iOS, X11, Android, EGL,
+HTML5 and Metal entry points use `#cfg(not(platform="windows"))`. These are
+Windows versus non-Windows restrictions only: the latter does not establish
+macOS, mobile or browser support, and neither condition selects a graphics
+backend. OpenGL, WebGPU and general Sokol functions remain cross-platform.
+Call sites for a restricted function need the same condition. For example:
+
+```moonbit nocheck
+///|
+#cfg(platform="windows")
+fn native_window() -> @native.Handle {
+  @app.win32_get_hwnd()
+}
+```
+
+The checked-in `app` and `gfx` interfaces describe non-Windows exports; on
+Windows, `moon info` produces the corresponding Windows interface. The coverage
+inventory still records all upstream declarations across both configurations.
+
 ## Descriptors and data ownership
 
 Descriptors own their copied strings and ranges. `set_*` modifies the receiver,
@@ -226,6 +246,7 @@ boundaries, and the development-only formatter setup used by the generator.
 python3 scripts/prepare.py --check
 python3 scripts/check_bindings.py
 python3 scripts/generate.py --check # requires the maintenance tools above
+python3 scripts/check_platform_api.py
 moon check --target all --warn-list +73
 SOKOL_HEADLESS=1 moon test --target native
 SOKOL_HEADLESS=1 moon test --target native --release

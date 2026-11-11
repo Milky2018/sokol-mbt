@@ -24,12 +24,14 @@ pub fn run(
 }
 
 ///|
+#cfg(not(platform="windows"))
 #borrow(request)
 extern "c" fn html5_fetch_ffi(request : Html5FetchRequest) = "mb_app_html5_fetch"
 
 ///|
 /// Native-level HTML5 integration. The C callback and buffer must outlive loading.
 /// This operation is available only in Sokol's HTML5 platform implementation.
+#cfg(not(platform="windows"))
 pub fn html5_fetch_dropped_file_native(request : Html5FetchRequest) -> Unit {
   html5_fetch_ffi(request)
 }

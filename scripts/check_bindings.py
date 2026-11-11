@@ -8,6 +8,8 @@ import json
 import re
 from pathlib import Path
 
+from platforms import platform_condition
+
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = dict(
     gfx="sg_",
@@ -61,6 +63,11 @@ def check_function(module, declaration, coverage, native_source, moon_source):
             raise SystemExit(f"missing C bridge: {name}")
     if not re.search(r"pub fn " + re.escape(public) + r"\s*\(", moon_source):
         raise SystemExit(f"missing public API: {name}")
+    condition = platform_condition(module, name)
+    if condition is not None:
+        guarded_api = f"#cfg({condition})\npub fn {public}("
+        if guarded_api not in moon_source:
+            raise SystemExit(f"missing platform condition on public API: {name}")
 
 
 def main():
@@ -86,7 +93,7 @@ def main():
                 )
                 count += 1
     print(
-        f"All {count} upstream functions have native bindings and public MoonBit APIs."
+        f"All {count} upstream functions have bindings; platform-specific APIs are conditionally exported."
     )
 
 

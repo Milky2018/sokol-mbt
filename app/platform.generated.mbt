@@ -760,49 +760,61 @@ pub fn AndroidDesc::set_native_event_cb(
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sapp_egl_get_display() -> @native.Handle = "sapp_egl_get_display"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn egl_get_display() -> @native.Handle {
   sapp_egl_get_display()
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sapp_egl_get_context() -> @native.Handle = "sapp_egl_get_context"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn egl_get_context() -> @native.Handle {
   sapp_egl_get_context()
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sapp_macos_get_window() -> @native.Handle = "sapp_macos_get_window"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn macos_get_window() -> @native.Handle {
   sapp_macos_get_window()
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sapp_ios_get_window() -> @native.Handle = "sapp_ios_get_window"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn ios_get_window() -> @native.Handle {
   sapp_ios_get_window()
 }
 
 ///|
+#cfg(platform="windows")
 extern "c" fn sapp_d3d11_get_swap_chain() -> @native.Handle = "sapp_d3d11_get_swap_chain"
 
 ///|
+#cfg(platform="windows")
 pub fn d3d11_get_swap_chain() -> @native.Handle {
   sapp_d3d11_get_swap_chain()
 }
 
 ///|
+#cfg(platform="windows")
 extern "c" fn sapp_win32_get_hwnd() -> @native.Handle = "sapp_win32_get_hwnd"
 
 ///|
+#cfg(platform="windows")
 pub fn win32_get_hwnd() -> @native.Handle {
   sapp_win32_get_hwnd()
 }
@@ -832,33 +844,41 @@ pub fn gl_is_gles() -> Bool {
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sapp_x11_get_window() -> @native.Handle = "sapp_x11_get_window"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn x11_get_window() -> @native.Handle {
   sapp_x11_get_window()
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sapp_x11_get_display() -> @native.Handle = "sapp_x11_get_display"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn x11_get_display() -> @native.Handle {
   sapp_x11_get_display()
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sapp_android_get_native_activity() -> @native.Handle = "sapp_android_get_native_activity"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn android_get_native_activity() -> @native.Handle {
   sapp_android_get_native_activity()
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sapp_android_get_native_window() -> @native.Handle = "sapp_android_get_native_window"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn android_get_native_window() -> @native.Handle {
   sapp_android_get_native_window()
 }

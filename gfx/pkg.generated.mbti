@@ -73,22 +73,6 @@ pub fn copy_buffer_to_image(CopyBufferToImageDesc) -> Unit
 
 pub fn copy_image_to_image(CopyImageToImageDesc) -> Unit
 
-pub fn d3d11_device() -> @native.Handle
-
-pub fn d3d11_device_context() -> @native.Handle
-
-pub fn d3d11_query_buffer_info(Buffer) -> D3d11BufferInfo
-
-pub fn d3d11_query_image_info(Image) -> D3d11ImageInfo
-
-pub fn d3d11_query_pipeline_info(Pipeline) -> D3d11PipelineInfo
-
-pub fn d3d11_query_sampler_info(Sampler) -> D3d11SamplerInfo
-
-pub fn d3d11_query_shader_info(Shader) -> D3d11ShaderInfo
-
-pub fn d3d11_query_view_info(View) -> D3d11ViewInfo
-
 pub fn dealloc_buffer(Buffer) -> Unit
 
 pub fn dealloc_image(Image) -> Unit

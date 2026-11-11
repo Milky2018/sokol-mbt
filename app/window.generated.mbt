@@ -81,17 +81,21 @@ pub fn dpi_scale() -> Float {
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sapp_show_keyboard(show : Bool) -> Unit = "mb_app_sapp_show_keyboard"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn show_keyboard(show : Bool) -> Unit {
   sapp_show_keyboard(show)
 }
 
 ///|
+#cfg(not(platform="windows"))
 extern "c" fn sapp_keyboard_shown() -> Bool = "mb_app_sapp_keyboard_shown"
 
 ///|
+#cfg(not(platform="windows"))
 pub fn keyboard_shown() -> Bool {
   sapp_keyboard_shown()
 }
