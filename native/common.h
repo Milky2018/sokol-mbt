@@ -5,7 +5,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+/* Keep the logger local to each stub so static archive order cannot leave
+   a logger reference unresolved when native/libnative.a is scanned first. */
+#define SOKOL_LOG_API_DECL static
+#define SOKOL_API_IMPL static
+#define SOKOL_LOG_IMPL
 #include "sokol_log.h"
+#undef SOKOL_LOG_IMPL
+#undef SOKOL_LOG_API_DECL
+#undef SOKOL_API_IMPL
+
+/* Windows requires the declaration and definition to agree on dllexport. */
+#define SOKOL_API_DECL MOONBIT_FFI_EXPORT
 
 /* C values live directly in MoonBit external-object payloads. Their
    destructors release owned fields; the runtime frees the payload itself. */

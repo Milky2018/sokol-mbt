@@ -1,4 +1,3 @@
-#define SOKOL_LOG_IMPL
 #include "common.h"
 MOONBIT_FFI_EXPORT void *mb_sokol_null(void) { return NULL; }
 MOONBIT_FFI_EXPORT uint64_t mb_sokol_address(void *p) { return (uintptr_t)p; }

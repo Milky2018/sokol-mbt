@@ -11,6 +11,9 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     env:
       SOKOL_HEADLESS: "1"
     steps:
@@ -39,7 +42,7 @@ jobs:
       - name: Select Clang on Windows
         if: runner.os == 'Windows'
         shell: pwsh
-        run: '"MOON_CC=clang" | Out-File -FilePath $env:GITHUB_ENV -Append'
+        run: '"MOON_CC=clang-cl.exe" | Out-File -FilePath $env:GITHUB_ENV -Append'
       - name: Verify Windows and non-Windows API visibility
         run: python scripts/check_platform_api.py
       - name: Check, test and verify public interfaces
