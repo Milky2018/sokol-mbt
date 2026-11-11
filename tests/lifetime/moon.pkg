@@ -1,0 +1,13 @@
+supported_targets = "native"
+
+options(
+  "native-stub": [ "probe.c" ],
+  link: { "native": { } },
+)
+
+import {
+  "Milky2018/sokol/gfx",
+  "Milky2018/sokol/fetch",
+  "Milky2018/sokol/time",
+  "Milky2018/sokol/native",
+} for "wbtest"

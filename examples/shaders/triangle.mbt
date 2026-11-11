@@ -53,22 +53,20 @@ pub fn triangle() -> @gfx.ShaderDesc {
     entry
   }
   @gfx.ShaderDesc::new()
-  .with_vertex_func(
-    @gfx.ShaderFunction::new().with_source(vertex).with_entry(entry),
+  .set_vertex_func(
+    @gfx.ShaderFunction::new().set_source(vertex).set_entry(entry),
   )
-  .with_fragment_func(
-    @gfx.ShaderFunction::new().with_source(fs_source).with_entry(fs_entry),
+  .set_fragment_func(
+    @gfx.ShaderFunction::new().set_source(fs_source).set_entry(fs_entry),
   )
-  .with_attrs(
+  .set_attrs(
     0,
     @gfx.ShaderVertexAttr::new()
-    .with_base_type(Float)
-    .with_hlsl_sem_name("POSITION"),
+    .set_base_type(Float)
+    .set_hlsl_sem_name("POSITION"),
   )
-  .with_attrs(
+  .set_attrs(
     1,
-    @gfx.ShaderVertexAttr::new()
-    .with_base_type(Float)
-    .with_hlsl_sem_name("COLOR"),
+    @gfx.ShaderVertexAttr::new().set_base_type(Float).set_hlsl_sem_name("COLOR"),
   )
 }

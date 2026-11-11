@@ -1,241 +1,388 @@
 #!/usr/bin/env python3
-"""Generate typed, ABI-normalized bindings from the pinned Clang declaration IR.
+"""Maintain mechanical declarations and C-layout adapters for pinned Sokol.
 
-No compiler is required by consumers. Run inspect_api.py to refresh api.json
-when updating Sokol, then run this script and moon info && moon fmt.
+This script does not infer resource ownership from names. Long-lived callback
+and IO state is implemented explicitly in support.c and documented in OWNERSHIP.md.
 """
-import json, re
-from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1]
-API=json.loads((ROOT/'scripts/api.json').read_text())
+import hashlib
+import json
+import re
+import subprocess
 import sys
-GENERATED=[ROOT/module/name for module in API for name in ['types.mbt','ffi.mbt','generated.h','moon.pkg']]+[ROOT/'gfx/callbacks.h',ROOT/'gfx/callbacks.mbt',ROOT/'scripts/coverage.json']
-BEFORE={p:p.read_bytes() if p.exists() else None for p in GENERATED} if '--check' in sys.argv else None
+from pathlib import Path
 
-PREFIX=dict(gfx='sg_',app='sapp_',audio='saudio_',fetch='sfetch_',args='sargs_',time='stm_',log='slog_',glue='sglue_')
-STRUCTS={d['name']:(m,d) for m,ds in API.items() for d in ds if d['kind']=='struct'}
-ENUMS={d['name']:(m,d) for m,ds in API.items() for d in ds if d['kind']=='enum'}
-PRIM={'void':('Unit','void'),'int':('Int','int32_t'),'int32_t':('Int','int32_t'),'uint32_t':('UInt','uint32_t'),'uint8_t':('Byte','uint8_t'),'uint16_t':('UInt16','uint16_t'),'int16_t':('Int16','int16_t'),'int8_t':('Int','int32_t'),'int64_t':('Int64','int64_t'),'uint64_t':('UInt64','uint64_t'),'uintptr_t':('UInt64','uint64_t'),'size_t':('UInt64','uint64_t'),'float':('Float','float'),'double':('Double','double'),'bool':('Bool','int32_t')}
-RESERVED={'type','fn','struct','enum','match','let','mut','const','continue','test','loop','for','while','in','as','is','raise','try','catch','else','if','return','pub','priv','trait','impl','extern','async','with','guard','derive','default','readonly','ref'}
-def ident(s): return s+'_' if s in RESERVED else s
-def typename(n):
- p=PREFIX[(STRUCTS.get(n) or ENUMS[n])[0]]
- s=n.removeprefix(p).removesuffix('_t')
- return 'FetchError' if n=='sfetch_error_t' else ''.join(w.capitalize() for w in s.split('_'))
-def mbtype(t,m,ffi=False):
- t=t.strip()
- if t in PRIM:return PRIM[t][0]
- if t in STRUCTS or t in ENUMS:
-  owner=(STRUCTS.get(t) or ENUMS[t])[0]
-  return ('' if owner==m else '@'+owner+'.')+typename(t)
- if t=='const char *':return 'Bytes' if ffi else 'String'
- if t=='uint64_t *':return 'Ref[UInt64]'
- if '*' in t:return '@native.Handle'
- raise ValueError(t)
+ROOT = Path(__file__).resolve().parents[1]
+API = json.loads((ROOT / 'scripts/api.json').read_text())
+PREFIX = dict(gfx='sg_', app='sapp_', audio='saudio_', fetch='sfetch_', args='sargs_', time='stm_', log='slog_', glue='sglue_')
+STRUCTS = {d['name']: (m, d) for m, ds in API.items() for d in ds if d['kind'] == 'struct'}
+ENUMS = {d['name']: (m, d) for m, ds in API.items() for d in ds if d['kind'] == 'enum'}
+HANDLES = {n for n, (_, d) in STRUCTS.items() if d['fields'] == [{'name': 'id', 'type': 'uint32_t'}]}
+RANGES = {'sg_range', 'sapp_range', 'sfetch_range_t'}
+CALLBACKS = {'sg_trace_hooks', 'sg_commit_listener'}
+PRIM = {
+    'void': ('Unit', 'void'), 'int': ('Int', 'int32_t'), 'int32_t': ('Int', 'int32_t'),
+    'uint32_t': ('UInt', 'uint32_t'), 'uint8_t': ('Byte', 'uint8_t'), 'uint16_t': ('UInt16', 'uint16_t'),
+    'int16_t': ('Int16', 'int16_t'), 'int8_t': ('Int', 'int32_t'), 'int64_t': ('Int64', 'int64_t'),
+    'uint64_t': ('UInt64', 'uint64_t'), 'uintptr_t': ('UInt64', 'uint64_t'), 'size_t': ('UInt64', 'uint64_t'),
+    'float': ('Float', 'float'), 'double': ('Double', 'double'), 'bool': ('Bool', 'int32_t'),
+}
+RESERVED = set('type fn struct enum match let mut const continue test loop for while in as is raise try catch else if return pub priv trait impl extern async with guard derive default readonly ref'.split())
+CUSTOM = {'sg_shutdown', 'sapp_run', 'saudio_push', 'sfetch_send', 'sfetch_bind_buffer', 'sfetch_unbind_buffer', 'sfetch_shutdown', 'sfetch_dowork', 'sargs_setup', 'stm_laptime', 'slog_func', 'sapp_html5_fetch_dropped_file', 'sg_add_commit_listener', 'sg_remove_commit_listener', 'sg_install_trace_hooks'}
+# Exact C/MoonBit scalar ABI matches. bool, size_t and small integers retain
+# normalization shims. String inputs are borrowed only by the audited APIs below.
+DIRECT_SCALARS = {'void', 'int', 'int32_t', 'uint32_t', 'int64_t', 'uint64_t', 'float', 'double', 'void *', 'const void *'} | set(ENUMS)
+BORROWED_STRINGS = {'sg_push_debug_group', 'sapp_set_clipboard_string', 'sapp_set_window_title'}
+GENERATED = [ROOT / m / name for m in API for name in ['types.mbt', 'ffi.mbt', 'bindings.inc.h', 'moon.pkg']] + [ROOT / 'gfx/callbacks.inc.h', ROOT / 'gfx/callbacks.mbt', ROOT / 'scripts/coverage.json']
+BEFORE = {p: p.read_bytes() if p.exists() else None for p in GENERATED} if '--check' in sys.argv else None
+
+
+def ident(name):
+    return name + '_' if name in RESERVED else name
+
+
+def typename(name):
+    owner = (STRUCTS.get(name) or ENUMS[name])[0]
+    return 'FetchError' if name == 'sfetch_error_t' else ''.join(w.capitalize() for w in name.removeprefix(PREFIX[owner]).removesuffix('_t').split('_'))
+
+
+def mbtype(t, module, ffi=False):
+    if t in HANDLES and ffi:
+        return 'UInt'
+    if t in PRIM:
+        return PRIM[t][0]
+    if t in STRUCTS or t in ENUMS:
+        owner = (STRUCTS.get(t) or ENUMS[t])[0]
+        return ('' if owner == module else '@' + owner + '.') + typename(t)
+    if t == 'const char *':
+        return 'Bytes' if ffi else 'String'
+    if '*' in t:
+        return '@native.Handle'
+    raise ValueError(t)
+
+
 def ctype(t):
- if t in PRIM:return PRIM[t][1]
- if t in ENUMS:return 'int32_t'
- if t in STRUCTS:return 'mb_box *'
- if t=='const char *':return 'moonbit_bytes_t'
- if t=='uint64_t *':return 'uint64_t *'
- if '*' in t:return 'void *'
- raise ValueError(t)
-def structptr(t):
- b=t.removeprefix('const ').removesuffix(' *')
- return b if t.endswith(' *') and b in STRUCTS else None
-def argexpr(t,n):
- if t in STRUCTS:return f'(*({t}*){n}->value)'
- if structptr(t):return f'(({structptr(t)}*){n}->value)'
- if t=='const char *':return f'(const char*){n}'
- if t in PRIM or t in ENUMS:return f'({t}){n}'
- return n
-def paramtype(t,m,ffi=False):return mbtype(structptr(t) or t,m,ffi)
-def normalized(t):return ctype(structptr(t) or t)
-def fields(d):return [f for f in d['fields'] if not f['name'].startswith('_')]
-def dims(t):return [int(n) for n in re.findall(r'\[(\d+)\]',t)]
-def base(t):return t.split('[')[0].strip()
-def enum_variants(d):
- items=[i for i in d['items'] if not i['name'].endswith(('FORCE_U32','NUM','NUMTYPES'))]
- import os
- pref=os.path.commonprefix([i['name'].lstrip('_') for i in items]).rsplit('_',1)[0]+'_'
- out=[];seen=set()
- for i in items:
-  s=i['name'].lstrip('_').removeprefix(pref)
-  name=''.join(x.capitalize() for x in s.split('_'))
-  if name[0].isdigit():name='V'+name
-  if name in seen:raise ValueError((d['name'],name))
-  seen.add(name);out.append((name,i['value']))
- return out
-# Functions with a safer hand-written signature or lifetime protocol.
-CUSTOM={'sg_shutdown','sapp_run','saudio_push','sfetch_send','sfetch_bind_buffer','sfetch_unbind_buffer','sfetch_shutdown','sfetch_dowork','sargs_setup','stm_laptime','slog_func','sapp_html5_fetch_dropped_file','sg_add_commit_listener','sg_remove_commit_listener','sg_install_trace_hooks'}
-coverage={}
-for module,decls in API.items():
- p=ROOT/module;p.mkdir(exist_ok=True)
- deps={'native'}
- if module in ['app','gfx','fetch','args','log']:deps.add('utf8')
- if module=='time':deps=set()
- if module=='log':deps.add('debug')
- if module=='glue':deps={'gfx','app'}
- mb=['// Generated by scripts/generate.py. Do not edit.']
- ff=['// Generated by scripts/generate.py. Do not edit.']
- c=['/* Generated by scripts/generate.py. Do not edit. */','#include "../native/common.h"']
- if module=='glue':c+=['#include "../native/sokol_gfx.h"','#include "../native/sokol_app.h"']
- if module=='app':c+=['#define SOKOL_NO_ENTRY']
- if module=='gfx':c+=['#define SOKOL_TRACE_HOOKS']
- if module not in ['log']:c+=['#define SOKOL_IMPL']
- c += [f'#include "../native/sokol_{module}.h"']
- def block(lines,s):lines.extend(['','///|',s])
- def extern(name,params,ret,body,public=None,doc=None):
-  # params: name, C declaration type, MoonBit type, ownership
-  sig=', '.join(f'{"object_" if n=="self" else n} : {mt}' for n,ct,mt,own in params)
-  attrs=""
-  for mode in ["borrow", "owned"]:
-   names=["object_" if n=="self" else n for n,ct,mt,own in params if own==mode]
-   if names: attrs+=f"#{mode}({', '.join(names)})\n"
-  block(ff,f'{attrs}extern "c" fn {name}({sig}) -> {ret} = "mb_{module}_{name}"')
-  csig=', '.join(f'{ct} {n}' for n,ct,mt,own in params) or 'void'
-  c.append(f'MOONBIT_FFI_EXPORT {body[0]} mb_{module}_{name}({csig}) {{ {body[1]} }}')
-  if public:block(mb,(('/// '+doc+'\n') if doc else '')+public)
- def newbox(n,expr):return f'mb_box *r=mb_box_new(sizeof({n})); {n} tmp={expr}; mb_clone_{n}(r->arena,({n}*)r->value,&tmp);'
- # Clone returned values: strings/ranges own their data; native handles stay unowned.
- for n,(owner,d) in STRUCTS.items():
-  if owner==module or module=='glue' and owner=='gfx':c.append(f'static void mb_clone_{n}(mb_arena*, {n}*, const {n}*);')
- def clone_field(t,dst,src):
-  if t in STRUCTS:return f'mb_clone_{t}(a,&{dst},&{src});'
-  if t=='const char *':return f'{dst}=mb_string(a,{src});'
-  return ''
- for n,(owner,d) in STRUCTS.items():
-  if owner!=module and not(module=='glue' and owner=='gfx'):continue
-  lines=[f'static void mb_clone_{n}(mb_arena *a,{n} *dst,const {n} *src) {{ *dst=*src;']
-  if n in ['sg_range','sapp_range','sfetch_range_t']:
-   lines.append('dst->ptr=mb_copy(a,src->ptr,src->size);')
-  else:
-   for f in fields(d):
-    t=f['type'];ds=dims(t);b=base(t)
-    suffix=''.join(f'[i{k}]' for k in range(len(ds)))
-    body=clone_field(b,'dst->'+f['name']+suffix,'src->'+f['name']+suffix)
-    if body:
-     for k,num in enumerate(ds):body=f'for(int i{k}=0;i{k}<{num};i{k}++) {{ {body} }}'
-     lines.append(body)
-  lines.append('}');c.extend(lines)
- for d in decls:
-  n=d.get('name','')
-  if d['kind']=='enum':
-   ty=typename(n)
-   vs=enum_variants(d)
-   block(mb,'#derive(Debug, Eq)\npub(all) enum '+ty+' {\n'+''.join(f'  {v} = {i}\n' for v,i in vs)+'}')
-   block(ff,f'extern "c" fn {ident(n)}_int(value : {ty}) -> Int = "mb_sokol_enum_identity"')
-   block(mb,f'pub extend {ty} with Eq::{{equal, not_equal}}\npub extend {ty} with @debug.Debug::{{to_repr}}')
-   deps.add('debug')
-   block(mb,f'pub fn {ty}::to_int(self : {ty}) -> Int {{ {ident(n)}_int(self) }}')
-  elif d['kind']=='consts':
-   for it in d['items']:
-    if it['name'].startswith('_'):continue
-    name=it['name'].removeprefix(PREFIX[module].upper())
-    block(mb,f'pub const {name} : Int = {it["value"]}')
-  elif d['kind']=='struct':
-   ty=typename(n)
-   block(mb,f'/// Immutable snapshot of `{n}`. Use `with_*` methods to create modified copies.\npub type {ty}')
-   extern(n+'_new',[],ty,('mb_box *',f'return mb_box_new(sizeof({n}));'),f'pub fn {ty}::new() -> {ty} {{ {n}_new() }}')
-   extern(n+'_native',[('self','mb_box *',ty,'borrow')],'@native.Handle',('void *','return self->value;'),f'/// Borrowed pointer, valid only while this snapshot remains alive.\npub fn {ty}::native_handle(self : {ty}) -> @native.Handle {{ {n}_native(self) }}')
-   extern(n+'_from_native',[('ptr','void *','@native.Handle',None)],ty,('mb_box *',f'if(!ptr) abort(); {newbox(n,"*("+n+"*)ptr")} return r;'),f'/// The pointer must refer to a live, correctly aligned `{n}`.\npub fn {ty}::unsafe_from_native(ptr : @native.Handle) -> {ty} {{ {n}_from_native(ptr) }}')
-   if n in ['sg_range','sapp_range','sfetch_range_t']:
-    extern(n+'_bytes',[('self','mb_box *',ty,'borrow')],'Bytes',('moonbit_bytes_t',f'{n} *v=self->value; return mb_bytes(v->ptr,v->size);'),f'pub fn {ty}::bytes(self : {ty}) -> Bytes {{ {n}_bytes(self) }}')
-    extern(n+'_data',[('data','moonbit_bytes_t','Bytes','borrow')],ty,('mb_box *',f'mb_box *r=mb_box_new(sizeof({n})); {n} *v=r->value; v->size=Moonbit_array_length(data); v->ptr=mb_copy(r->arena,data,v->size); return r;'),f'pub fn {ty}::from_bytes(data : Bytes) -> {ty} {{ {n}_data(data) }}')
-   for f in fields(d):
-    fn=f['name'];t=f['type'];b=base(t);ds=dims(t)
-    if '(*)' in b:
-     cbname=f'mb_{n}_{fn}_fn';prefix,suffix=b.split('(*)');c.append(f'typedef {prefix} (*{cbname}){suffix};')
-     ft='@native.Handle';ct='void *';out=f'(void*)v->{fn}';setval=f'({cbname})value'
-    else:
-     ft=mbtype(b,module);ct=ctype(b);out=f'v->{fn}';setval=argexpr(b,'value')
-    if b in STRUCTS:
-     owner=STRUCTS[b][0]
-     if owner!=module:deps.add(owner)
-    suffix=''.join(f'[i{k}]' for k in range(len(ds)))
-    access=f'v->{fn}{suffix}'
-    ps=[('self','mb_box *',ty,'borrow')]+[(f'i{k}','int32_t','Int',None) for k in range(len(ds))]
-    bounds=' '.join(f'if(i{k}<0 || i{k}>={num}) abort();' for k,num in enumerate(ds))
-    getname=f'{n}_get_{fn}'
-    getret=ctype(b) if '(*)' not in b else 'void *'
-    if b in STRUCTS:
-     body=f'{bounds} {n} *v=self->value; {newbox(b,access)} mb_keep(r->arena,self->arena); return r;'
-    elif b=='const char *':body=f'{bounds} {n} *v=self->value; return mb_utf8({access});'
-    elif '(*)' in b:body=f'{bounds} {n} *v=self->value; return (void*){access};'
-    else:body=f'{bounds} {n} *v=self->value; return '+('(void*)' if '*' in b else '')+f'{access};'
-    args=', '.join(n for n,*_ in ps)
-    call=f'{getname}({args})'
-    if b=='const char *':call=f'@utf8.decode_lossy({call})'
-    check=' '.join(f'guard i{k} >= 0 && i{k} < {num} else {{ abort("descriptor array index out of bounds") }};' for k,num in enumerate(ds))
-    fsig=', '.join(f'{nm} : {mt}' for nm,ctt,mt,_ in ps)
-    if n in ['sg_range','sapp_range','sfetch_range_t'] and fn=='ptr':continue
-    extern(getname,ps,'Bytes' if b=='const char *' else ft,(getret,body),f'pub fn {ty}::{ident(fn)}({fsig}) -> {ft} {{ {check} {call} }}')
-    if n in ['sg_range','sapp_range','sfetch_range_t']:continue
-    setname=f'{n}_set_{fn}'
-    sps=ps+[('value',ct,('Bytes' if b=='const char *' else ft),'borrow' if b in STRUCTS or b=='const char *' else None)]
-    retain=''
-    if b in STRUCTS:retain='mb_keep(r->arena,value->arena);'
-    if b=='const char *':setval='mb_string(r->arena,(const char*)value)'
-    setbody=f'{bounds} mb_box *r=mb_box_copy(self,sizeof({n})); {n} *v=r->value; {access}={setval}; {retain} return r;'
-    margs=', '.join(n for n,*_ in ps)+', '+('@native.cstring(value)' if b=='const char *' else 'value')
-    extern(setname,sps,ty,('mb_box *',setbody),f'pub fn {ty}::with_{fn}({fsig}, value : {ft}) -> {ty} {{ {check} {setname}({margs}) }}')
-  elif d['kind']=='func' and n not in CUSTOM:
-   name=ident(n.removeprefix(PREFIX[module]));ps=[];actual=[];msig=[];margs=[]
-   for i,par in enumerate(d['params']):
-    pn=ident(par['name']);t=par['type'];b=structptr(t) or t
-    mt=paramtype(t,module);mf=paramtype(t,module,True);ct=normalized(t)
-    own='borrow' if b in STRUCTS or t=='const char *' or t=='uint64_t *' else None
-    ps.append((pn,ct,mf,own));actual.append(argexpr(t,pn));msig.append(f'{pn} : {mt}');margs.append(f'@native.cstring({pn})' if t=='const char *' else pn)
-    if b in STRUCTS and STRUCTS[b][0]!=module:deps.add(STRUCTS[b][0])
-   ret=d['result'];rt=mbtype(ret,module);call=n+'('+', '.join(actual)+')'
-   pre='';post=''
-   if n.endswith('_setup') and d['params'] and structptr(d['params'][0]['type']):post='mb_store(0,desc->arena);'
-   if n.endswith('_shutdown'):post='mb_release_all();'
-   if module=='gfx':
-    kinds=['buffer','image','sampler','shader','pipeline','view']
-    for k,kind in enumerate(kinds,1):
-     if n=='sg_make_'+kind:post+=f'if(tmp.id) mb_store(((uint64_t){k}<<32)|tmp.id,desc->arena);'
-     if n=='sg_init_'+kind:post+=f'mb_store(((uint64_t){k}<<32)|(({"sg_"+kind}*){ps[0][0]}->value)->id,desc->arena);'
-     if n in ['sg_destroy_'+kind,'sg_uninit_'+kind,'sg_dealloc_'+kind]:post+=f'mb_release(((uint64_t){k}<<32)|(({"sg_"+kind}*){ps[0][0]}->value)->id);'
-   if ret in STRUCTS:
-    body=newbox(ret,call)+' '+post+' mb_keep(r->arena,mb_lookup(0));'
-    for pn,ct,mt,own in ps:
-     if ct=='mb_box *':body+=f' mb_keep(r->arena,{pn}->arena);'
-    body+=' return r;'
-   elif ret=='void':body=f'{pre}{call}; {post}'
-   elif ret=='const char *':body=f'return mb_utf8({call});'
-   else:body='return '+('(void*)' if '*' in ret else '')+f'{call};'
-   mcall=f'{n}('+', '.join(margs)+')'
-   if ret=='const char *':mcall=f'@utf8.decode_lossy({mcall})'
-   if module=='glue':mcall='guard @app.isvalid() else { abort("app must be initialized") }; '+mcall
-   extern(n,ps,'Bytes' if ret=='const char *' else rt,(ctype(ret),body),f'pub fn {name}('+', '.join(msig)+f') -> {rt} {{ {mcall} }}')
- # logger defaults point to thread-safe C logger, no MoonBit calls from workers.
- for n,(owner,d) in STRUCTS.items():
-  if owner==module and n.removesuffix('_t').endswith('_logger'):
-   ty=typename(n)
-   extern(n+'_default',[],ty,('mb_box *',f'mb_box *r=mb_box_new(sizeof({n})); (({n}*)r->value)->func=slog_func; return r;'),f'pub fn {ty}::default() -> {ty} {{ {n}_default() }}')
- (p/'types.mbt').write_text('\n'.join(mb)+'\n')
- (p/'ffi.mbt').write_text('\n'.join(ff)+'\n')
- (p/'generated.h').write_text('\n'.join(c)+'\n')
- imports=[]
- for dep in sorted(deps):imports.append('  "'+('moonbitlang/core/encoding/utf8' if dep=='utf8' else 'moonbitlang/core/debug' if dep=='debug' else 'Milky2018/sokol/'+dep)+'",')
- config='import {\n'+'\n'.join(imports)+'\n}\nsupported_targets = "native"\n'
- flag=f'${{build.SOKOL_{module.upper()}_FLAGS}}' if module in ['gfx','app','audio'] else ''
- config+='options(\n  "native-stub": ["support.c"],\n  link: { "native": { "stub-cc-flags": "'+flag+'" } },\n)\n'
- if module=='fetch':config+='\nimport { "Milky2018/sokol/time" } for "test"\n'
- (p/'moon.pkg').write_text(config)
- if not (p/'support.c').exists():(p/'support.c').write_text('#include "generated.c"\n')
- coverage[module]={'functions':len([d for d in decls if d['kind']=='func']),'generated':len([d for d in decls if d['kind']=='func' and d['name'] not in CUSTOM]),'custom':[d['name'] for d in decls if d['kind']=='func' and d['name'] in CUSTOM],'structs':len([d for d in decls if d['kind']=='struct']),'enums':len([d for d in decls if d['kind']=='enum'])}
-(ROOT/'scripts/coverage.json').write_text(json.dumps(coverage,indent=2)+'\n')
-print(json.dumps(coverage,indent=2))
+    if t in HANDLES:
+        return 'uint32_t'
+    if t in PRIM:
+        return PRIM[t][1]
+    if t in ENUMS:
+        return 'int32_t'
+    if t in STRUCTS:
+        return t + ' *'
+    return 'moonbit_bytes_t' if t == 'const char *' else 'void *'
 
+
+def structptr(t):
+    base = t.removeprefix('const ').removesuffix(' *')
+    return base if t.endswith(' *') and base in STRUCTS else None
+
+
+def argexpr(t, name):
+    if t in HANDLES:
+        return f'({t}){{ .id = {name} }}'
+    if t in STRUCTS:
+        return f'(*{name})'
+    if structptr(t):
+        return name
+    if t == 'const char *':
+        return f'(const char*){name}'
+    return f'({t}){name}' if t in PRIM or t in ENUMS else name
+
+
+def fields(d):
+    return [f for f in d['fields'] if not f['name'].startswith('_')]
+
+
+def dimensions(t):
+    return [int(n) for n in re.findall(r'\[(\d+)\]', t)]
+
+
+def base(t):
+    return t.split('[')[0].strip()
+
+
+def enum_variants(d):
+    import os
+    items = [i for i in d['items'] if not i['name'].endswith(('FORCE_U32', 'NUM', 'NUMTYPES'))]
+    prefix = os.path.commonprefix([i['name'].lstrip('_') for i in items]).rsplit('_', 1)[0] + '_'
+    for item in items:
+        name = ''.join(w.capitalize() for w in item['name'].lstrip('_').removeprefix(prefix).split('_'))
+        yield ('V' + name if name[0].isdigit() else name), item['value']
+
+
+def clone_statement(t, dst, src):
+    if t in STRUCTS and t not in HANDLES:
+        return f'mb_clone_{t}(&{dst}, &{src});'
+    if t == 'const char *':
+        return f'{dst} = mb_string({src});'
+    return ''
+
+
+def drop_statement(t, value):
+    if t in STRUCTS and t not in HANDLES:
+        return f'mb_drop_{t}(&{value});'
+    if t == 'const char *':
+        return f'free((void*){value});'
+    return ''
+
+
+coverage = {}
+for module, declarations in API.items():
+    directory = ROOT / module
+    mb = ['// C API declarations and field adapters maintained by scripts/generate.py.']
+    ffi = ['// Private ABI declarations maintained by scripts/generate.py.']
+    c = ['/* C-layout adapters. Resource ownership is handled in support.c. */', '#include "../native/common.h"']
+    deps = set()
+    if module == 'glue':
+        c += ['#include "../native/sokol_gfx.h"', '#include "../native/sokol_app.h"']
+        deps.update(['app', 'gfx'])
+    if module == 'app':
+        c += ['#define SOKOL_NO_ENTRY']
+    if module == 'gfx':
+        c += ['#define SOKOL_TRACE_HOOKS']
+    if module != 'log':
+        c += ['#define SOKOL_API_IMPL MOONBIT_FFI_EXPORT', '#define SOKOL_IMPL']
+    c += [f'#include "../native/sokol_{module}.h"']
+    headers = [ROOT/'native/common.h', ROOT/'native/sokol_log.h', ROOT/f'native/sokol_{module}.h']
+    if module == 'glue':
+        headers += [ROOT/'native/sokol_gfx.h', ROOT/'native/sokol_app.h']
+    digest = hashlib.sha256(b''.join(p.read_bytes() for p in headers)).hexdigest()
+    c.insert(0, f'/* Header inputs: {digest}. Regenerate after editing shared headers. */')
+
+    def block(out, text):
+        out += ['', '///|', text]
+
+    def extern(name, params, result, cresult, body=None, symbol=None):
+        symbol = symbol or f'mb_{module}_{name}'
+        attrs = ''
+        for ownership in ['borrow', 'owned']:
+            names = ['object_' if n == 'self' else n for n, ct, mt, own in params if own == ownership]
+            if names:
+                attrs += f'#{ownership}({", ".join(names)})\n'
+        signature = ', '.join(f'{"object_" if n == "self" else n} : {mt}' for n, ct, mt, own in params)
+        block(ffi, f'{attrs}extern "c" fn {name}({signature}) -> {result} = "{symbol}"')
+        if body is not None:
+            args = ', '.join(f'{ct} {n}' for n, ct, mt, own in params) or 'void'
+            c.append(f'MOONBIT_FFI_EXPORT {cresult} {symbol}({args}) {{ {body} }}')
+
+    # Only the types returned by glue need local copy helpers there.
+    needed = set()
+    def visit(name):
+        if name in needed or name in HANDLES:
+            return
+        needed.add(name)
+        for field in fields(STRUCTS[name][1]):
+            nested = base(field['type'])
+            if nested in STRUCTS:
+                visit(nested)
+    for d in declarations:
+        if d['kind'] == 'struct':
+            visit(d['name'])
+        elif d['kind'] == 'func' and d['result'] in STRUCTS:
+            visit(d['result'])
+    for name in sorted(needed):
+        c += [f'static void mb_clone_{name}({name}*, const {name}*);', f'static void mb_drop_{name}(void*);']
+    for name in sorted(CALLBACKS & needed):
+        c += [f'static void mb_clone_{name}_callbacks({name}*, const {name}*);', f'static void mb_drop_{name}_callbacks({name}*);', f'static int mb_managed_{name}(const {name}*);']
+    for name in sorted(needed):
+        clone = [f'static void mb_clone_{name}({name} *dst, const {name} *src) {{ *dst = *src;']
+        drop = [f'static void mb_drop_{name}(void *object) {{ {name} *value = object;']
+        if name in RANGES:
+            clone += ['dst->ptr = mb_copy(src->ptr, src->size);']
+            drop += ['free((void*)value->ptr);']
+        elif name in CALLBACKS:
+            clone += [f'mb_clone_{name}_callbacks(dst, src);']
+            drop += [f'mb_drop_{name}_callbacks(value);']
+        elif name == 'sfetch_response_t':
+            clone += ['dst->path = mb_string(src->path);', 'mb_clone_sfetch_range_t(&dst->buffer, &src->buffer);', 'if (dst->buffer.ptr && mb_contains(src->buffer.ptr, src->buffer.size, src->data.ptr, src->data.size)) { dst->data.ptr = (const uint8_t*)dst->buffer.ptr + ((uintptr_t)src->data.ptr - (uintptr_t)src->buffer.ptr); } else { mb_clone_sfetch_range_t(&dst->data, &src->data); }']
+            drop += ['if (!mb_contains(value->buffer.ptr, value->buffer.size, value->data.ptr, value->data.size)) free((void*)value->data.ptr);', 'free((void*)value->buffer.ptr); free((void*)value->path);']
+        else:
+            for field in fields(STRUCTS[name][1]):
+                t = base(field['type'])
+                sizes = dimensions(field['type'])
+                suffix = ''.join(f'[i{k}]' for k in range(len(sizes)))
+                copy = clone_statement(t, 'dst->' + field['name'] + suffix, 'src->' + field['name'] + suffix)
+                destroy = drop_statement(t, 'value->' + field['name'] + suffix)
+                for k, size in reversed(list(enumerate(sizes))):
+                    if copy:
+                        copy = f'for (int i{k}=0; i{k}<{size}; i{k}++) {{ {copy} }}'
+                    if destroy:
+                        destroy = f'for (int i{k}=0; i{k}<{size}; i{k}++) {{ {destroy} }}'
+                if copy:
+                    clone.append(copy)
+                if destroy:
+                    drop.append(destroy)
+        c += clone + ['}'] + drop + ['}']
+        c += [f'_Static_assert(_Alignof({name}) <= _Alignof(void*), "external payload alignment");', f'static {name} *mb_new_{name}(void) {{ return mb_object_new(sizeof({name}), mb_drop_{name}); }}', f'static {name} *mb_copy_{name}(const {name} *source) {{ {name} *r = mb_new_{name}(); mb_clone_{name}(r, source); return r; }}']
+
+    direct = []
+    for d in declarations:
+        name = d.get('name', '')
+        if d['kind'] == 'enum':
+            t = typename(name)
+            deps.add('debug')
+            block(mb, '#derive(Debug, Eq)\npub(all) enum ' + t + ' {\n' + ''.join(f'  {v} = {i}\n' for v, i in enum_variants(d)) + '}')
+            block(mb, f'pub extend {t} with Eq::{{equal, not_equal}}\npub extend {t} with @debug.Debug::{{to_repr}}')
+            block(ffi, f'extern "c" fn {name}_int(value : {t}) -> Int = "mb_sokol_enum_identity"')
+            block(mb, f'pub fn {t}::to_int(self : {t}) -> Int {{ {name}_int(self) }}')
+        elif d['kind'] == 'consts':
+            for item in d['items']:
+                if not item['name'].startswith('_'):
+                    block(mb, f'pub const {item["name"].removeprefix(PREFIX[module].upper())} : Int = {item["value"]}')
+        elif d['kind'] == 'struct':
+            t = typename(name)
+            if name in HANDLES:
+                block(mb, f'/// Non-owning Sokol ID; copying this value does not allocate a C object.\n#derive(Debug, Eq)\npub struct {t}(UInt)')
+                deps.update(['debug', 'native'])
+                block(mb, f'pub extend {t} with Eq::{{equal, not_equal}}\npub extend {t} with @debug.Debug::{{to_repr}}')
+                block(mb, f'pub fn {t}::new() -> {t} {{ {t}(0U) }}')
+                block(mb, f'pub fn {t}::id(self : {t}) -> UInt {{ self.0 }}')
+                block(mb, f'pub fn {t}::from_id(id : UInt) -> {t} {{ {t}(id) }}')
+                extern(name + '_read_id', [('ptr', 'void *', '@native.Handle', None)], 'UInt', 'uint32_t', 'if (!ptr) abort(); uint32_t id; memcpy(&id, ptr, sizeof(id)); return id;')
+                block(mb, f'/// The pointer must identify a live `{name}`.\npub fn {t}::unsafe_from_native(ptr : @native.Handle) -> {t} {{ {t}({name}_read_id(ptr)) }}')
+                continue
+            deps.add('native')
+            block(mb, f'/// Owned C value. copy() creates an independent copy.\npub type {t}')
+            extern(name + '_new', [], t, ctype(name), f'return mb_new_{name}();')
+            block(mb, f'pub fn {t}::new() -> {t} {{ {name}_new() }}')
+            extern(name + '_copy', [('self', ctype(name), t, 'borrow')], t, ctype(name), f'return mb_copy_{name}(self);')
+            block(mb, f'pub fn {t}::copy(self : {t}) -> {t} {{ {name}_copy(self) }}')
+            extern(name + '_native', [('self', ctype(name), t, 'borrow')], '@native.Handle', 'void *', 'return self;')
+            block(mb, f'/// Unowned pointer. Keep this object alive across the native operation.\npub fn {t}::unsafe_native_handle(self : {t}) -> @native.Handle {{ {name}_native(self) }}')
+            extern(name + '_from_native', [('ptr', 'void *', '@native.Handle', None)], t, ctype(name), f'if (!ptr) abort(); return mb_copy_{name}(ptr);')
+            block(mb, f'/// The pointer and its owned string/range fields must be readable for this call.\npub fn {t}::unsafe_from_native(ptr : @native.Handle) -> {t} {{ {name}_from_native(ptr) }}')
+            if name in RANGES:
+                extern(name + '_bytes', [('self', ctype(name), t, 'borrow')], 'Bytes', 'moonbit_bytes_t', f'{name} *v = self; return mb_bytes(v->ptr, v->size);')
+                block(mb, f'pub fn {t}::bytes(self : {t}) -> Bytes {{ {name}_bytes(self) }}')
+                extern(name + '_data', [('data', 'moonbit_bytes_t', 'Bytes', 'borrow')], t, ctype(name), f'{name} source = {{ .ptr = data, .size = Moonbit_array_length(data) }}; return mb_copy_{name}(&source);')
+                block(mb, f'pub fn {t}::from_bytes(data : Bytes) -> {t} {{ {name}_data(data) }}')
+            for field in fields(d):
+                fname = field['name']
+                b = base(field['type'])
+                sizes = dimensions(field['type'])
+                if name in RANGES and fname == 'ptr':
+                    continue
+                callback = '(*)' in b
+                if callback:
+                    cbtype = f'mb_{name}_{fname}_fn'
+                    result, signature = b.split('(*)')
+                    c.append(f'typedef {result} (*{cbtype}){signature};')
+                    mt, ct = '@native.Handle', 'void *'
+                else:
+                    mt, ct = mbtype(b, module), ctype(b)
+                deps.update(['native'] if '*' in b else [])
+                if b == 'const char *':
+                    deps.add('utf8')
+                suffix = ''.join(f'[i{k}]' for k in range(len(sizes)))
+                access = f'v->{fname}{suffix}'
+                params = [('self', ctype(name), t, 'borrow')] + [(f'i{k}', 'int32_t', 'Int', None) for k in range(len(sizes))]
+                msig = ', '.join(f'{n} : {mt}' for n, ct, mt, own in params)
+                args = ', '.join(n for n, ct, mt, own in params)
+                bounds = ' '.join(f'if (i{k}<0 || i{k}>={size}) abort();' for k, size in enumerate(sizes))
+                checks = ' '.join(f'guard i{k} >= 0 && i{k} < {size} else {{ abort("descriptor array index out of bounds") }};' for k, size in enumerate(sizes))
+                get = f'{name}_get_{fname}'
+                if b in HANDLES:
+                    body = f'return {access}.id;'
+                elif b in STRUCTS:
+                    body = f'return mb_copy_{b}(&{access});'
+                elif b == 'const char *':
+                    body = f'return mb_utf8({access});'
+                else:
+                    body = 'return ' + ('(void*)' if '*' in b else '') + access + ';'
+                extern(get, params, 'Bytes' if b == 'const char *' else 'UInt' if b in HANDLES else mt, ct, f'{bounds} {name} *v = self; {body}')
+                call = f'{get}({args})'
+                if b == 'const char *':
+                    call = f'@utf8.decode_lossy({call})'
+                if b in HANDLES:
+                    call = f'{typename(b)}({call})'
+                block(mb, f'pub fn {t}::{ident(fname)}({msig}) -> {mt} {{ {checks} {call} }}')
+                if name in RANGES or name == 'sfetch_response_t':
+                    continue
+                setname = f'{name}_set_{fname}'
+                own = 'borrow' if (b in STRUCTS and b not in HANDLES) or b == 'const char *' else None
+                setter_params = params + [('value', ct, 'Bytes' if b == 'const char *' else 'UInt' if b in HANDLES else mt, own)]
+                if b in STRUCTS and b not in HANDLES:
+                    setter = f'{b} replacement; mb_clone_{b}(&replacement, value); mb_drop_{b}(&{access}); {access} = replacement;'
+                elif b == 'const char *':
+                    setter = f'const char *replacement = mb_string((const char*)value); free((void*){access}); {access} = replacement;'
+                else:
+                    setter = f'{access} = ' + (f'({cbtype})value' if callback else argexpr(b, 'value')) + ';'
+                if name in CALLBACKS:
+                    setter = f'if (mb_managed_{name}(v)) abort(); ' + setter
+                extern(setname, setter_params, 'Unit', 'void', f'{bounds} {name} *v = self; {setter}')
+                value = '@native.cstring(value)' if b == 'const char *' else 'value.0' if b in HANDLES else 'value'
+                block(mb, f'pub fn {t}::set_{fname}({msig}, value : {mt}) -> {t} {{ {checks} {setname}({args}, {value}); self }}')
+        elif d['kind'] == 'func' and name not in CUSTOM:
+            public = ident(name.removeprefix(PREFIX[module]))
+            params, signature, args, actual = [], [], [], []
+            types = [d['result']] + [p['type'] for p in d['params']]
+            is_direct = all(t in DIRECT_SCALARS or (t == 'const char *' and name in BORROWED_STRINGS) for t in types)
+            for param in d['params']:
+                n, pt = ident(param['name']), param['type']
+                b = structptr(pt) or pt
+                mt = mbtype(b, module)
+                if mt.startswith('@native.'):
+                    deps.add('native')
+                own = 'borrow' if (b in STRUCTS and b not in HANDLES) or pt == 'const char *' else None
+                params.append((n, ctype(b), mbtype(b, module, True), own))
+                signature.append(f'{n} : {mt}')
+                args.append(f'@native.cstring({n})' if pt == 'const char *' else f'{n}.0' if b in HANDLES else n)
+                actual.append(argexpr(pt, n))
+                if pt == 'const char *':
+                    deps.add('native')
+            result = d['result']
+            if '*' in result:
+                deps.add('native')
+            call = name + '(' + ', '.join(actual) + ')'
+            if result in HANDLES:
+                body = f'{result} value = {call}; return value.id;'
+            elif result in STRUCTS:
+                body = f'{result} value = {call}; return mb_copy_{result}(&value);'
+            elif result == 'void':
+                body = call + ';'
+            elif result == 'const char *':
+                deps.add('utf8')
+                body = f'return mb_utf8({call});'
+            else:
+                body = 'return ' + ('(void*)' if '*' in result else '') + call + ';'
+            extern(name, params, mbtype(result, module, True), ctype(result), None if is_direct else body, name if is_direct else None)
+            if is_direct:
+                direct.append(name)
+            mcall = f'{name}({", ".join(args)})'
+            if result in HANDLES:
+                mcall = f'{typename(result)}({mcall})'
+            elif result == 'const char *':
+                mcall = f'@utf8.decode_lossy({mcall})'
+            if module == 'glue':
+                mcall = 'guard @app.isvalid() else { abort("app must be initialized") }; ' + mcall
+            block(mb, f'pub fn {public}({", ".join(signature)}) -> {mbtype(result, module)} {{ {mcall} }}')
+    for name, (owner, d) in STRUCTS.items():
+        if owner == module and name.removesuffix('_t').endswith('_logger'):
+            t = typename(name)
+            extern(name + '_default', [], t, ctype(name), f'{name} *r = mb_new_{name}(); r->func = slog_func; return r;')
+            block(mb, f'pub fn {t}::default() -> {t} {{ {name}_default() }}')
+    # Handwritten APIs also import these helpers.
+    if module in ['app', 'gfx', 'fetch', 'args', 'log']:
+        deps.add('native')
+    if module == 'log':
+        deps.add('debug')
+    (directory / 'types.mbt').write_text('\n'.join(mb) + '\n')
+    (directory / 'ffi.mbt').write_text('\n'.join(ffi) + '\n')
+    (directory / 'bindings.inc.h').write_text('\n'.join(c) + '\n')
+    imports = ['moonbitlang/core/encoding/utf8' if dep == 'utf8' else 'moonbitlang/core/debug' if dep == 'debug' else 'Milky2018/sokol/' + dep for dep in sorted(deps)]
+    config = 'import {\n' + ''.join(f'  "{name}",\n' for name in imports) + '}\nsupported_targets = "native"\n'
+    flag = f'${{build.SOKOL_{module.upper()}_FLAGS}}' if module in ['gfx', 'app', 'audio'] else ''
+    config += 'options(\n  "native-stub": ["support.c"],\n  link: { "native": { "stub-cc-flags": "' + flag + '" } },\n)\n'
+    if module == 'fetch':
+        config += '\nimport { "Milky2018/sokol/time" } for "test"\n'
+    (directory / 'moon.pkg').write_text(config)
+    coverage[module] = {'functions': sum(d['kind'] == 'func' for d in declarations), 'direct': direct, 'adapted': [d['name'] for d in declarations if d['kind'] == 'func' and d['name'] not in CUSTOM and d['name'] not in direct], 'custom': [d['name'] for d in declarations if d['kind'] == 'func' and d['name'] in CUSTOM], 'structs': sum(d['kind'] == 'struct' for d in declarations), 'enums': sum(d['kind'] == 'enum' for d in declarations)}
+(ROOT / 'scripts/coverage.json').write_text(json.dumps(coverage, indent=2) + '\n')
 from callbacks import generate as generate_callbacks
 generate_callbacks()
-
-import subprocess
-subprocess.run(["moon", "fmt"], cwd=ROOT, check=True)
-
+subprocess.run(['moon', 'fmt'], cwd=ROOT, check=True)
 if BEFORE is not None:
- changed=[str(p.relative_to(ROOT)) for p in GENERATED if p.read_bytes()!=BEFORE[p]]
- if changed:raise SystemExit("Generated files were stale: "+", ".join(changed))
- print("Generated bindings are reproducible and up to date.")
+    changed = [str(p.relative_to(ROOT)) for p in GENERATED if p.read_bytes() != BEFORE[p]]
+    if changed:
+        raise SystemExit('Generated files were stale: ' + ', '.join(changed))
+print(f'Bindings: {sum(len(v["direct"]) for v in coverage.values())} direct calls; aggregate ABI and callback adapters retained.')

@@ -40,29 +40,31 @@ pub fn valid() -> Bool
 // Types and methods
 pub type Allocator
 pub fn Allocator::alloc_fn(Self) -> @native.Handle
+pub fn Allocator::copy(Self) -> Self
 pub fn Allocator::free_fn(Self) -> @native.Handle
-pub fn Allocator::native_handle(Self) -> @native.Handle
 pub fn Allocator::new() -> Self
+pub fn Allocator::set_alloc_fn(Self, @native.Handle) -> Self
+pub fn Allocator::set_free_fn(Self, @native.Handle) -> Self
+pub fn Allocator::set_user_data(Self, @native.Handle) -> Self
 pub fn Allocator::unsafe_from_native(@native.Handle) -> Self
+pub fn Allocator::unsafe_native_handle(Self) -> @native.Handle
 pub fn Allocator::user_data(Self) -> @native.Handle
-pub fn Allocator::with_alloc_fn(Self, @native.Handle) -> Self
-pub fn Allocator::with_free_fn(Self, @native.Handle) -> Self
-pub fn Allocator::with_user_data(Self, @native.Handle) -> Self
 
 pub type Desc
 pub fn Desc::allocator(Self) -> Allocator
+pub fn Desc::copy(Self) -> Self
 pub fn Desc::logger(Self) -> Logger
 pub fn Desc::max_requests(Self) -> UInt32
-pub fn Desc::native_handle(Self) -> @native.Handle
 pub fn Desc::new() -> Self
 pub fn Desc::num_channels(Self) -> UInt32
 pub fn Desc::num_lanes(Self) -> UInt32
+pub fn Desc::set_allocator(Self, Allocator) -> Self
+pub fn Desc::set_logger(Self, Logger) -> Self
+pub fn Desc::set_max_requests(Self, UInt32) -> Self
+pub fn Desc::set_num_channels(Self, UInt32) -> Self
+pub fn Desc::set_num_lanes(Self, UInt32) -> Self
 pub fn Desc::unsafe_from_native(@native.Handle) -> Self
-pub fn Desc::with_allocator(Self, Allocator) -> Self
-pub fn Desc::with_logger(Self, Logger) -> Self
-pub fn Desc::with_max_requests(Self, UInt32) -> Self
-pub fn Desc::with_num_channels(Self, UInt32) -> Self
-pub fn Desc::with_num_lanes(Self, UInt32) -> Self
+pub fn Desc::unsafe_native_handle(Self) -> @native.Handle
 
 #derive(Eq, @debug.Debug)
 pub(all) enum FetchError {
@@ -80,12 +82,15 @@ pub fn FetchError::not_equal(Self, Self) -> Bool
 pub fn FetchError::to_int(Self) -> Int32
 pub fn FetchError::to_repr(Self) -> @debug.Repr
 
-pub type Handle
+#derive(Eq, @debug.Debug)
+pub struct Handle(UInt32)
+pub fn Handle::equal(Self, Self) -> Bool
+pub fn Handle::from_id(UInt32) -> Self
 pub fn Handle::id(Self) -> UInt32
-pub fn Handle::native_handle(Self) -> @native.Handle
 pub fn Handle::new() -> Self
+pub fn Handle::not_equal(Self, Self) -> Bool
+pub fn Handle::to_repr(Self) -> @debug.Repr
 pub fn Handle::unsafe_from_native(@native.Handle) -> Self
-pub fn Handle::with_id(Self, UInt32) -> Self
 
 #derive(Eq, @debug.Debug)
 pub(all) enum LogItem {
@@ -110,45 +115,49 @@ pub fn LogItem::to_int(Self) -> Int32
 pub fn LogItem::to_repr(Self) -> @debug.Repr
 
 pub type Logger
+pub fn Logger::copy(Self) -> Self
 pub fn Logger::default() -> Self
 pub fn Logger::func(Self) -> @native.Handle
-pub fn Logger::native_handle(Self) -> @native.Handle
 pub fn Logger::new() -> Self
+pub fn Logger::set_func(Self, @native.Handle) -> Self
+pub fn Logger::set_user_data(Self, @native.Handle) -> Self
 pub fn Logger::unsafe_from_native(@native.Handle) -> Self
+pub fn Logger::unsafe_native_handle(Self) -> @native.Handle
 pub fn Logger::user_data(Self) -> @native.Handle
-pub fn Logger::with_func(Self, @native.Handle) -> Self
-pub fn Logger::with_user_data(Self, @native.Handle) -> Self
 
 pub type Range
 pub fn Range::allocate(Int32) -> Self
 pub fn Range::bytes(Self) -> Bytes
+pub fn Range::copy(Self) -> Self
 pub fn Range::from_bytes(Bytes) -> Self
-pub fn Range::native_handle(Self) -> @native.Handle
 pub fn Range::new() -> Self
 pub fn Range::size(Self) -> UInt64
 pub fn Range::unsafe_from_native(@native.Handle) -> Self
+pub fn Range::unsafe_native_handle(Self) -> @native.Handle
 
 pub type Request
 pub fn Request::buffer(Self) -> Range
 pub fn Request::callback(Self) -> @native.Handle
 pub fn Request::channel(Self) -> UInt32
 pub fn Request::chunk_size(Self) -> UInt32
-pub fn Request::native_handle(Self) -> @native.Handle
+pub fn Request::copy(Self) -> Self
 pub fn Request::new() -> Self
 pub fn Request::path(Self) -> String
+pub fn Request::set_buffer(Self, Range) -> Self
+pub fn Request::set_callback(Self, @native.Handle) -> Self
+pub fn Request::set_channel(Self, UInt32) -> Self
+pub fn Request::set_chunk_size(Self, UInt32) -> Self
+pub fn Request::set_path(Self, String) -> Self
+pub fn Request::set_user_data(Self, Range) -> Self
 pub fn Request::unsafe_from_native(@native.Handle) -> Self
+pub fn Request::unsafe_native_handle(Self) -> @native.Handle
 pub fn Request::user_data(Self) -> Range
-pub fn Request::with_buffer(Self, Range) -> Self
-pub fn Request::with_callback(Self, @native.Handle) -> Self
-pub fn Request::with_channel(Self, UInt32) -> Self
-pub fn Request::with_chunk_size(Self, UInt32) -> Self
-pub fn Request::with_path(Self, String) -> Self
-pub fn Request::with_user_data(Self, Range) -> Self
 
 pub type Response
 pub fn Response::buffer(Self) -> Range
 pub fn Response::cancelled(Self) -> Bool
 pub fn Response::channel(Self) -> UInt32
+pub fn Response::copy(Self) -> Self
 pub fn Response::data(Self) -> Range
 pub fn Response::data_offset(Self) -> UInt32
 pub fn Response::dispatched(Self) -> Bool
@@ -158,27 +167,12 @@ pub fn Response::fetched(Self) -> Bool
 pub fn Response::finished(Self) -> Bool
 pub fn Response::handle(Self) -> Handle
 pub fn Response::lane(Self) -> UInt32
-pub fn Response::native_handle(Self) -> @native.Handle
 pub fn Response::new() -> Self
 pub fn Response::path(Self) -> String
 pub fn Response::paused(Self) -> Bool
 pub fn Response::unsafe_from_native(@native.Handle) -> Self
+pub fn Response::unsafe_native_handle(Self) -> @native.Handle
 pub fn Response::user_data(Self) -> @native.Handle
-pub fn Response::with_buffer(Self, Range) -> Self
-pub fn Response::with_cancelled(Self, Bool) -> Self
-pub fn Response::with_channel(Self, UInt32) -> Self
-pub fn Response::with_data(Self, Range) -> Self
-pub fn Response::with_data_offset(Self, UInt32) -> Self
-pub fn Response::with_dispatched(Self, Bool) -> Self
-pub fn Response::with_error_code(Self, FetchError) -> Self
-pub fn Response::with_failed(Self, Bool) -> Self
-pub fn Response::with_fetched(Self, Bool) -> Self
-pub fn Response::with_finished(Self, Bool) -> Self
-pub fn Response::with_handle(Self, Handle) -> Self
-pub fn Response::with_lane(Self, UInt32) -> Self
-pub fn Response::with_path(Self, String) -> Self
-pub fn Response::with_paused(Self, Bool) -> Self
-pub fn Response::with_user_data(Self, @native.Handle) -> Self
 
 // Type aliases
 

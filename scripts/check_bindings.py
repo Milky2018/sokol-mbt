@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure every pinned upstream function has a C bridge and a public API."""
+"""Ensure every pinned upstream function has a native binding and a public API."""
 import json,re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -22,15 +22,19 @@ CUSTOM={
  'stm_laptime':('mb_time_laptime','laptime'),
  'slog_func':('mb_log_write','write'),
 }
+coverage=json.loads((ROOT/'scripts/coverage.json').read_text())
 count=0
 for module,decls in API.items():
- c='\n'.join(p.read_text() for p in (ROOT/module).glob('*') if p.suffix in ['.h','.c'])
+ c='\n'.join(p.read_text() for p in (ROOT/module).glob('*') if p.suffix in ['.h','.c','.inc'])
  mb='\n'.join(p.read_text() for p in (ROOT/module).glob('*.mbt') if not p.name.endswith(('_test.mbt','_wbtest.mbt')))
  for d in decls:
   if d['kind']!='func':continue
   n=d['name'];bridge,public=CUSTOM.get(n,(f'mb_{module}_{n}',n.removeprefix(PREFIX[module])))
   if public=='continue':public='continue_'
-  if not re.search(r'\b'+re.escape(bridge)+r'\s*\(',c):raise SystemExit(f'missing C bridge: {n}')
+  if n in coverage[module]['direct']:
+   ffi=(ROOT/module/'ffi.mbt').read_text()
+   if not re.search(r'= \"'+re.escape(n)+r'\"',ffi):raise SystemExit(f'missing direct FFI declaration: {n}')
+  elif not re.search(r'\b'+re.escape(bridge)+r'\s*\(',c):raise SystemExit(f'missing C bridge: {n}')
   if not re.search(r'pub fn '+re.escape(public)+r'\s*\(',mb):raise SystemExit(f'missing public API: {n}')
   count+=1
-print(f'All {count} upstream functions have C bridges and public MoonBit APIs.')
+print(f'All {count} upstream functions have native bindings and public MoonBit APIs.')

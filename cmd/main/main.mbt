@@ -7,18 +7,18 @@ fn main {
   let smoke = @env.args().contains("--smoke")
   @app.run(
     @app.Desc::new()
-    .with_width(800)
-    .with_height(600)
-    .with_window_title("MoonBit + Sokol")
-    .with_logger(@app.Logger::default()),
+    .set_width(800)
+    .set_height(600)
+    .set_window_title("MoonBit + Sokol")
+    .set_logger(@app.Logger::default()),
     init=fn() {
       @gfx.setup(
         @gfx.Desc::new()
-        .with_environment(@glue.environment())
-        .with_logger(@gfx.Logger::default()),
+        .set_environment(@glue.environment())
+        .set_logger(@gfx.Logger::default()),
       )
       buffer.val = @gfx.make_buffer(
-        @gfx.BufferDesc::new().with_data(
+        @gfx.BufferDesc::new().set_data(
           @gfx.Range::from_floats([
             0.0F,
             0.65F,
@@ -43,29 +43,25 @@ fn main {
       )
       shader.val = @gfx.make_shader(@shaders.triangle())
       let layout = @gfx.VertexLayoutState::new()
-        .with_attrs(0, @gfx.VertexAttrState::new().with_format(Float2))
-        .with_attrs(1, @gfx.VertexAttrState::new().with_format(Float4))
+        .set_attrs(0, @gfx.VertexAttrState::new().set_format(Float2))
+        .set_attrs(1, @gfx.VertexAttrState::new().set_format(Float4))
       pipeline.val = @gfx.make_pipeline(
-        @gfx.PipelineDesc::new().with_shader(shader.val).with_layout(layout),
+        @gfx.PipelineDesc::new().set_shader(shader.val).set_layout(layout),
       )
       guard @gfx.query_pipeline_state(pipeline.val) == Valid else {
         abort("pipeline creation failed")
       }
-      bindings.val = @gfx.Bindings::new().with_vertex_buffers(0, buffer.val)
+      bindings.val = @gfx.Bindings::new().set_vertex_buffers(0, buffer.val)
     },
     frame=fn() {
-      let action = @gfx.PassAction::new().with_colors(
+      let action = @gfx.PassAction::new().set_colors(
         0,
-        @gfx.ColorAttachmentAction::new().with_clear_value(
-          @gfx.Color::new()
-          .with_r(0.06F)
-          .with_g(0.08F)
-          .with_b(0.12F)
-          .with_a(1.0F),
+        @gfx.ColorAttachmentAction::new().set_clear_value(
+          @gfx.Color::new().set_r(0.06F).set_g(0.08F).set_b(0.12F).set_a(1.0F),
         ),
       )
       @gfx.begin_pass(
-        @gfx.Pass::new().with_action(action).with_swapchain(@glue.swapchain()),
+        @gfx.Pass::new().set_action(action).set_swapchain(@glue.swapchain()),
       )
       @gfx.apply_pipeline(pipeline.val)
       @gfx.apply_bindings(bindings.val)

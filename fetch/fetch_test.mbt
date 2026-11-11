@@ -9,11 +9,11 @@ fn pump_until(done : () -> Bool) -> Unit {
 
 ///|
 test "async fetch keeps closures and buffers alive through completion" {
-  @fetch.setup(@fetch.Desc::new().with_logger(@fetch.Logger::default()))
+  @fetch.setup(@fetch.Desc::new().set_logger(@fetch.Logger::default()))
   let saved : Array[@fetch.Response] = []
   let request = @fetch.Request::new()
-    .with_path("native/SOKOL-LICENSE")
-    .with_buffer(@fetch.Range::allocate(16384))
+    .set_path("native/SOKOL-LICENSE")
+    .set_buffer(@fetch.Range::allocate(16384))
   let handle = @fetch.send(request, response => saved.push(response))
   assert_true(handle.id() != 0U)
   pump_until(fn() { saved.any(r => r.finished()) })
@@ -34,8 +34,8 @@ test "missing file reports a terminal error and shutdown releases pending closur
   ignore(
     @fetch.send(
       @fetch.Request::new()
-      .with_path(".prepare/no-such-file")
-      .with_buffer(@fetch.Range::allocate(64)),
+      .set_path(".prepare/no-such-file")
+      .set_buffer(@fetch.Range::allocate(64)),
       response => results.push(response),
     ),
   )
@@ -44,8 +44,8 @@ test "missing file reports a terminal error and shutdown releases pending closur
   ignore(
     @fetch.send(
       @fetch.Request::new()
-      .with_path("native/SOKOL-LICENSE")
-      .with_buffer(@fetch.Range::allocate(16384)),
+      .set_path("native/SOKOL-LICENSE")
+      .set_buffer(@fetch.Range::allocate(16384)),
       _ => (),
     ),
   )
@@ -58,8 +58,8 @@ test "cancellation delivers a final response" {
   let results : Array[@fetch.Response] = []
   let handle = @fetch.send(
     @fetch.Request::new()
-    .with_path("native/SOKOL-LICENSE")
-    .with_buffer(@fetch.Range::allocate(16384)),
+    .set_path("native/SOKOL-LICENSE")
+    .set_buffer(@fetch.Range::allocate(16384)),
     r => results.push(r),
   )
   @fetch.cancel(handle)
@@ -74,9 +74,9 @@ test "streaming can bind and replace buffers inside callbacks" {
   let chunks : Array[Bytes] = []
   let finished = Ref(false)
   let request = @fetch.Request::new()
-    .with_path("native/SOKOL-LICENSE")
-    .with_chunk_size(64U)
-    .with_buffer(@fetch.Range::allocate(64))
+    .set_path("native/SOKOL-LICENSE")
+    .set_chunk_size(64U)
+    .set_buffer(@fetch.Range::allocate(64))
   let handle = @fetch.send(request, fn(r) {
     if r.dispatched() {
       @fetch.bind_buffer(r.handle(), @fetch.Range::allocate(64))
@@ -107,7 +107,7 @@ test "a non-streaming request can acquire its buffer on dispatch" {
   let dispatched = Ref(false)
   let finished = Ref(false)
   let handle = @fetch.send(
-    @fetch.Request::new().with_path("native/SOKOL-LICENSE"),
+    @fetch.Request::new().set_path("native/SOKOL-LICENSE"),
     fn(r) {
       if r.dispatched() {
         dispatched.val = true
@@ -126,11 +126,11 @@ test "a non-streaming request can acquire its buffer on dispatch" {
 
 ///|
 test "rejected requests never invoke callbacks" {
-  @fetch.setup(@fetch.Desc::new().with_max_requests(1U))
+  @fetch.setup(@fetch.Desc::new().set_max_requests(1U))
   let called = Ref(false)
   let request = @fetch.Request::new()
-    .with_path("native/SOKOL-LICENSE")
-    .with_buffer(@fetch.Range::allocate(16384))
+    .set_path("native/SOKOL-LICENSE")
+    .set_buffer(@fetch.Range::allocate(16384))
   let accepted = @fetch.send(request, _ => called.val = true)
   let rejected = @fetch.send(request, _ => called.val = true)
   assert_true(accepted.id() != 0U)

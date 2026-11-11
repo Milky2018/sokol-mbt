@@ -1,17 +1,17 @@
 ///|
-test "descriptors are independent snapshots and preserve byte ownership" {
+test "descriptor copying isolates mutable configuration and byte ownership" {
   let data = @gfx.Range::from_bytes(b"abcdefgh")
   let original = @gfx.BufferDesc::new()
-    .with_label("vertex 月兔")
-    .with_data(data)
-  let changed = original.with_label("changed")
+    .set_label("vertex 月兔")
+    .set_data(data)
+  let changed = original.copy().set_label("changed")
   assert_eq(original.label(), "vertex 月兔")
   assert_eq(changed.label(), "changed")
   assert_eq(changed.data().bytes(), b"abcdefgh")
   assert_eq(@gfx.PixelFormat::Rgba8.to_int(), 23)
-  let bindings = @gfx.Bindings::new().with_vertex_buffers(
+  let bindings = @gfx.Bindings::new().set_vertex_buffers(
     0,
-    @gfx.Buffer::new().with_id(123U),
+    @gfx.Buffer::from_id(123U),
   )
   assert_eq(bindings.vertex_buffers(0).id(), 123U)
 }
@@ -19,7 +19,7 @@ test "descriptors are independent snapshots and preserve byte ownership" {
 ///|
 test "resource lifecycle rendering trace hooks and commit callbacks" {
   if @gfx.is_headless() {
-    @gfx.setup(@gfx.Desc::new().with_logger(@gfx.Logger::default()))
+    @gfx.setup(@gfx.Desc::new().set_logger(@gfx.Logger::default()))
     assert_true(@gfx.isvalid())
     let made : Array[UInt32] = []
     let commits = Ref(0)
@@ -36,8 +36,8 @@ test "resource lifecycle rendering trace hooks and commit callbacks" {
     assert_true(@gfx.add_commit_listener(listener))
     let buffer = @gfx.make_buffer(
       @gfx.BufferDesc::new()
-      .with_label("test")
-      .with_data(@gfx.Range::from_bytes(b"abcdefghijklmnop")),
+      .set_label("test")
+      .set_data(@gfx.Range::from_bytes(b"abcdefghijklmnop")),
     )
     assert_eq(@gfx.query_buffer_state(buffer), Valid)
     assert_eq(@gfx.query_buffer_size(buffer), 16UL)
@@ -45,8 +45,8 @@ test "resource lifecycle rendering trace hooks and commit callbacks" {
     let info = @gfx.query_buffer_info(buffer)
     assert_eq(info.slot().state(), Valid)
     @gfx.begin_pass(
-      @gfx.Pass::new().with_swapchain(
-        @gfx.Swapchain::new().with_width(32).with_height(32),
+      @gfx.Pass::new().set_swapchain(
+        @gfx.Swapchain::new().set_width(32).set_height(32),
       ),
     )
     @gfx.end_pass()
@@ -79,24 +79,24 @@ test "owned ranges detach mutable inputs" {
 ///|
 test "image sampler view and two-phase resource allocation" {
   if @gfx.is_headless() {
-    @gfx.setup(@gfx.Desc::new().with_logger(@gfx.Logger::default()))
+    @gfx.setup(@gfx.Desc::new().set_logger(@gfx.Logger::default()))
     let image = @gfx.alloc_image()
     assert_eq(@gfx.query_image_state(image), Alloc)
     @gfx.init_image(
       image,
       @gfx.ImageDesc::new()
-      .with_width(2)
-      .with_height(2)
-      .with_data(@gfx.Range::from_bytes(Bytes::make(16, 255))),
+      .set_width(2)
+      .set_height(2)
+      .set_data(@gfx.Range::from_bytes(Bytes::make(16, 255))),
     )
     assert_eq(@gfx.query_image_state(image), Valid)
     let view = @gfx.make_view(
-      @gfx.ViewDesc::new().with_texture(
-        @gfx.TextureViewDesc::new().with_image(image),
+      @gfx.ViewDesc::new().set_texture(
+        @gfx.TextureViewDesc::new().set_image(image),
       ),
     )
     let sampler = @gfx.make_sampler(
-      @gfx.SamplerDesc::new().with_min_filter(Linear).with_mag_filter(Linear),
+      @gfx.SamplerDesc::new().set_min_filter(Linear).set_mag_filter(Linear),
     )
     assert_eq(@gfx.query_view_state(view), Valid)
     assert_eq(@gfx.query_view_image(view).id(), image.id())

@@ -1,6 +1,6 @@
 ///|
 test "audio configuration and interleaved push" {
-  let desc = @audio.Desc::new().with_sample_rate(44100).with_num_channels(2)
+  let desc = @audio.Desc::new().set_sample_rate(44100).set_num_channels(2)
   assert_eq(desc.sample_rate(), 44100)
   if @audio.is_headless() {
     @audio.setup(desc)

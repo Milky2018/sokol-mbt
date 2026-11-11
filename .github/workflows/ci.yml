@@ -36,6 +36,10 @@ jobs:
       - name: Configure Windows SDK
         if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
+      - name: Select Clang on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: '"MOON_CC=clang" | Out-File -FilePath $env:GITHUB_ENV -Append'
       - name: Verify vendored sources and API coverage
         run: |
           python scripts/prepare.py --check
@@ -49,6 +53,7 @@ jobs:
           moon test --target native --release
           moon info
           moon fmt --check
+          moon fmt --check build.mbtx
           git diff --exit-code
       - name: Compile the production backend
         env:
@@ -56,9 +61,4 @@ jobs:
         run: moon build --target native --release
       - name: Address and leak sanitizers
         if: runner.os == 'Linux'
-        run: >-
-          python scripts/run-asan.py --repo-root .
-          --pkg moon.pkg --pkg native/moon.pkg --pkg app/moon.pkg --pkg gfx/moon.pkg
-          --pkg audio/moon.pkg --pkg fetch/moon.pkg --pkg args/moon.pkg
-          --pkg time/moon.pkg --pkg log/moon.pkg --pkg glue/moon.pkg
-          --pkg cmd/main/moon.pkg --pkg examples/offscreen/moon.pkg
+        run: python scripts/run-asan.py

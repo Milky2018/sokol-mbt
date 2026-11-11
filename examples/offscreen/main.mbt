@@ -16,31 +16,31 @@ fn main {
     abort("offscreen validation requires macOS Metal")
   }
   let defaults = @gfx.EnvironmentDefaults::new()
-    .with_color_format(Rgba8)
-    .with_depth_format(None)
-    .with_sample_count(1)
+    .set_color_format(Rgba8)
+    .set_depth_format(None)
+    .set_sample_count(1)
   let environment = @gfx.Environment::new()
-    .with_defaults(defaults)
-    .with_metal(@gfx.MetalEnvironment::new().with_device(device))
+    .set_defaults(defaults)
+    .set_metal(@gfx.MetalEnvironment::new().set_device(device))
   @gfx.setup(
     @gfx.Desc::new()
-    .with_environment(environment)
-    .with_logger(@gfx.Logger::default()),
+    .set_environment(environment)
+    .set_logger(@gfx.Logger::default()),
   )
   let image = @gfx.make_image(
     @gfx.ImageDesc::new()
-    .with_width(64)
-    .with_height(64)
-    .with_pixel_format(Rgba8)
-    .with_usage(@gfx.ImageUsage::new().with_color_attachment(true)),
+    .set_width(64)
+    .set_height(64)
+    .set_pixel_format(Rgba8)
+    .set_usage(@gfx.ImageUsage::new().set_color_attachment(true)),
   )
   let view = @gfx.make_view(
-    @gfx.ViewDesc::new().with_color_attachment(
-      @gfx.ImageViewDesc::new().with_image(image),
+    @gfx.ViewDesc::new().set_color_attachment(
+      @gfx.ImageViewDesc::new().set_image(image),
     ),
   )
   let buffer = @gfx.make_buffer(
-    @gfx.BufferDesc::new().with_data(
+    @gfx.BufferDesc::new().set_data(
       @gfx.Range::from_floats([
         0.0F,
         0.9F,
@@ -65,31 +65,31 @@ fn main {
   )
   let shader = @gfx.make_shader(@shaders.triangle())
   let layout = @gfx.VertexLayoutState::new()
-    .with_attrs(0, @gfx.VertexAttrState::new().with_format(Float2))
-    .with_attrs(1, @gfx.VertexAttrState::new().with_format(Float4))
+    .set_attrs(0, @gfx.VertexAttrState::new().set_format(Float2))
+    .set_attrs(1, @gfx.VertexAttrState::new().set_format(Float4))
   let pipeline = @gfx.make_pipeline(
     @gfx.PipelineDesc::new()
-    .with_shader(shader)
-    .with_layout(layout)
-    .with_colors(0, @gfx.ColorTargetState::new().with_pixel_format(Rgba8))
-    .with_depth(@gfx.DepthState::new().with_pixel_format(None)),
+    .set_shader(shader)
+    .set_layout(layout)
+    .set_colors(0, @gfx.ColorTargetState::new().set_pixel_format(Rgba8))
+    .set_depth(@gfx.DepthState::new().set_pixel_format(None)),
   )
   guard @gfx.query_pipeline_state(pipeline) == Valid else {
     abort("offscreen pipeline failed")
   }
-  let action = @gfx.PassAction::new().with_colors(
+  let action = @gfx.PassAction::new().set_colors(
     0,
     @gfx.ColorAttachmentAction::new()
-    .with_store_action(Store)
-    .with_clear_value(@gfx.Color::new().with_a(1.0F)),
+    .set_store_action(Store)
+    .set_clear_value(@gfx.Color::new().set_a(1.0F)),
   )
   @gfx.begin_pass(
     @gfx.Pass::new()
-    .with_action(action)
-    .with_attachments(@gfx.Attachments::new().with_colors(0, view)),
+    .set_action(action)
+    .set_attachments(@gfx.Attachments::new().set_colors(0, view)),
   )
   @gfx.apply_pipeline(pipeline)
-  @gfx.apply_bindings(@gfx.Bindings::new().with_vertex_buffers(0, buffer))
+  @gfx.apply_bindings(@gfx.Bindings::new().set_vertex_buffers(0, buffer))
   @gfx.draw(0, 3, 1)
   @gfx.end_pass()
   @gfx.commit()
@@ -134,50 +134,48 @@ fn verify_compute() -> Unit {
   let data = @gfx.Range::from_uints([1U, 2U, 3U, 4U])
   let buffer = @gfx.make_buffer(
     @gfx.BufferDesc::new()
-    .with_size(16UL)
-    .with_usage(
-      @gfx.BufferUsage::new()
-      .with_storage_buffer(true)
-      .with_write_unsealed(true),
+    .set_size(16UL)
+    .set_usage(
+      @gfx.BufferUsage::new().set_storage_buffer(true).set_write_unsealed(true),
     ),
   )
   @gfx.write_buffer_unsealed(
     @gfx.WriteBufferDesc::new()
-    .with_src(@gfx.WriteBufferSource::new().with_data(data))
-    .with_dst(@gfx.BufferLocation::new().with_buffer(buffer)),
+    .set_src(@gfx.WriteBufferSource::new().set_data(data))
+    .set_dst(@gfx.BufferLocation::new().set_buffer(buffer)),
   )
   @gfx.seal_buffer(buffer)
   let view = @gfx.make_view(
-    @gfx.ViewDesc::new().with_storage_buffer(
-      @gfx.BufferViewDesc::new().with_buffer(buffer),
+    @gfx.ViewDesc::new().set_storage_buffer(
+      @gfx.BufferViewDesc::new().set_buffer(buffer),
     ),
   )
   let shader = @gfx.make_shader(
     @gfx.ShaderDesc::new()
-    .with_compute_func(
-      @gfx.ShaderFunction::new().with_source(source).with_entry("cs_main"),
+    .set_compute_func(
+      @gfx.ShaderFunction::new().set_source(source).set_entry("cs_main"),
     )
-    .with_views(
+    .set_views(
       0,
-      @gfx.ShaderView::new().with_storage_buffer(
+      @gfx.ShaderView::new().set_storage_buffer(
         @gfx.ShaderStorageBufferView::new()
-        .with_stage(Compute)
-        .with_msl_buffer_n(8),
+        .set_stage(Compute)
+        .set_msl_buffer_n(8),
       ),
     )
-    .with_mtl_threads_per_threadgroup(
-      @gfx.MtlShaderThreadsPerThreadgroup::new().with_x(32).with_y(1).with_z(1),
+    .set_mtl_threads_per_threadgroup(
+      @gfx.MtlShaderThreadsPerThreadgroup::new().set_x(32).set_y(1).set_z(1),
     ),
   )
   let pipeline = @gfx.make_pipeline(
-    @gfx.PipelineDesc::new().with_compute(true).with_shader(shader),
+    @gfx.PipelineDesc::new().set_compute(true).set_shader(shader),
   )
   guard @gfx.query_pipeline_state(pipeline) == Valid else {
     abort("compute pipeline failed")
   }
-  @gfx.begin_pass(@gfx.Pass::new().with_compute(true))
+  @gfx.begin_pass(@gfx.Pass::new().set_compute(true))
   @gfx.apply_pipeline(pipeline)
-  @gfx.apply_bindings(@gfx.Bindings::new().with_views(0, view))
+  @gfx.apply_bindings(@gfx.Bindings::new().set_views(0, view))
   @gfx.dispatch(1, 1, 1)
   @gfx.end_pass()
   @gfx.commit()
@@ -200,10 +198,10 @@ fn verify_compute() -> Unit {
 fn verify_image_copy() -> Unit {
   let src = @gfx.make_image(
     @gfx.ImageDesc::new()
-    .with_width(2)
-    .with_height(2)
-    .with_usage(@gfx.ImageUsage::new().with_copy_src(true))
-    .with_data(
+    .set_width(2)
+    .set_height(2)
+    .set_usage(@gfx.ImageUsage::new().set_copy_src(true))
+    .set_data(
       @gfx.Range::from_bytes(
         b"\xff\x00\x00\xff\xff\x00\x00\xff\xff\x00\x00\xff\xff\x00\x00\xff",
       ),
@@ -211,14 +209,14 @@ fn verify_image_copy() -> Unit {
   )
   let dst = @gfx.make_image(
     @gfx.ImageDesc::new()
-    .with_width(2)
-    .with_height(2)
-    .with_usage(@gfx.ImageUsage::new().with_copy_dst(true)),
+    .set_width(2)
+    .set_height(2)
+    .set_usage(@gfx.ImageUsage::new().set_copy_dst(true)),
   )
   @gfx.copy_image_to_image(
     @gfx.CopyImageToImageDesc::new()
-    .with_src(@gfx.ImageLocation::new().with_image(src))
-    .with_dst(@gfx.ImageLocation::new().with_image(dst)),
+    .set_src(@gfx.ImageLocation::new().set_image(src))
+    .set_dst(@gfx.ImageLocation::new().set_image(dst)),
   )
   @gfx.commit()
   let info = @gfx.mtl_query_image_info(dst)

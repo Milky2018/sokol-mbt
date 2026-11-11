@@ -35,29 +35,31 @@ pub fn value_def(String, String) -> String
 // Types and methods
 pub type Allocator
 pub fn Allocator::alloc_fn(Self) -> @native.Handle
+pub fn Allocator::copy(Self) -> Self
 pub fn Allocator::free_fn(Self) -> @native.Handle
-pub fn Allocator::native_handle(Self) -> @native.Handle
 pub fn Allocator::new() -> Self
+pub fn Allocator::set_alloc_fn(Self, @native.Handle) -> Self
+pub fn Allocator::set_free_fn(Self, @native.Handle) -> Self
+pub fn Allocator::set_user_data(Self, @native.Handle) -> Self
 pub fn Allocator::unsafe_from_native(@native.Handle) -> Self
+pub fn Allocator::unsafe_native_handle(Self) -> @native.Handle
 pub fn Allocator::user_data(Self) -> @native.Handle
-pub fn Allocator::with_alloc_fn(Self, @native.Handle) -> Self
-pub fn Allocator::with_free_fn(Self, @native.Handle) -> Self
-pub fn Allocator::with_user_data(Self, @native.Handle) -> Self
 
 pub type Desc
 pub fn Desc::allocator(Self) -> Allocator
 pub fn Desc::argc(Self) -> Int32
 pub fn Desc::argv(Self) -> @native.Handle
 pub fn Desc::buf_size(Self) -> Int32
+pub fn Desc::copy(Self) -> Self
 pub fn Desc::max_args(Self) -> Int32
-pub fn Desc::native_handle(Self) -> @native.Handle
 pub fn Desc::new() -> Self
+pub fn Desc::set_allocator(Self, Allocator) -> Self
+pub fn Desc::set_argc(Self, Int32) -> Self
+pub fn Desc::set_argv(Self, @native.Handle) -> Self
+pub fn Desc::set_buf_size(Self, Int32) -> Self
+pub fn Desc::set_max_args(Self, Int32) -> Self
 pub fn Desc::unsafe_from_native(@native.Handle) -> Self
-pub fn Desc::with_allocator(Self, Allocator) -> Self
-pub fn Desc::with_argc(Self, Int32) -> Self
-pub fn Desc::with_argv(Self, @native.Handle) -> Self
-pub fn Desc::with_buf_size(Self, Int32) -> Self
-pub fn Desc::with_max_args(Self, Int32) -> Self
+pub fn Desc::unsafe_native_handle(Self) -> @native.Handle
 
 // Type aliases
 

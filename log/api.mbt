@@ -41,7 +41,7 @@ pub fn write(
     @native.cstring(tag),
     level_ffi(level),
     item,
-    @utf8.encode(message),
+    @native.cstring(message),
     line,
     @native.cstring(filename),
   )

@@ -1,1 +1,1 @@
-#include "generated.h"
+#include "bindings.inc.h"

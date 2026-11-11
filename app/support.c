@@ -1,41 +1,83 @@
-#include "generated.h"
+#include "bindings.inc.h"
+
+/* Sokol has one application context. The bridge has the same static lifetime;
+   captured objects and the descriptor have explicit ownership until cleanup. */
 typedef struct {
-    mb_box *desc;
+    sapp_desc *desc;
     void (*call)(void*);
-    void (*event_call)(void*,mb_box*);
-    void *init,*frame,*cleanup,*event;
+    void (*event_call)(void*, sapp_event*);
+    void *init, *frame, *cleanup, *event;
 } mb_app_callbacks;
-static mb_app_callbacks *mb_app_active;
-static void mb_app_init(void *ptr) { mb_app_callbacks *s=ptr; moonbit_incref(s->init); s->call(s->init); }
-static void mb_app_frame(void *ptr) { mb_app_callbacks *s=ptr; moonbit_incref(s->frame); s->call(s->frame); }
-static void mb_app_event(const sapp_event *event,void *ptr) {
-    mb_app_callbacks *s=ptr; mb_box *b=mb_box_new(sizeof(*event)); mb_clone_sapp_event(b->arena,b->value,event);
-    moonbit_incref(s->event); s->event_call(s->event,b);
+static mb_app_callbacks mb_app_state;
+static int mb_app_running;
+static sapp_desc *mb_native_desc;
+static sapp_desc mb_native_callbacks;
+
+static void mb_app_call(void *closure) {
+    moonbit_incref(closure);
+    mb_app_state.call(closure);
+    moonbit_decref(closure);
 }
-static void mb_app_cleanup(void *ptr) {
-    mb_app_callbacks *s=ptr;
-    moonbit_incref(s->cleanup); s->call(s->cleanup);
-    moonbit_decref(s->init); moonbit_decref(s->frame); moonbit_decref(s->cleanup); moonbit_decref(s->event);
-    s->init=s->frame=s->cleanup=s->event=NULL;
+static void mb_app_release(void) {
+    if (!mb_app_state.desc) return;
+    moonbit_decref(mb_app_state.init);
+    moonbit_decref(mb_app_state.frame);
+    moonbit_decref(mb_app_state.cleanup);
+    moonbit_decref(mb_app_state.event);
+    moonbit_decref(mb_app_state.desc);
+    memset(&mb_app_state, 0, sizeof(mb_app_state));
 }
-MOONBIT_FFI_EXPORT void mb_app_run(mb_box *desc,void (*call)(void*),void *init,void *frame,void *cleanup,void (*event_call)(void*,mb_box*),void *event) {
-    if(mb_app_active) abort();
-    mb_app_callbacks *s=mb_malloc(sizeof(*s));
-    s->desc=desc; s->call=call; s->init=init; s->frame=frame; s->cleanup=cleanup; s->event_call=event_call; s->event=event;
-    sapp_desc d=*(sapp_desc*)desc->value;
-    d.init_cb=NULL; d.frame_cb=NULL; d.cleanup_cb=NULL; d.event_cb=NULL;
-    d.init_userdata_cb=mb_app_init; d.frame_userdata_cb=mb_app_frame; d.cleanup_userdata_cb=mb_app_cleanup; d.event_userdata_cb=mb_app_event; d.user_data=s;
-    mb_app_active=s; sapp_run(&d);
-    /* Desktop backends which return do so after cleanup. macOS exits inside Sokol. */
-#if !defined(__EMSCRIPTEN__)
-    mb_app_active=NULL; moonbit_decref(desc); free(s);
-#endif
+static void mb_app_init(void *unused) {
+    (void)unused;
+    mb_app_call(mb_app_state.init);
 }
-/* Raw native callbacks support platform integrations without MoonBit runtime calls. */
-MOONBIT_FFI_EXPORT void mb_app_html5_fetch(mb_box *request) { sapp_html5_fetch_dropped_file(request->value); }
-MOONBIT_FFI_EXPORT void mb_app_run_native(mb_box *desc) {
-    sapp_run(desc->value);
-#if !defined(__EMSCRIPTEN__)
-    moonbit_decref(desc);
-#endif
+static void mb_app_frame(void *unused) {
+    (void)unused;
+    mb_app_call(mb_app_state.frame);
+}
+static void mb_app_event(const sapp_event *event, void *unused) {
+    (void)unused;
+    sapp_event *snapshot = mb_copy_sapp_event(event);
+    void *closure = mb_app_state.event;
+    moonbit_incref(closure);
+    mb_app_state.event_call(closure, snapshot);
+    moonbit_decref(snapshot);
+    moonbit_decref(closure);
+}
+static void mb_app_cleanup(void *unused) {
+    (void)unused;
+    mb_app_call(mb_app_state.cleanup);
+    mb_app_release();
+}
+MOONBIT_FFI_EXPORT void mb_app_run(sapp_desc *desc, void (*call)(void*), void *init, void *frame, void *cleanup, void (*event_call)(void*,sapp_event*), void *event) {
+    if (mb_app_running) abort();
+    mb_app_running = 1;
+    mb_app_state = (mb_app_callbacks){desc, call, event_call, init, frame, cleanup, event};
+    sapp_desc value = *desc;
+    value.init_cb = NULL; value.frame_cb = NULL; value.cleanup_cb = NULL; value.event_cb = NULL;
+    value.init_userdata_cb = mb_app_init; value.frame_userdata_cb = mb_app_frame;
+    value.cleanup_userdata_cb = mb_app_cleanup; value.event_userdata_cb = mb_app_event;
+    value.user_data = NULL;
+    sapp_run(&value);
+    /* Some desktop platforms return; macOS terminates inside Sokol after cleanup. */
+    mb_app_release();
+    mb_app_running = 0;
+}
+MOONBIT_FFI_EXPORT void mb_app_html5_fetch(sapp_html5_fetch_request *request) {
+    sapp_html5_fetch_dropped_file(request);
+}
+static void mb_app_native_cleanup(void) {
+    if (mb_native_callbacks.cleanup_cb) mb_native_callbacks.cleanup_cb();
+    else if (mb_native_callbacks.cleanup_userdata_cb) mb_native_callbacks.cleanup_userdata_cb(mb_native_callbacks.user_data);
+    if (mb_native_desc) { moonbit_decref(mb_native_desc); mb_native_desc = NULL; }
+}
+MOONBIT_FFI_EXPORT void mb_app_run_native(sapp_desc *desc) {
+    if (mb_app_running) abort();
+    mb_app_running = 1; mb_native_desc = desc;
+    mb_native_callbacks = *desc;
+    sapp_desc value = mb_native_callbacks;
+    value.cleanup_cb = mb_app_native_cleanup; value.cleanup_userdata_cb = NULL;
+    sapp_run(&value);
+    if (mb_native_desc) { moonbit_decref(mb_native_desc); mb_native_desc = NULL; }
+    mb_app_running = 0;
 }
