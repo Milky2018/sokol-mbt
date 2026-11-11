@@ -1,0 +1,21 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "Milky2018/sokol/native"
+
+// Values
+pub fn cstring(String) -> Bytes
+
+pub fn null() -> Handle
+
+pub fn unsafe_from_address(UInt64) -> Handle
+
+// Errors
+
+// Types and methods
+#external
+pub type Handle
+pub fn Handle::address(Self) -> UInt64
+pub fn Handle::is_null(Self) -> Bool
+
+// Type aliases
+
+// Traits

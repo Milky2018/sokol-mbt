@@ -1,0 +1,11 @@
+import {
+  "Milky2018/sokol/app",
+  "Milky2018/sokol/gfx",
+}
+
+supported_targets = "native"
+
+options(
+  "native-stub": [ "support.c" ],
+  link: { "native": { "stub-cc-flags": "" } },
+)

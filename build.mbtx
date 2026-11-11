@@ -1,0 +1,106 @@
+---
+import {
+  "moonbitlang/core/env",
+}
+---
+
+///|
+// Moon's prebuild hook supplies platform flags to dependent packages as well.
+fn main {
+  let headless = @env.get_env_var("SOKOL_HEADLESS") == Some("1")
+  guard @env.get_env_var("MOON_HOST_OS") is Some(host_os) else {
+    abort(
+      "build.mbtx must run as a Moon prebuild hook (MOON_HOST_OS is missing)",
+    )
+  }
+  let mac = host_os == "macos"
+  let win = host_os == "windows"
+  let backend = if headless {
+    "-DSOKOL_DUMMY_BACKEND"
+  } else if mac {
+    "-DSOKOL_METAL"
+  } else if win {
+    "-DSOKOL_D3D11"
+  } else {
+    "-DSOKOL_GLCORE"
+  }
+  let graphics = if mac && !headless {
+    "\{backend} -ObjC -fobjc-arc"
+  } else {
+    backend
+  }
+  let app = if mac {
+    "-DSOKOL_METAL -ObjC -fobjc-arc"
+  } else if win {
+    "-DSOKOL_D3D11"
+  } else {
+    "-DSOKOL_GLCORE"
+  }
+  let links = [
+    (
+      "examples/offscreen",
+      if mac {
+        "-framework Metal -framework Foundation"
+      } else {
+        ""
+      },
+    ),
+    (
+      "gfx",
+      if headless {
+        ""
+      } else if mac {
+        "-framework Metal -framework QuartzCore -framework Foundation"
+      } else if win {
+        "-ld3d11 -ldxgi -ld3dcompiler"
+      } else {
+        "-lGL -ldl -lpthread -lm"
+      },
+    ),
+    (
+      "app",
+      if mac {
+        "-framework AppKit -framework QuartzCore -framework Metal"
+      } else if win {
+        "-luser32 -lshell32 -lgdi32 -ld3d11 -ldxgi"
+      } else {
+        "-lX11 -lXi -lXcursor -lGL -ldl -lpthread -lm"
+      },
+    ),
+    (
+      "audio",
+      if headless {
+        ""
+      } else if mac {
+        "-framework AudioToolbox"
+      } else if win {
+        "-lole32"
+      } else {
+        "-lasound -lpthread"
+      },
+    ),
+    ("fetch", if win { "" } else { "-lpthread" }),
+  ]
+  let link_configs : Array[Json] = links.map(fn(pair) {
+    let (name, flags) = pair
+    { "package": "Milky2018/sokol/\{name}", "link_flags": flags }
+  })
+  let output : Json = {
+    "vars": {
+      "SOKOL_OBJC_FLAGS": if mac {
+        "-ObjC -fobjc-arc"
+      } else {
+        ""
+      },
+      "SOKOL_GFX_FLAGS": graphics,
+      "SOKOL_APP_FLAGS": app,
+      "SOKOL_AUDIO_FLAGS": if headless {
+        "-DSOKOL_DUMMY_BACKEND"
+      } else {
+        ""
+      },
+    },
+    "link_configs": link_configs,
+  }
+  println(output.stringify())
+}

@@ -1,0 +1,3559 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "Milky2018/sokol/gfx"
+
+import {
+  "Milky2018/sokol/native",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub const INVALID_ID : Int32 = 0
+
+pub const MAX_COLOR_ATTACHMENTS : Int32 = 8
+
+pub const MAX_PORTABLE_COLOR_ATTACHMENTS : Int32 = 4
+
+pub const MAX_PORTABLE_STORAGEBUFFER_BINDINGS_PER_STAGE : Int32 = 8
+
+pub const MAX_PORTABLE_STORAGEIMAGE_BINDINGS_PER_STAGE : Int32 = 4
+
+pub const MAX_PORTABLE_TEXTURE_BINDINGS_PER_STAGE : Int32 = 16
+
+pub const MAX_SAMPLER_BINDSLOTS : Int32 = 14
+
+pub const MAX_TEXTURE_SAMPLER_PAIRS : Int32 = 32
+
+pub const MAX_UNIFORMBLOCK_BINDSLOTS : Int32 = 8
+
+pub const MAX_UNIFORMBLOCK_MEMBERS : Int32 = 16
+
+pub const MAX_VERTEXBUFFER_BINDSLOTS : Int32 = 8
+
+pub const MAX_VERTEX_ATTRIBUTES : Int32 = 16
+
+pub const MAX_VIEW_BINDSLOTS : Int32 = 32
+
+pub const NUM_INFLIGHT_FRAMES : Int32 = 2
+
+pub fn add_commit_listener(CommitListener) -> Bool
+
+pub fn alloc_buffer() -> Buffer
+
+pub fn alloc_image() -> Image
+
+pub fn alloc_pipeline() -> Pipeline
+
+pub fn alloc_sampler() -> Sampler
+
+pub fn alloc_shader() -> Shader
+
+pub fn alloc_view() -> View
+
+pub fn apply_bindings(Bindings) -> Unit
+
+pub fn apply_pipeline(Pipeline) -> Unit
+
+pub fn apply_scissor_rect(Int32, Int32, Int32, Int32, Bool) -> Unit
+
+pub fn apply_scissor_rectf(Float, Float, Float, Float, Bool) -> Unit
+
+pub fn apply_uniforms(Int32, Range) -> Unit
+
+pub fn apply_viewport(Int32, Int32, Int32, Int32, Bool) -> Unit
+
+pub fn apply_viewportf(Float, Float, Float, Float, Bool) -> Unit
+
+pub fn begin_pass(Pass) -> Unit
+
+pub fn commit() -> Unit
+
+pub fn copy_buffer_to_buffer(CopyBufferToBufferDesc) -> Unit
+
+pub fn copy_buffer_to_image(CopyBufferToImageDesc) -> Unit
+
+pub fn copy_image_to_image(CopyImageToImageDesc) -> Unit
+
+pub fn d3d11_device() -> @native.Handle
+
+pub fn d3d11_device_context() -> @native.Handle
+
+pub fn d3d11_query_buffer_info(Buffer) -> D3d11BufferInfo
+
+pub fn d3d11_query_image_info(Image) -> D3d11ImageInfo
+
+pub fn d3d11_query_pipeline_info(Pipeline) -> D3d11PipelineInfo
+
+pub fn d3d11_query_sampler_info(Sampler) -> D3d11SamplerInfo
+
+pub fn d3d11_query_shader_info(Shader) -> D3d11ShaderInfo
+
+pub fn d3d11_query_view_info(View) -> D3d11ViewInfo
+
+pub fn dealloc_buffer(Buffer) -> Unit
+
+pub fn dealloc_image(Image) -> Unit
+
+pub fn dealloc_pipeline(Pipeline) -> Unit
+
+pub fn dealloc_sampler(Sampler) -> Unit
+
+pub fn dealloc_shader(Shader) -> Unit
+
+pub fn dealloc_view(View) -> Unit
+
+pub fn destroy_buffer(Buffer) -> Unit
+
+pub fn destroy_image(Image) -> Unit
+
+pub fn destroy_pipeline(Pipeline) -> Unit
+
+pub fn destroy_sampler(Sampler) -> Unit
+
+pub fn destroy_shader(Shader) -> Unit
+
+pub fn destroy_view(View) -> Unit
+
+pub fn disable_stats() -> Unit
+
+pub fn dispatch(Int32, Int32, Int32) -> Unit
+
+pub fn draw(Int32, Int32, Int32) -> Unit
+
+pub fn draw_ex(Int32, Int32, Int32, Int32, Int32) -> Unit
+
+pub fn enable_stats() -> Unit
+
+pub fn end_pass() -> Unit
+
+pub fn fail_buffer(Buffer) -> Unit
+
+pub fn fail_image(Image) -> Unit
+
+pub fn fail_pipeline(Pipeline) -> Unit
+
+pub fn fail_sampler(Sampler) -> Unit
+
+pub fn fail_shader(Shader) -> Unit
+
+pub fn fail_view(View) -> Unit
+
+pub fn gl_query_buffer_info(Buffer) -> GlBufferInfo
+
+pub fn gl_query_image_info(Image) -> GlImageInfo
+
+pub fn gl_query_sampler_info(Sampler) -> GlSamplerInfo
+
+pub fn gl_query_shader_info(Shader) -> GlShaderInfo
+
+pub fn gl_query_view_info(View) -> GlViewInfo
+
+pub fn init_buffer(Buffer, BufferDesc) -> Unit
+
+pub fn init_image(Image, ImageDesc) -> Unit
+
+pub fn init_pipeline(Pipeline, PipelineDesc) -> Unit
+
+pub fn init_sampler(Sampler, SamplerDesc) -> Unit
+
+pub fn init_shader(Shader, ShaderDesc) -> Unit
+
+pub fn init_view(View, ViewDesc) -> Unit
+
+pub fn install_trace_hooks(TraceHooks) -> TraceHooks
+
+pub fn is_headless() -> Bool
+
+pub fn isvalid() -> Bool
+
+pub fn make_buffer(BufferDesc) -> Buffer
+
+pub fn make_image(ImageDesc) -> Image
+
+pub fn make_pipeline(PipelineDesc) -> Pipeline
+
+pub fn make_sampler(SamplerDesc) -> Sampler
+
+pub fn make_shader(ShaderDesc) -> Shader
+
+pub fn make_view(ViewDesc) -> View
+
+pub fn mtl_command_queue() -> @native.Handle
+
+pub fn mtl_compute_command_encoder() -> @native.Handle
+
+pub fn mtl_device() -> @native.Handle
+
+pub fn mtl_query_buffer_info(Buffer) -> MtlBufferInfo
+
+pub fn mtl_query_image_info(Image) -> MtlImageInfo
+
+pub fn mtl_query_pipeline_info(Pipeline) -> MtlPipelineInfo
+
+pub fn mtl_query_sampler_info(Sampler) -> MtlSamplerInfo
+
+pub fn mtl_query_shader_info(Shader) -> MtlShaderInfo
+
+pub fn mtl_render_command_encoder() -> @native.Handle
+
+pub fn pop_debug_group() -> Unit
+
+pub fn push_debug_group(String) -> Unit
+
+pub fn query_backend() -> Backend
+
+pub fn query_buffer_defaults(BufferDesc) -> BufferDesc
+
+pub fn query_buffer_desc(Buffer) -> BufferDesc
+
+pub fn query_buffer_info(Buffer) -> BufferInfo
+
+pub fn query_buffer_size(Buffer) -> UInt64
+
+pub fn query_buffer_state(Buffer) -> ResourceState
+
+pub fn query_buffer_usage(Buffer) -> BufferUsage
+
+pub fn query_desc() -> Desc
+
+pub fn query_features() -> Features
+
+pub fn query_image_defaults(ImageDesc) -> ImageDesc
+
+pub fn query_image_desc(Image) -> ImageDesc
+
+pub fn query_image_height(Image) -> Int32
+
+pub fn query_image_info(Image) -> ImageInfo
+
+pub fn query_image_num_mipmaps(Image) -> Int32
+
+pub fn query_image_num_slices(Image) -> Int32
+
+pub fn query_image_pixelformat(Image) -> PixelFormat
+
+pub fn query_image_sample_count(Image) -> Int32
+
+pub fn query_image_state(Image) -> ResourceState
+
+pub fn query_image_type(Image) -> ImageType
+
+pub fn query_image_usage(Image) -> ImageUsage
+
+pub fn query_image_width(Image) -> Int32
+
+pub fn query_limits() -> Limits
+
+pub fn query_pass_state() -> PassState
+
+pub fn query_pipeline_defaults(PipelineDesc) -> PipelineDesc
+
+pub fn query_pipeline_desc(Pipeline) -> PipelineDesc
+
+pub fn query_pipeline_info(Pipeline) -> PipelineInfo
+
+pub fn query_pipeline_state(Pipeline) -> ResourceState
+
+pub fn query_pixelformat(PixelFormat) -> PixelformatInfo
+
+pub fn query_row_pitch(PixelFormat, Int32, Int32) -> Int32
+
+pub fn query_sampler_defaults(SamplerDesc) -> SamplerDesc
+
+pub fn query_sampler_desc(Sampler) -> SamplerDesc
+
+pub fn query_sampler_info(Sampler) -> SamplerInfo
+
+pub fn query_sampler_state(Sampler) -> ResourceState
+
+pub fn query_shader_defaults(ShaderDesc) -> ShaderDesc
+
+pub fn query_shader_desc(Shader) -> ShaderDesc
+
+pub fn query_shader_info(Shader) -> ShaderInfo
+
+pub fn query_shader_state(Shader) -> ResourceState
+
+pub fn query_stats() -> Stats
+
+pub fn query_surface_pitch(PixelFormat, Int32, Int32, Int32) -> Int32
+
+pub fn query_view_buffer(View) -> Buffer
+
+pub fn query_view_defaults(ViewDesc) -> ViewDesc
+
+pub fn query_view_desc(View) -> ViewDesc
+
+pub fn query_view_image(View) -> Image
+
+pub fn query_view_info(View) -> ViewInfo
+
+pub fn query_view_state(View) -> ResourceState
+
+pub fn query_view_type(View) -> ViewType
+
+pub fn remove_commit_listener(CommitListener) -> Bool
+
+pub fn reset_state_cache() -> Unit
+
+pub fn seal_buffer(Buffer) -> Unit
+
+pub fn seal_image(Image) -> Unit
+
+pub fn setup(Desc) -> Unit
+
+pub fn shutdown() -> Unit
+
+pub fn stats_enabled() -> Bool
+
+pub fn uninit_buffer(Buffer) -> Unit
+
+pub fn uninit_image(Image) -> Unit
+
+pub fn uninit_pipeline(Pipeline) -> Unit
+
+pub fn uninit_sampler(Sampler) -> Unit
+
+pub fn uninit_shader(Shader) -> Unit
+
+pub fn uninit_view(View) -> Unit
+
+pub fn wgpu_command_encoder() -> @native.Handle
+
+pub fn wgpu_compute_pass_encoder() -> @native.Handle
+
+pub fn wgpu_device() -> @native.Handle
+
+pub fn wgpu_query_buffer_info(Buffer) -> WgpuBufferInfo
+
+pub fn wgpu_query_image_info(Image) -> WgpuImageInfo
+
+pub fn wgpu_query_pipeline_info(Pipeline) -> WgpuPipelineInfo
+
+pub fn wgpu_query_sampler_info(Sampler) -> WgpuSamplerInfo
+
+pub fn wgpu_query_shader_info(Shader) -> WgpuShaderInfo
+
+pub fn wgpu_query_view_info(View) -> WgpuViewInfo
+
+pub fn wgpu_queue() -> @native.Handle
+
+pub fn wgpu_render_pass_encoder() -> @native.Handle
+
+pub fn write_buffer_transient(WriteBufferDesc) -> Unit
+
+pub fn write_buffer_unsealed(WriteBufferDesc) -> Unit
+
+pub fn write_image_transient(WriteImageDesc) -> Unit
+
+pub fn write_image_unsealed(WriteImageDesc) -> Unit
+
+// Errors
+
+// Types and methods
+pub type Allocator
+pub fn Allocator::alloc_fn(Self) -> @native.Handle
+pub fn Allocator::free_fn(Self) -> @native.Handle
+pub fn Allocator::native_handle(Self) -> @native.Handle
+pub fn Allocator::new() -> Self
+pub fn Allocator::unsafe_from_native(@native.Handle) -> Self
+pub fn Allocator::user_data(Self) -> @native.Handle
+pub fn Allocator::with_alloc_fn(Self, @native.Handle) -> Self
+pub fn Allocator::with_free_fn(Self, @native.Handle) -> Self
+pub fn Allocator::with_user_data(Self, @native.Handle) -> Self
+
+pub type Attachments
+pub fn Attachments::colors(Self, Int32) -> View
+pub fn Attachments::depth_stencil(Self) -> View
+pub fn Attachments::native_handle(Self) -> @native.Handle
+pub fn Attachments::new() -> Self
+pub fn Attachments::resolves(Self, Int32) -> View
+pub fn Attachments::unsafe_from_native(@native.Handle) -> Self
+pub fn Attachments::with_colors(Self, Int32, View) -> Self
+pub fn Attachments::with_depth_stencil(Self, View) -> Self
+pub fn Attachments::with_resolves(Self, Int32, View) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Backend {
+  Glcore
+  Gles3
+  D3d11
+  MetalIos
+  MetalMacos
+  MetalSimulator
+  Wgpu
+  Vulkan
+  Dummy
+}
+pub fn Backend::equal(Self, Self) -> Bool
+pub fn Backend::not_equal(Self, Self) -> Bool
+pub fn Backend::to_int(Self) -> Int32
+pub fn Backend::to_repr(Self) -> @debug.Repr
+
+pub type Bindings
+pub fn Bindings::index_buffer(Self) -> Buffer
+pub fn Bindings::index_buffer_offset(Self) -> Int32
+pub fn Bindings::native_handle(Self) -> @native.Handle
+pub fn Bindings::new() -> Self
+pub fn Bindings::samplers(Self, Int32) -> Sampler
+pub fn Bindings::unsafe_from_native(@native.Handle) -> Self
+pub fn Bindings::vertex_buffer_offsets(Self, Int32) -> Int32
+pub fn Bindings::vertex_buffers(Self, Int32) -> Buffer
+pub fn Bindings::views(Self, Int32) -> View
+pub fn Bindings::with_index_buffer(Self, Buffer) -> Self
+pub fn Bindings::with_index_buffer_offset(Self, Int32) -> Self
+pub fn Bindings::with_samplers(Self, Int32, Sampler) -> Self
+pub fn Bindings::with_vertex_buffer_offsets(Self, Int32, Int32) -> Self
+pub fn Bindings::with_vertex_buffers(Self, Int32, Buffer) -> Self
+pub fn Bindings::with_views(Self, Int32, View) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum BlendFactor {
+  Default
+  Zero
+  One
+  SrcColor
+  OneMinusSrcColor
+  SrcAlpha
+  OneMinusSrcAlpha
+  DstColor
+  OneMinusDstColor
+  DstAlpha
+  OneMinusDstAlpha
+  SrcAlphaSaturated
+  BlendColor
+  OneMinusBlendColor
+  BlendAlpha
+  OneMinusBlendAlpha
+  Src1Color
+  OneMinusSrc1Color
+  Src1Alpha
+  OneMinusSrc1Alpha
+}
+pub fn BlendFactor::equal(Self, Self) -> Bool
+pub fn BlendFactor::not_equal(Self, Self) -> Bool
+pub fn BlendFactor::to_int(Self) -> Int32
+pub fn BlendFactor::to_repr(Self) -> @debug.Repr
+
+#derive(Eq, @debug.Debug)
+pub(all) enum BlendOp {
+  Default
+  Add
+  Subtract
+  ReverseSubtract
+  Min
+  Max
+}
+pub fn BlendOp::equal(Self, Self) -> Bool
+pub fn BlendOp::not_equal(Self, Self) -> Bool
+pub fn BlendOp::to_int(Self) -> Int32
+pub fn BlendOp::to_repr(Self) -> @debug.Repr
+
+pub type BlendState
+pub fn BlendState::dst_factor_alpha(Self) -> BlendFactor
+pub fn BlendState::dst_factor_rgb(Self) -> BlendFactor
+pub fn BlendState::enabled(Self) -> Bool
+pub fn BlendState::native_handle(Self) -> @native.Handle
+pub fn BlendState::new() -> Self
+pub fn BlendState::op_alpha(Self) -> BlendOp
+pub fn BlendState::op_rgb(Self) -> BlendOp
+pub fn BlendState::src_factor_alpha(Self) -> BlendFactor
+pub fn BlendState::src_factor_rgb(Self) -> BlendFactor
+pub fn BlendState::unsafe_from_native(@native.Handle) -> Self
+pub fn BlendState::with_dst_factor_alpha(Self, BlendFactor) -> Self
+pub fn BlendState::with_dst_factor_rgb(Self, BlendFactor) -> Self
+pub fn BlendState::with_enabled(Self, Bool) -> Self
+pub fn BlendState::with_op_alpha(Self, BlendOp) -> Self
+pub fn BlendState::with_op_rgb(Self, BlendOp) -> Self
+pub fn BlendState::with_src_factor_alpha(Self, BlendFactor) -> Self
+pub fn BlendState::with_src_factor_rgb(Self, BlendFactor) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum BorderColor {
+  Default
+  TransparentBlack
+  OpaqueBlack
+  OpaqueWhite
+}
+pub fn BorderColor::equal(Self, Self) -> Bool
+pub fn BorderColor::not_equal(Self, Self) -> Bool
+pub fn BorderColor::to_int(Self) -> Int32
+pub fn BorderColor::to_repr(Self) -> @debug.Repr
+
+pub type Buffer
+pub fn Buffer::id(Self) -> UInt32
+pub fn Buffer::native_handle(Self) -> @native.Handle
+pub fn Buffer::new() -> Self
+pub fn Buffer::unsafe_from_native(@native.Handle) -> Self
+pub fn Buffer::with_id(Self, UInt32) -> Self
+
+pub type BufferDesc
+pub fn BufferDesc::d3d11_buffer(Self) -> @native.Handle
+pub fn BufferDesc::data(Self) -> Range
+pub fn BufferDesc::gl_buffer(Self) -> UInt32
+pub fn BufferDesc::label(Self) -> String
+pub fn BufferDesc::mtl_buffer(Self) -> @native.Handle
+pub fn BufferDesc::native_handle(Self) -> @native.Handle
+pub fn BufferDesc::new() -> Self
+pub fn BufferDesc::size(Self) -> UInt64
+pub fn BufferDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn BufferDesc::usage(Self) -> BufferUsage
+pub fn BufferDesc::wgpu_buffer(Self) -> @native.Handle
+pub fn BufferDesc::with_d3d11_buffer(Self, @native.Handle) -> Self
+pub fn BufferDesc::with_data(Self, Range) -> Self
+pub fn BufferDesc::with_gl_buffer(Self, UInt32) -> Self
+pub fn BufferDesc::with_label(Self, String) -> Self
+pub fn BufferDesc::with_mtl_buffer(Self, @native.Handle) -> Self
+pub fn BufferDesc::with_size(Self, UInt64) -> Self
+pub fn BufferDesc::with_usage(Self, BufferUsage) -> Self
+pub fn BufferDesc::with_wgpu_buffer(Self, @native.Handle) -> Self
+
+pub type BufferImageLocation
+pub fn BufferImageLocation::buffer(Self) -> Buffer
+pub fn BufferImageLocation::bytes_per_row(Self) -> Int32
+pub fn BufferImageLocation::bytes_per_slice(Self) -> Int32
+pub fn BufferImageLocation::native_handle(Self) -> @native.Handle
+pub fn BufferImageLocation::new() -> Self
+pub fn BufferImageLocation::offset(Self) -> UInt64
+pub fn BufferImageLocation::unsafe_from_native(@native.Handle) -> Self
+pub fn BufferImageLocation::with_buffer(Self, Buffer) -> Self
+pub fn BufferImageLocation::with_bytes_per_row(Self, Int32) -> Self
+pub fn BufferImageLocation::with_bytes_per_slice(Self, Int32) -> Self
+pub fn BufferImageLocation::with_offset(Self, UInt64) -> Self
+
+pub type BufferInfo
+pub fn BufferInfo::active_slot(Self) -> Int32
+pub fn BufferInfo::native_handle(Self) -> @native.Handle
+pub fn BufferInfo::new() -> Self
+pub fn BufferInfo::num_slots(Self) -> Int32
+pub fn BufferInfo::slot(Self) -> SlotInfo
+pub fn BufferInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn BufferInfo::with_active_slot(Self, Int32) -> Self
+pub fn BufferInfo::with_num_slots(Self, Int32) -> Self
+pub fn BufferInfo::with_slot(Self, SlotInfo) -> Self
+
+pub type BufferLocation
+pub fn BufferLocation::buffer(Self) -> Buffer
+pub fn BufferLocation::native_handle(Self) -> @native.Handle
+pub fn BufferLocation::new() -> Self
+pub fn BufferLocation::offset(Self) -> UInt64
+pub fn BufferLocation::unsafe_from_native(@native.Handle) -> Self
+pub fn BufferLocation::with_buffer(Self, Buffer) -> Self
+pub fn BufferLocation::with_offset(Self, UInt64) -> Self
+
+pub type BufferUsage
+pub fn BufferUsage::copy_dst(Self) -> Bool
+pub fn BufferUsage::copy_src(Self) -> Bool
+pub fn BufferUsage::index_buffer(Self) -> Bool
+pub fn BufferUsage::native_handle(Self) -> @native.Handle
+pub fn BufferUsage::new() -> Self
+pub fn BufferUsage::staging_buffer(Self) -> Bool
+pub fn BufferUsage::staging_index_buffer(Self) -> Bool
+pub fn BufferUsage::storage_buffer(Self) -> Bool
+pub fn BufferUsage::unsafe_from_native(@native.Handle) -> Self
+pub fn BufferUsage::vertex_buffer(Self) -> Bool
+pub fn BufferUsage::with_copy_dst(Self, Bool) -> Self
+pub fn BufferUsage::with_copy_src(Self, Bool) -> Self
+pub fn BufferUsage::with_index_buffer(Self, Bool) -> Self
+pub fn BufferUsage::with_staging_buffer(Self, Bool) -> Self
+pub fn BufferUsage::with_staging_index_buffer(Self, Bool) -> Self
+pub fn BufferUsage::with_storage_buffer(Self, Bool) -> Self
+pub fn BufferUsage::with_vertex_buffer(Self, Bool) -> Self
+pub fn BufferUsage::with_write_transient(Self, Bool) -> Self
+pub fn BufferUsage::with_write_unsealed(Self, Bool) -> Self
+pub fn BufferUsage::write_transient(Self) -> Bool
+pub fn BufferUsage::write_unsealed(Self) -> Bool
+
+pub type BufferViewDesc
+pub fn BufferViewDesc::buffer(Self) -> Buffer
+pub fn BufferViewDesc::native_handle(Self) -> @native.Handle
+pub fn BufferViewDesc::new() -> Self
+pub fn BufferViewDesc::offset(Self) -> Int32
+pub fn BufferViewDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn BufferViewDesc::with_buffer(Self, Buffer) -> Self
+pub fn BufferViewDesc::with_offset(Self, Int32) -> Self
+
+pub type Color
+pub fn Color::a(Self) -> Float
+pub fn Color::b(Self) -> Float
+pub fn Color::g(Self) -> Float
+pub fn Color::native_handle(Self) -> @native.Handle
+pub fn Color::new() -> Self
+pub fn Color::r(Self) -> Float
+pub fn Color::unsafe_from_native(@native.Handle) -> Self
+pub fn Color::with_a(Self, Float) -> Self
+pub fn Color::with_b(Self, Float) -> Self
+pub fn Color::with_g(Self, Float) -> Self
+pub fn Color::with_r(Self, Float) -> Self
+
+pub type ColorAttachmentAction
+pub fn ColorAttachmentAction::clear_value(Self) -> Color
+pub fn ColorAttachmentAction::load_action(Self) -> LoadAction
+pub fn ColorAttachmentAction::native_handle(Self) -> @native.Handle
+pub fn ColorAttachmentAction::new() -> Self
+pub fn ColorAttachmentAction::store_action(Self) -> StoreAction
+pub fn ColorAttachmentAction::unsafe_from_native(@native.Handle) -> Self
+pub fn ColorAttachmentAction::with_clear_value(Self, Color) -> Self
+pub fn ColorAttachmentAction::with_load_action(Self, LoadAction) -> Self
+pub fn ColorAttachmentAction::with_store_action(Self, StoreAction) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum ColorMask {
+  Default
+  None
+  R
+  G
+  Rg
+  B
+  Rb
+  Gb
+  Rgb
+  A
+  Ra
+  Ga
+  Rga
+  Ba
+  Rba
+  Gba
+  Rgba
+}
+pub fn ColorMask::equal(Self, Self) -> Bool
+pub fn ColorMask::not_equal(Self, Self) -> Bool
+pub fn ColorMask::to_int(Self) -> Int32
+pub fn ColorMask::to_repr(Self) -> @debug.Repr
+
+pub type ColorTargetState
+pub fn ColorTargetState::blend(Self) -> BlendState
+pub fn ColorTargetState::native_handle(Self) -> @native.Handle
+pub fn ColorTargetState::new() -> Self
+pub fn ColorTargetState::pixel_format(Self) -> PixelFormat
+pub fn ColorTargetState::unsafe_from_native(@native.Handle) -> Self
+pub fn ColorTargetState::with_blend(Self, BlendState) -> Self
+pub fn ColorTargetState::with_pixel_format(Self, PixelFormat) -> Self
+pub fn ColorTargetState::with_write_mask(Self, ColorMask) -> Self
+pub fn ColorTargetState::write_mask(Self) -> ColorMask
+
+pub type CommitListener
+pub fn CommitListener::func(Self) -> @native.Handle
+pub fn CommitListener::native_handle(Self) -> @native.Handle
+pub fn CommitListener::new() -> Self
+pub fn CommitListener::on_func(Self, () -> Unit) -> Self
+pub fn CommitListener::unsafe_from_native(@native.Handle) -> Self
+pub fn CommitListener::user_data(Self) -> @native.Handle
+pub fn CommitListener::with_func(Self, @native.Handle) -> Self
+pub fn CommitListener::with_user_data(Self, @native.Handle) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum CompareFunc {
+  Default
+  Never
+  Less
+  Equal
+  LessEqual
+  Greater
+  NotEqual
+  GreaterEqual
+  Always
+}
+pub fn CompareFunc::equal(Self, Self) -> Bool
+pub fn CompareFunc::not_equal(Self, Self) -> Bool
+pub fn CompareFunc::to_int(Self) -> Int32
+pub fn CompareFunc::to_repr(Self) -> @debug.Repr
+
+pub type CopyBufferToBufferDesc
+pub fn CopyBufferToBufferDesc::dst(Self) -> BufferLocation
+pub fn CopyBufferToBufferDesc::native_handle(Self) -> @native.Handle
+pub fn CopyBufferToBufferDesc::new() -> Self
+pub fn CopyBufferToBufferDesc::size(Self) -> UInt64
+pub fn CopyBufferToBufferDesc::src(Self) -> BufferLocation
+pub fn CopyBufferToBufferDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn CopyBufferToBufferDesc::with_dst(Self, BufferLocation) -> Self
+pub fn CopyBufferToBufferDesc::with_size(Self, UInt64) -> Self
+pub fn CopyBufferToBufferDesc::with_src(Self, BufferLocation) -> Self
+
+pub type CopyBufferToImageDesc
+pub fn CopyBufferToImageDesc::dst(Self) -> ImageLocation
+pub fn CopyBufferToImageDesc::native_handle(Self) -> @native.Handle
+pub fn CopyBufferToImageDesc::new() -> Self
+pub fn CopyBufferToImageDesc::size(Self) -> ImageExtent
+pub fn CopyBufferToImageDesc::src(Self) -> BufferImageLocation
+pub fn CopyBufferToImageDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn CopyBufferToImageDesc::with_dst(Self, ImageLocation) -> Self
+pub fn CopyBufferToImageDesc::with_size(Self, ImageExtent) -> Self
+pub fn CopyBufferToImageDesc::with_src(Self, BufferImageLocation) -> Self
+
+pub type CopyImageToImageDesc
+pub fn CopyImageToImageDesc::dst(Self) -> ImageLocation
+pub fn CopyImageToImageDesc::native_handle(Self) -> @native.Handle
+pub fn CopyImageToImageDesc::new() -> Self
+pub fn CopyImageToImageDesc::size(Self) -> ImageExtent
+pub fn CopyImageToImageDesc::src(Self) -> ImageLocation
+pub fn CopyImageToImageDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn CopyImageToImageDesc::with_dst(Self, ImageLocation) -> Self
+pub fn CopyImageToImageDesc::with_size(Self, ImageExtent) -> Self
+pub fn CopyImageToImageDesc::with_src(Self, ImageLocation) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum CullMode {
+  Default
+  None
+  Front
+  Back
+}
+pub fn CullMode::equal(Self, Self) -> Bool
+pub fn CullMode::not_equal(Self, Self) -> Bool
+pub fn CullMode::to_int(Self) -> Int32
+pub fn CullMode::to_repr(Self) -> @debug.Repr
+
+pub type D3d11BufferInfo
+pub fn D3d11BufferInfo::buf(Self) -> @native.Handle
+pub fn D3d11BufferInfo::native_handle(Self) -> @native.Handle
+pub fn D3d11BufferInfo::new() -> Self
+pub fn D3d11BufferInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn D3d11BufferInfo::with_buf(Self, @native.Handle) -> Self
+
+pub type D3d11Desc
+pub fn D3d11Desc::native_handle(Self) -> @native.Handle
+pub fn D3d11Desc::new() -> Self
+pub fn D3d11Desc::shader_debugging(Self) -> Bool
+pub fn D3d11Desc::unsafe_from_native(@native.Handle) -> Self
+pub fn D3d11Desc::with_shader_debugging(Self, Bool) -> Self
+
+pub type D3d11Environment
+pub fn D3d11Environment::device(Self) -> @native.Handle
+pub fn D3d11Environment::device_context(Self) -> @native.Handle
+pub fn D3d11Environment::native_handle(Self) -> @native.Handle
+pub fn D3d11Environment::new() -> Self
+pub fn D3d11Environment::unsafe_from_native(@native.Handle) -> Self
+pub fn D3d11Environment::with_device(Self, @native.Handle) -> Self
+pub fn D3d11Environment::with_device_context(Self, @native.Handle) -> Self
+
+pub type D3d11ImageInfo
+pub fn D3d11ImageInfo::native_handle(Self) -> @native.Handle
+pub fn D3d11ImageInfo::new() -> Self
+pub fn D3d11ImageInfo::res(Self) -> @native.Handle
+pub fn D3d11ImageInfo::tex2d(Self) -> @native.Handle
+pub fn D3d11ImageInfo::tex3d(Self) -> @native.Handle
+pub fn D3d11ImageInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn D3d11ImageInfo::with_res(Self, @native.Handle) -> Self
+pub fn D3d11ImageInfo::with_tex2d(Self, @native.Handle) -> Self
+pub fn D3d11ImageInfo::with_tex3d(Self, @native.Handle) -> Self
+
+pub type D3d11PipelineInfo
+pub fn D3d11PipelineInfo::bs(Self) -> @native.Handle
+pub fn D3d11PipelineInfo::dss(Self) -> @native.Handle
+pub fn D3d11PipelineInfo::il(Self) -> @native.Handle
+pub fn D3d11PipelineInfo::native_handle(Self) -> @native.Handle
+pub fn D3d11PipelineInfo::new() -> Self
+pub fn D3d11PipelineInfo::rs(Self) -> @native.Handle
+pub fn D3d11PipelineInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn D3d11PipelineInfo::with_bs(Self, @native.Handle) -> Self
+pub fn D3d11PipelineInfo::with_dss(Self, @native.Handle) -> Self
+pub fn D3d11PipelineInfo::with_il(Self, @native.Handle) -> Self
+pub fn D3d11PipelineInfo::with_rs(Self, @native.Handle) -> Self
+
+pub type D3d11SamplerInfo
+pub fn D3d11SamplerInfo::native_handle(Self) -> @native.Handle
+pub fn D3d11SamplerInfo::new() -> Self
+pub fn D3d11SamplerInfo::smp(Self) -> @native.Handle
+pub fn D3d11SamplerInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn D3d11SamplerInfo::with_smp(Self, @native.Handle) -> Self
+
+pub type D3d11ShaderInfo
+pub fn D3d11ShaderInfo::cbufs(Self, Int32) -> @native.Handle
+pub fn D3d11ShaderInfo::fs(Self) -> @native.Handle
+pub fn D3d11ShaderInfo::native_handle(Self) -> @native.Handle
+pub fn D3d11ShaderInfo::new() -> Self
+pub fn D3d11ShaderInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn D3d11ShaderInfo::vs(Self) -> @native.Handle
+pub fn D3d11ShaderInfo::with_cbufs(Self, Int32, @native.Handle) -> Self
+pub fn D3d11ShaderInfo::with_fs(Self, @native.Handle) -> Self
+pub fn D3d11ShaderInfo::with_vs(Self, @native.Handle) -> Self
+
+pub type D3d11Swapchain
+pub fn D3d11Swapchain::depth_stencil_view(Self) -> @native.Handle
+pub fn D3d11Swapchain::native_handle(Self) -> @native.Handle
+pub fn D3d11Swapchain::new() -> Self
+pub fn D3d11Swapchain::render_view(Self) -> @native.Handle
+pub fn D3d11Swapchain::resolve_view(Self) -> @native.Handle
+pub fn D3d11Swapchain::unsafe_from_native(@native.Handle) -> Self
+pub fn D3d11Swapchain::with_depth_stencil_view(Self, @native.Handle) -> Self
+pub fn D3d11Swapchain::with_render_view(Self, @native.Handle) -> Self
+pub fn D3d11Swapchain::with_resolve_view(Self, @native.Handle) -> Self
+
+pub type D3d11ViewInfo
+pub fn D3d11ViewInfo::dsv(Self) -> @native.Handle
+pub fn D3d11ViewInfo::native_handle(Self) -> @native.Handle
+pub fn D3d11ViewInfo::new() -> Self
+pub fn D3d11ViewInfo::rtv(Self) -> @native.Handle
+pub fn D3d11ViewInfo::srv(Self) -> @native.Handle
+pub fn D3d11ViewInfo::uav(Self) -> @native.Handle
+pub fn D3d11ViewInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn D3d11ViewInfo::with_dsv(Self, @native.Handle) -> Self
+pub fn D3d11ViewInfo::with_rtv(Self, @native.Handle) -> Self
+pub fn D3d11ViewInfo::with_srv(Self, @native.Handle) -> Self
+pub fn D3d11ViewInfo::with_uav(Self, @native.Handle) -> Self
+
+pub type DepthAttachmentAction
+pub fn DepthAttachmentAction::clear_value(Self) -> Float
+pub fn DepthAttachmentAction::load_action(Self) -> LoadAction
+pub fn DepthAttachmentAction::native_handle(Self) -> @native.Handle
+pub fn DepthAttachmentAction::new() -> Self
+pub fn DepthAttachmentAction::store_action(Self) -> StoreAction
+pub fn DepthAttachmentAction::unsafe_from_native(@native.Handle) -> Self
+pub fn DepthAttachmentAction::with_clear_value(Self, Float) -> Self
+pub fn DepthAttachmentAction::with_load_action(Self, LoadAction) -> Self
+pub fn DepthAttachmentAction::with_store_action(Self, StoreAction) -> Self
+
+pub type DepthState
+pub fn DepthState::bias(Self) -> Float
+pub fn DepthState::bias_clamp(Self) -> Float
+pub fn DepthState::bias_slope_scale(Self) -> Float
+pub fn DepthState::compare(Self) -> CompareFunc
+pub fn DepthState::native_handle(Self) -> @native.Handle
+pub fn DepthState::new() -> Self
+pub fn DepthState::pixel_format(Self) -> PixelFormat
+pub fn DepthState::unsafe_from_native(@native.Handle) -> Self
+pub fn DepthState::with_bias(Self, Float) -> Self
+pub fn DepthState::with_bias_clamp(Self, Float) -> Self
+pub fn DepthState::with_bias_slope_scale(Self, Float) -> Self
+pub fn DepthState::with_compare(Self, CompareFunc) -> Self
+pub fn DepthState::with_pixel_format(Self, PixelFormat) -> Self
+pub fn DepthState::with_write_enabled(Self, Bool) -> Self
+pub fn DepthState::write_enabled(Self) -> Bool
+
+pub type Desc
+pub fn Desc::allocator(Self) -> Allocator
+pub fn Desc::buffer_pool_size(Self) -> Int32
+pub fn Desc::d3d11(Self) -> D3d11Desc
+pub fn Desc::disable_validation(Self) -> Bool
+pub fn Desc::enforce_portable_limits(Self) -> Bool
+pub fn Desc::environment(Self) -> Environment
+pub fn Desc::image_pool_size(Self) -> Int32
+pub fn Desc::logger(Self) -> Logger
+pub fn Desc::max_commit_listeners(Self) -> Int32
+pub fn Desc::metal(Self) -> MetalDesc
+pub fn Desc::native_handle(Self) -> @native.Handle
+pub fn Desc::new() -> Self
+pub fn Desc::pipeline_pool_size(Self) -> Int32
+pub fn Desc::sampler_pool_size(Self) -> Int32
+pub fn Desc::shader_pool_size(Self) -> Int32
+pub fn Desc::uniform_buffer_size(Self) -> Int32
+pub fn Desc::unsafe_from_native(@native.Handle) -> Self
+pub fn Desc::view_pool_size(Self) -> Int32
+pub fn Desc::vulkan(Self) -> VulkanDesc
+pub fn Desc::wgpu(Self) -> WgpuDesc
+pub fn Desc::with_allocator(Self, Allocator) -> Self
+pub fn Desc::with_buffer_pool_size(Self, Int32) -> Self
+pub fn Desc::with_d3d11(Self, D3d11Desc) -> Self
+pub fn Desc::with_disable_validation(Self, Bool) -> Self
+pub fn Desc::with_enforce_portable_limits(Self, Bool) -> Self
+pub fn Desc::with_environment(Self, Environment) -> Self
+pub fn Desc::with_image_pool_size(Self, Int32) -> Self
+pub fn Desc::with_logger(Self, Logger) -> Self
+pub fn Desc::with_max_commit_listeners(Self, Int32) -> Self
+pub fn Desc::with_metal(Self, MetalDesc) -> Self
+pub fn Desc::with_pipeline_pool_size(Self, Int32) -> Self
+pub fn Desc::with_sampler_pool_size(Self, Int32) -> Self
+pub fn Desc::with_shader_pool_size(Self, Int32) -> Self
+pub fn Desc::with_uniform_buffer_size(Self, Int32) -> Self
+pub fn Desc::with_view_pool_size(Self, Int32) -> Self
+pub fn Desc::with_vulkan(Self, VulkanDesc) -> Self
+pub fn Desc::with_wgpu(Self, WgpuDesc) -> Self
+
+pub type Environment
+pub fn Environment::d3d11(Self) -> D3d11Environment
+pub fn Environment::defaults(Self) -> EnvironmentDefaults
+pub fn Environment::metal(Self) -> MetalEnvironment
+pub fn Environment::native_handle(Self) -> @native.Handle
+pub fn Environment::new() -> Self
+pub fn Environment::unsafe_from_native(@native.Handle) -> Self
+pub fn Environment::vulkan(Self) -> VulkanEnvironment
+pub fn Environment::wgpu(Self) -> WgpuEnvironment
+pub fn Environment::with_d3d11(Self, D3d11Environment) -> Self
+pub fn Environment::with_defaults(Self, EnvironmentDefaults) -> Self
+pub fn Environment::with_metal(Self, MetalEnvironment) -> Self
+pub fn Environment::with_vulkan(Self, VulkanEnvironment) -> Self
+pub fn Environment::with_wgpu(Self, WgpuEnvironment) -> Self
+
+pub type EnvironmentDefaults
+pub fn EnvironmentDefaults::color_format(Self) -> PixelFormat
+pub fn EnvironmentDefaults::depth_format(Self) -> PixelFormat
+pub fn EnvironmentDefaults::native_handle(Self) -> @native.Handle
+pub fn EnvironmentDefaults::new() -> Self
+pub fn EnvironmentDefaults::sample_count(Self) -> Int32
+pub fn EnvironmentDefaults::unsafe_from_native(@native.Handle) -> Self
+pub fn EnvironmentDefaults::with_color_format(Self, PixelFormat) -> Self
+pub fn EnvironmentDefaults::with_depth_format(Self, PixelFormat) -> Self
+pub fn EnvironmentDefaults::with_sample_count(Self, Int32) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum FaceWinding {
+  Default
+  Ccw
+  Cw
+}
+pub fn FaceWinding::equal(Self, Self) -> Bool
+pub fn FaceWinding::not_equal(Self, Self) -> Bool
+pub fn FaceWinding::to_int(Self) -> Int32
+pub fn FaceWinding::to_repr(Self) -> @debug.Repr
+
+pub type Features
+pub fn Features::compute(Self) -> Bool
+pub fn Features::copy_buffer_to_image_relaxed_buffer_type(Self) -> Bool
+pub fn Features::copy_buffer_to_image_relaxed_bytes_per_row(Self) -> Bool
+pub fn Features::copy_image_to_image_relaxed_pixel_format(Self) -> Bool
+pub fn Features::draw_base_instance(Self) -> Bool
+pub fn Features::draw_base_vertex(Self) -> Bool
+pub fn Features::dual_source_blending(Self) -> Bool
+pub fn Features::gl_texture_views(Self) -> Bool
+pub fn Features::image_clamp_to_border(Self) -> Bool
+pub fn Features::mrt_independent_blend_state(Self) -> Bool
+pub fn Features::mrt_independent_write_mask(Self) -> Bool
+pub fn Features::msaa_texture_bindings(Self) -> Bool
+pub fn Features::native_handle(Self) -> @native.Handle
+pub fn Features::new() -> Self
+pub fn Features::origin_top_left(Self) -> Bool
+pub fn Features::separate_buffer_types(Self) -> Bool
+pub fn Features::unsafe_from_native(@native.Handle) -> Self
+pub fn Features::vertexformat_int10_n2(Self) -> Bool
+pub fn Features::with_compute(Self, Bool) -> Self
+pub fn Features::with_copy_buffer_to_image_relaxed_buffer_type(Self, Bool) -> Self
+pub fn Features::with_copy_buffer_to_image_relaxed_bytes_per_row(Self, Bool) -> Self
+pub fn Features::with_copy_image_to_image_relaxed_pixel_format(Self, Bool) -> Self
+pub fn Features::with_draw_base_instance(Self, Bool) -> Self
+pub fn Features::with_draw_base_vertex(Self, Bool) -> Self
+pub fn Features::with_dual_source_blending(Self, Bool) -> Self
+pub fn Features::with_gl_texture_views(Self, Bool) -> Self
+pub fn Features::with_image_clamp_to_border(Self, Bool) -> Self
+pub fn Features::with_mrt_independent_blend_state(Self, Bool) -> Self
+pub fn Features::with_mrt_independent_write_mask(Self, Bool) -> Self
+pub fn Features::with_msaa_texture_bindings(Self, Bool) -> Self
+pub fn Features::with_origin_top_left(Self, Bool) -> Self
+pub fn Features::with_separate_buffer_types(Self, Bool) -> Self
+pub fn Features::with_vertexformat_int10_n2(Self, Bool) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Filter {
+  Default
+  Nearest
+  Linear
+}
+pub fn Filter::equal(Self, Self) -> Bool
+pub fn Filter::not_equal(Self, Self) -> Bool
+pub fn Filter::to_int(Self) -> Int32
+pub fn Filter::to_repr(Self) -> @debug.Repr
+
+pub type FrameResourceStats
+pub fn FrameResourceStats::allocated(Self) -> UInt32
+pub fn FrameResourceStats::deallocated(Self) -> UInt32
+pub fn FrameResourceStats::inited(Self) -> UInt32
+pub fn FrameResourceStats::native_handle(Self) -> @native.Handle
+pub fn FrameResourceStats::new() -> Self
+pub fn FrameResourceStats::uninited(Self) -> UInt32
+pub fn FrameResourceStats::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameResourceStats::with_allocated(Self, UInt32) -> Self
+pub fn FrameResourceStats::with_deallocated(Self, UInt32) -> Self
+pub fn FrameResourceStats::with_inited(Self, UInt32) -> Self
+pub fn FrameResourceStats::with_uninited(Self, UInt32) -> Self
+
+pub type FrameStats
+pub fn FrameStats::buffers(Self) -> FrameResourceStats
+pub fn FrameStats::d3d11(Self) -> FrameStatsD3d11
+pub fn FrameStats::frame_index(Self) -> UInt32
+pub fn FrameStats::gl(Self) -> FrameStatsGl
+pub fn FrameStats::images(Self) -> FrameResourceStats
+pub fn FrameStats::metal(Self) -> FrameStatsMetal
+pub fn FrameStats::native_handle(Self) -> @native.Handle
+pub fn FrameStats::new() -> Self
+pub fn FrameStats::num_apply_bindings(Self) -> UInt32
+pub fn FrameStats::num_apply_pipeline(Self) -> UInt32
+pub fn FrameStats::num_apply_scissor_rect(Self) -> UInt32
+pub fn FrameStats::num_apply_uniforms(Self) -> UInt32
+pub fn FrameStats::num_apply_viewport(Self) -> UInt32
+pub fn FrameStats::num_copy_buffer_to_buffer(Self) -> UInt32
+pub fn FrameStats::num_copy_buffer_to_image(Self) -> UInt32
+pub fn FrameStats::num_copy_image_to_image(Self) -> UInt32
+pub fn FrameStats::num_dispatch(Self) -> UInt32
+pub fn FrameStats::num_draw(Self) -> UInt32
+pub fn FrameStats::num_draw_ex(Self) -> UInt32
+pub fn FrameStats::num_passes(Self) -> UInt32
+pub fn FrameStats::num_seal_buffer(Self) -> UInt32
+pub fn FrameStats::num_seal_image(Self) -> UInt32
+pub fn FrameStats::num_write_buffer_transient(Self) -> UInt32
+pub fn FrameStats::num_write_buffer_unsealed(Self) -> UInt32
+pub fn FrameStats::num_write_image_transient(Self) -> UInt32
+pub fn FrameStats::num_write_image_unsealed(Self) -> UInt32
+pub fn FrameStats::pipelines(Self) -> FrameResourceStats
+pub fn FrameStats::samplers(Self) -> FrameResourceStats
+pub fn FrameStats::shaders(Self) -> FrameResourceStats
+pub fn FrameStats::size_apply_uniforms(Self) -> UInt32
+pub fn FrameStats::size_copy_buffer_to_buffer(Self) -> UInt32
+pub fn FrameStats::size_copy_buffer_to_image(Self) -> UInt32
+pub fn FrameStats::size_copy_image_to_image(Self) -> UInt32
+pub fn FrameStats::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStats::views(Self) -> FrameResourceStats
+pub fn FrameStats::vk(Self) -> FrameStatsVk
+pub fn FrameStats::wgpu(Self) -> FrameStatsWgpu
+pub fn FrameStats::with_buffers(Self, FrameResourceStats) -> Self
+pub fn FrameStats::with_d3d11(Self, FrameStatsD3d11) -> Self
+pub fn FrameStats::with_frame_index(Self, UInt32) -> Self
+pub fn FrameStats::with_gl(Self, FrameStatsGl) -> Self
+pub fn FrameStats::with_images(Self, FrameResourceStats) -> Self
+pub fn FrameStats::with_metal(Self, FrameStatsMetal) -> Self
+pub fn FrameStats::with_num_apply_bindings(Self, UInt32) -> Self
+pub fn FrameStats::with_num_apply_pipeline(Self, UInt32) -> Self
+pub fn FrameStats::with_num_apply_scissor_rect(Self, UInt32) -> Self
+pub fn FrameStats::with_num_apply_uniforms(Self, UInt32) -> Self
+pub fn FrameStats::with_num_apply_viewport(Self, UInt32) -> Self
+pub fn FrameStats::with_num_copy_buffer_to_buffer(Self, UInt32) -> Self
+pub fn FrameStats::with_num_copy_buffer_to_image(Self, UInt32) -> Self
+pub fn FrameStats::with_num_copy_image_to_image(Self, UInt32) -> Self
+pub fn FrameStats::with_num_dispatch(Self, UInt32) -> Self
+pub fn FrameStats::with_num_draw(Self, UInt32) -> Self
+pub fn FrameStats::with_num_draw_ex(Self, UInt32) -> Self
+pub fn FrameStats::with_num_passes(Self, UInt32) -> Self
+pub fn FrameStats::with_num_seal_buffer(Self, UInt32) -> Self
+pub fn FrameStats::with_num_seal_image(Self, UInt32) -> Self
+pub fn FrameStats::with_num_write_buffer_transient(Self, UInt32) -> Self
+pub fn FrameStats::with_num_write_buffer_unsealed(Self, UInt32) -> Self
+pub fn FrameStats::with_num_write_image_transient(Self, UInt32) -> Self
+pub fn FrameStats::with_num_write_image_unsealed(Self, UInt32) -> Self
+pub fn FrameStats::with_pipelines(Self, FrameResourceStats) -> Self
+pub fn FrameStats::with_samplers(Self, FrameResourceStats) -> Self
+pub fn FrameStats::with_shaders(Self, FrameResourceStats) -> Self
+pub fn FrameStats::with_size_apply_uniforms(Self, UInt32) -> Self
+pub fn FrameStats::with_size_copy_buffer_to_buffer(Self, UInt32) -> Self
+pub fn FrameStats::with_size_copy_buffer_to_image(Self, UInt32) -> Self
+pub fn FrameStats::with_size_copy_image_to_image(Self, UInt32) -> Self
+pub fn FrameStats::with_views(Self, FrameResourceStats) -> Self
+pub fn FrameStats::with_vk(Self, FrameStatsVk) -> Self
+pub fn FrameStats::with_wgpu(Self, FrameStatsWgpu) -> Self
+
+pub type FrameStatsD3d11
+pub fn FrameStatsD3d11::bindings(Self) -> FrameStatsD3d11Bindings
+pub fn FrameStatsD3d11::draw(Self) -> FrameStatsD3d11Draw
+pub fn FrameStatsD3d11::native_handle(Self) -> @native.Handle
+pub fn FrameStatsD3d11::new() -> Self
+pub fn FrameStatsD3d11::num_copy_subresource_region(Self) -> UInt32
+pub fn FrameStatsD3d11::num_map(Self) -> UInt32
+pub fn FrameStatsD3d11::num_unmap(Self) -> UInt32
+pub fn FrameStatsD3d11::num_update_subresource(Self) -> UInt32
+pub fn FrameStatsD3d11::pass(Self) -> FrameStatsD3d11Pass
+pub fn FrameStatsD3d11::pipeline(Self) -> FrameStatsD3d11Pipeline
+pub fn FrameStatsD3d11::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsD3d11::with_bindings(Self, FrameStatsD3d11Bindings) -> Self
+pub fn FrameStatsD3d11::with_draw(Self, FrameStatsD3d11Draw) -> Self
+pub fn FrameStatsD3d11::with_num_copy_subresource_region(Self, UInt32) -> Self
+pub fn FrameStatsD3d11::with_num_map(Self, UInt32) -> Self
+pub fn FrameStatsD3d11::with_num_unmap(Self, UInt32) -> Self
+pub fn FrameStatsD3d11::with_num_update_subresource(Self, UInt32) -> Self
+pub fn FrameStatsD3d11::with_pass(Self, FrameStatsD3d11Pass) -> Self
+pub fn FrameStatsD3d11::with_pipeline(Self, FrameStatsD3d11Pipeline) -> Self
+
+pub type FrameStatsD3d11Bindings
+pub fn FrameStatsD3d11Bindings::native_handle(Self) -> @native.Handle
+pub fn FrameStatsD3d11Bindings::new() -> Self
+pub fn FrameStatsD3d11Bindings::num_cs_set_samplers(Self) -> UInt32
+pub fn FrameStatsD3d11Bindings::num_cs_set_shader_resources(Self) -> UInt32
+pub fn FrameStatsD3d11Bindings::num_cs_set_unordered_access_views(Self) -> UInt32
+pub fn FrameStatsD3d11Bindings::num_ia_set_index_buffer(Self) -> UInt32
+pub fn FrameStatsD3d11Bindings::num_ia_set_vertex_buffers(Self) -> UInt32
+pub fn FrameStatsD3d11Bindings::num_om_set_rts_and_uavs(Self) -> UInt32
+pub fn FrameStatsD3d11Bindings::num_ps_set_samplers(Self) -> UInt32
+pub fn FrameStatsD3d11Bindings::num_ps_set_shader_resources(Self) -> UInt32
+pub fn FrameStatsD3d11Bindings::num_vs_set_samplers(Self) -> UInt32
+pub fn FrameStatsD3d11Bindings::num_vs_set_shader_resources(Self) -> UInt32
+pub fn FrameStatsD3d11Bindings::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsD3d11Bindings::with_num_cs_set_samplers(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Bindings::with_num_cs_set_shader_resources(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Bindings::with_num_cs_set_unordered_access_views(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Bindings::with_num_ia_set_index_buffer(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Bindings::with_num_ia_set_vertex_buffers(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Bindings::with_num_om_set_rts_and_uavs(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Bindings::with_num_ps_set_samplers(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Bindings::with_num_ps_set_shader_resources(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Bindings::with_num_vs_set_samplers(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Bindings::with_num_vs_set_shader_resources(Self, UInt32) -> Self
+
+pub type FrameStatsD3d11Draw
+pub fn FrameStatsD3d11Draw::native_handle(Self) -> @native.Handle
+pub fn FrameStatsD3d11Draw::new() -> Self
+pub fn FrameStatsD3d11Draw::num_draw(Self) -> UInt32
+pub fn FrameStatsD3d11Draw::num_draw_indexed(Self) -> UInt32
+pub fn FrameStatsD3d11Draw::num_draw_indexed_instanced(Self) -> UInt32
+pub fn FrameStatsD3d11Draw::num_draw_instanced(Self) -> UInt32
+pub fn FrameStatsD3d11Draw::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsD3d11Draw::with_num_draw(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Draw::with_num_draw_indexed(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Draw::with_num_draw_indexed_instanced(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Draw::with_num_draw_instanced(Self, UInt32) -> Self
+
+pub type FrameStatsD3d11Pass
+pub fn FrameStatsD3d11Pass::native_handle(Self) -> @native.Handle
+pub fn FrameStatsD3d11Pass::new() -> Self
+pub fn FrameStatsD3d11Pass::num_clear_depth_stencil_view(Self) -> UInt32
+pub fn FrameStatsD3d11Pass::num_clear_render_target_view(Self) -> UInt32
+pub fn FrameStatsD3d11Pass::num_om_set_render_targets(Self) -> UInt32
+pub fn FrameStatsD3d11Pass::num_resolve_subresource(Self) -> UInt32
+pub fn FrameStatsD3d11Pass::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsD3d11Pass::with_num_clear_depth_stencil_view(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Pass::with_num_clear_render_target_view(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Pass::with_num_om_set_render_targets(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Pass::with_num_resolve_subresource(Self, UInt32) -> Self
+
+pub type FrameStatsD3d11Pipeline
+pub fn FrameStatsD3d11Pipeline::native_handle(Self) -> @native.Handle
+pub fn FrameStatsD3d11Pipeline::new() -> Self
+pub fn FrameStatsD3d11Pipeline::num_cs_set_constant_buffers(Self) -> UInt32
+pub fn FrameStatsD3d11Pipeline::num_cs_set_shader(Self) -> UInt32
+pub fn FrameStatsD3d11Pipeline::num_ia_set_input_layout(Self) -> UInt32
+pub fn FrameStatsD3d11Pipeline::num_ia_set_primitive_topology(Self) -> UInt32
+pub fn FrameStatsD3d11Pipeline::num_om_set_blend_state(Self) -> UInt32
+pub fn FrameStatsD3d11Pipeline::num_om_set_depth_stencil_state(Self) -> UInt32
+pub fn FrameStatsD3d11Pipeline::num_ps_set_constant_buffers(Self) -> UInt32
+pub fn FrameStatsD3d11Pipeline::num_ps_set_shader(Self) -> UInt32
+pub fn FrameStatsD3d11Pipeline::num_rs_set_state(Self) -> UInt32
+pub fn FrameStatsD3d11Pipeline::num_vs_set_constant_buffers(Self) -> UInt32
+pub fn FrameStatsD3d11Pipeline::num_vs_set_shader(Self) -> UInt32
+pub fn FrameStatsD3d11Pipeline::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsD3d11Pipeline::with_num_cs_set_constant_buffers(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Pipeline::with_num_cs_set_shader(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Pipeline::with_num_ia_set_input_layout(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Pipeline::with_num_ia_set_primitive_topology(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Pipeline::with_num_om_set_blend_state(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Pipeline::with_num_om_set_depth_stencil_state(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Pipeline::with_num_ps_set_constant_buffers(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Pipeline::with_num_ps_set_shader(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Pipeline::with_num_rs_set_state(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Pipeline::with_num_vs_set_constant_buffers(Self, UInt32) -> Self
+pub fn FrameStatsD3d11Pipeline::with_num_vs_set_shader(Self, UInt32) -> Self
+
+pub type FrameStatsGl
+pub fn FrameStatsGl::native_handle(Self) -> @native.Handle
+pub fn FrameStatsGl::new() -> Self
+pub fn FrameStatsGl::num_active_texture(Self) -> UInt32
+pub fn FrameStatsGl::num_bind_buffer(Self) -> UInt32
+pub fn FrameStatsGl::num_bind_image_texture(Self) -> UInt32
+pub fn FrameStatsGl::num_bind_sampler(Self) -> UInt32
+pub fn FrameStatsGl::num_bind_texture(Self) -> UInt32
+pub fn FrameStatsGl::num_disable_vertex_attrib_array(Self) -> UInt32
+pub fn FrameStatsGl::num_enable_vertex_attrib_array(Self) -> UInt32
+pub fn FrameStatsGl::num_memory_barriers(Self) -> UInt32
+pub fn FrameStatsGl::num_render_state(Self) -> UInt32
+pub fn FrameStatsGl::num_uniform(Self) -> UInt32
+pub fn FrameStatsGl::num_use_program(Self) -> UInt32
+pub fn FrameStatsGl::num_vertex_attrib_divisor(Self) -> UInt32
+pub fn FrameStatsGl::num_vertex_attrib_pointer(Self) -> UInt32
+pub fn FrameStatsGl::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsGl::with_num_active_texture(Self, UInt32) -> Self
+pub fn FrameStatsGl::with_num_bind_buffer(Self, UInt32) -> Self
+pub fn FrameStatsGl::with_num_bind_image_texture(Self, UInt32) -> Self
+pub fn FrameStatsGl::with_num_bind_sampler(Self, UInt32) -> Self
+pub fn FrameStatsGl::with_num_bind_texture(Self, UInt32) -> Self
+pub fn FrameStatsGl::with_num_disable_vertex_attrib_array(Self, UInt32) -> Self
+pub fn FrameStatsGl::with_num_enable_vertex_attrib_array(Self, UInt32) -> Self
+pub fn FrameStatsGl::with_num_memory_barriers(Self, UInt32) -> Self
+pub fn FrameStatsGl::with_num_render_state(Self, UInt32) -> Self
+pub fn FrameStatsGl::with_num_uniform(Self, UInt32) -> Self
+pub fn FrameStatsGl::with_num_use_program(Self, UInt32) -> Self
+pub fn FrameStatsGl::with_num_vertex_attrib_divisor(Self, UInt32) -> Self
+pub fn FrameStatsGl::with_num_vertex_attrib_pointer(Self, UInt32) -> Self
+
+pub type FrameStatsMetal
+pub fn FrameStatsMetal::bindings(Self) -> FrameStatsMetalBindings
+pub fn FrameStatsMetal::idpool(Self) -> FrameStatsMetalIdpool
+pub fn FrameStatsMetal::native_handle(Self) -> @native.Handle
+pub fn FrameStatsMetal::new() -> Self
+pub fn FrameStatsMetal::pipeline(Self) -> FrameStatsMetalPipeline
+pub fn FrameStatsMetal::uniforms(Self) -> FrameStatsMetalUniforms
+pub fn FrameStatsMetal::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsMetal::with_bindings(Self, FrameStatsMetalBindings) -> Self
+pub fn FrameStatsMetal::with_idpool(Self, FrameStatsMetalIdpool) -> Self
+pub fn FrameStatsMetal::with_pipeline(Self, FrameStatsMetalPipeline) -> Self
+pub fn FrameStatsMetal::with_uniforms(Self, FrameStatsMetalUniforms) -> Self
+
+pub type FrameStatsMetalBindings
+pub fn FrameStatsMetalBindings::native_handle(Self) -> @native.Handle
+pub fn FrameStatsMetalBindings::new() -> Self
+pub fn FrameStatsMetalBindings::num_set_compute_buffer(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_set_compute_buffer_offset(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_set_compute_sampler_state(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_set_compute_texture(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_set_fragment_buffer(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_set_fragment_buffer_offset(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_set_fragment_sampler_state(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_set_fragment_texture(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_set_vertex_buffer(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_set_vertex_buffer_offset(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_set_vertex_sampler_state(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_set_vertex_texture(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_skip_redundant_compute_buffer(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_skip_redundant_compute_sampler_state(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_skip_redundant_compute_texture(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_skip_redundant_fragment_buffer(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_skip_redundant_fragment_sampler_state(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_skip_redundant_fragment_texture(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_skip_redundant_vertex_buffer(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_skip_redundant_vertex_sampler_state(Self) -> UInt32
+pub fn FrameStatsMetalBindings::num_skip_redundant_vertex_texture(Self) -> UInt32
+pub fn FrameStatsMetalBindings::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsMetalBindings::with_num_set_compute_buffer(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_set_compute_buffer_offset(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_set_compute_sampler_state(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_set_compute_texture(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_set_fragment_buffer(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_set_fragment_buffer_offset(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_set_fragment_sampler_state(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_set_fragment_texture(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_set_vertex_buffer(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_set_vertex_buffer_offset(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_set_vertex_sampler_state(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_set_vertex_texture(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_skip_redundant_compute_buffer(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_skip_redundant_compute_sampler_state(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_skip_redundant_compute_texture(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_skip_redundant_fragment_buffer(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_skip_redundant_fragment_sampler_state(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_skip_redundant_fragment_texture(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_skip_redundant_vertex_buffer(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_skip_redundant_vertex_sampler_state(Self, UInt32) -> Self
+pub fn FrameStatsMetalBindings::with_num_skip_redundant_vertex_texture(Self, UInt32) -> Self
+
+pub type FrameStatsMetalIdpool
+pub fn FrameStatsMetalIdpool::native_handle(Self) -> @native.Handle
+pub fn FrameStatsMetalIdpool::new() -> Self
+pub fn FrameStatsMetalIdpool::num_added(Self) -> UInt32
+pub fn FrameStatsMetalIdpool::num_garbage_collected(Self) -> UInt32
+pub fn FrameStatsMetalIdpool::num_released(Self) -> UInt32
+pub fn FrameStatsMetalIdpool::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsMetalIdpool::with_num_added(Self, UInt32) -> Self
+pub fn FrameStatsMetalIdpool::with_num_garbage_collected(Self, UInt32) -> Self
+pub fn FrameStatsMetalIdpool::with_num_released(Self, UInt32) -> Self
+
+pub type FrameStatsMetalPipeline
+pub fn FrameStatsMetalPipeline::native_handle(Self) -> @native.Handle
+pub fn FrameStatsMetalPipeline::new() -> Self
+pub fn FrameStatsMetalPipeline::num_set_blend_color(Self) -> UInt32
+pub fn FrameStatsMetalPipeline::num_set_cull_mode(Self) -> UInt32
+pub fn FrameStatsMetalPipeline::num_set_depth_bias(Self) -> UInt32
+pub fn FrameStatsMetalPipeline::num_set_depth_stencil_state(Self) -> UInt32
+pub fn FrameStatsMetalPipeline::num_set_front_facing_winding(Self) -> UInt32
+pub fn FrameStatsMetalPipeline::num_set_render_pipeline_state(Self) -> UInt32
+pub fn FrameStatsMetalPipeline::num_set_stencil_reference_value(Self) -> UInt32
+pub fn FrameStatsMetalPipeline::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsMetalPipeline::with_num_set_blend_color(Self, UInt32) -> Self
+pub fn FrameStatsMetalPipeline::with_num_set_cull_mode(Self, UInt32) -> Self
+pub fn FrameStatsMetalPipeline::with_num_set_depth_bias(Self, UInt32) -> Self
+pub fn FrameStatsMetalPipeline::with_num_set_depth_stencil_state(Self, UInt32) -> Self
+pub fn FrameStatsMetalPipeline::with_num_set_front_facing_winding(Self, UInt32) -> Self
+pub fn FrameStatsMetalPipeline::with_num_set_render_pipeline_state(Self, UInt32) -> Self
+pub fn FrameStatsMetalPipeline::with_num_set_stencil_reference_value(Self, UInt32) -> Self
+
+pub type FrameStatsMetalUniforms
+pub fn FrameStatsMetalUniforms::native_handle(Self) -> @native.Handle
+pub fn FrameStatsMetalUniforms::new() -> Self
+pub fn FrameStatsMetalUniforms::num_set_compute_buffer_offset(Self) -> UInt32
+pub fn FrameStatsMetalUniforms::num_set_fragment_buffer_offset(Self) -> UInt32
+pub fn FrameStatsMetalUniforms::num_set_vertex_buffer_offset(Self) -> UInt32
+pub fn FrameStatsMetalUniforms::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsMetalUniforms::with_num_set_compute_buffer_offset(Self, UInt32) -> Self
+pub fn FrameStatsMetalUniforms::with_num_set_fragment_buffer_offset(Self, UInt32) -> Self
+pub fn FrameStatsMetalUniforms::with_num_set_vertex_buffer_offset(Self, UInt32) -> Self
+
+pub type FrameStatsVk
+pub fn FrameStatsVk::native_handle(Self) -> @native.Handle
+pub fn FrameStatsVk::new() -> Self
+pub fn FrameStatsVk::num_allocate_memory(Self) -> UInt32
+pub fn FrameStatsVk::num_cmd_copy_buffer(Self) -> UInt32
+pub fn FrameStatsVk::num_cmd_copy_buffer_to_image(Self) -> UInt32
+pub fn FrameStatsVk::num_cmd_copy_image(Self) -> UInt32
+pub fn FrameStatsVk::num_cmd_pipeline_barrier(Self) -> UInt32
+pub fn FrameStatsVk::num_cmd_set_descriptor_buffer_offsets(Self) -> UInt32
+pub fn FrameStatsVk::num_delete_queue_added(Self) -> UInt32
+pub fn FrameStatsVk::num_delete_queue_collected(Self) -> UInt32
+pub fn FrameStatsVk::num_free_memory(Self) -> UInt32
+pub fn FrameStatsVk::size_allocate_memory(Self) -> UInt32
+pub fn FrameStatsVk::size_descriptor_buffer_writes(Self) -> UInt32
+pub fn FrameStatsVk::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsVk::with_num_allocate_memory(Self, UInt32) -> Self
+pub fn FrameStatsVk::with_num_cmd_copy_buffer(Self, UInt32) -> Self
+pub fn FrameStatsVk::with_num_cmd_copy_buffer_to_image(Self, UInt32) -> Self
+pub fn FrameStatsVk::with_num_cmd_copy_image(Self, UInt32) -> Self
+pub fn FrameStatsVk::with_num_cmd_pipeline_barrier(Self, UInt32) -> Self
+pub fn FrameStatsVk::with_num_cmd_set_descriptor_buffer_offsets(Self, UInt32) -> Self
+pub fn FrameStatsVk::with_num_delete_queue_added(Self, UInt32) -> Self
+pub fn FrameStatsVk::with_num_delete_queue_collected(Self, UInt32) -> Self
+pub fn FrameStatsVk::with_num_free_memory(Self, UInt32) -> Self
+pub fn FrameStatsVk::with_size_allocate_memory(Self, UInt32) -> Self
+pub fn FrameStatsVk::with_size_descriptor_buffer_writes(Self, UInt32) -> Self
+
+pub type FrameStatsWgpu
+pub fn FrameStatsWgpu::bindings(Self) -> FrameStatsWgpuBindings
+pub fn FrameStatsWgpu::native_handle(Self) -> @native.Handle
+pub fn FrameStatsWgpu::new() -> Self
+pub fn FrameStatsWgpu::uniforms(Self) -> FrameStatsWgpuUniforms
+pub fn FrameStatsWgpu::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsWgpu::with_bindings(Self, FrameStatsWgpuBindings) -> Self
+pub fn FrameStatsWgpu::with_uniforms(Self, FrameStatsWgpuUniforms) -> Self
+
+pub type FrameStatsWgpuBindings
+pub fn FrameStatsWgpuBindings::native_handle(Self) -> @native.Handle
+pub fn FrameStatsWgpuBindings::new() -> Self
+pub fn FrameStatsWgpuBindings::num_bindgroup_cache_collisions(Self) -> UInt32
+pub fn FrameStatsWgpuBindings::num_bindgroup_cache_hash_vs_key_mismatch(Self) -> UInt32
+pub fn FrameStatsWgpuBindings::num_bindgroup_cache_hits(Self) -> UInt32
+pub fn FrameStatsWgpuBindings::num_bindgroup_cache_invalidates(Self) -> UInt32
+pub fn FrameStatsWgpuBindings::num_bindgroup_cache_misses(Self) -> UInt32
+pub fn FrameStatsWgpuBindings::num_create_bindgroup(Self) -> UInt32
+pub fn FrameStatsWgpuBindings::num_discard_bindgroup(Self) -> UInt32
+pub fn FrameStatsWgpuBindings::num_set_bindgroup(Self) -> UInt32
+pub fn FrameStatsWgpuBindings::num_set_index_buffer(Self) -> UInt32
+pub fn FrameStatsWgpuBindings::num_set_vertex_buffer(Self) -> UInt32
+pub fn FrameStatsWgpuBindings::num_skip_redundant_bindgroup(Self) -> UInt32
+pub fn FrameStatsWgpuBindings::num_skip_redundant_index_buffer(Self) -> UInt32
+pub fn FrameStatsWgpuBindings::num_skip_redundant_vertex_buffer(Self) -> UInt32
+pub fn FrameStatsWgpuBindings::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsWgpuBindings::with_num_bindgroup_cache_collisions(Self, UInt32) -> Self
+pub fn FrameStatsWgpuBindings::with_num_bindgroup_cache_hash_vs_key_mismatch(Self, UInt32) -> Self
+pub fn FrameStatsWgpuBindings::with_num_bindgroup_cache_hits(Self, UInt32) -> Self
+pub fn FrameStatsWgpuBindings::with_num_bindgroup_cache_invalidates(Self, UInt32) -> Self
+pub fn FrameStatsWgpuBindings::with_num_bindgroup_cache_misses(Self, UInt32) -> Self
+pub fn FrameStatsWgpuBindings::with_num_create_bindgroup(Self, UInt32) -> Self
+pub fn FrameStatsWgpuBindings::with_num_discard_bindgroup(Self, UInt32) -> Self
+pub fn FrameStatsWgpuBindings::with_num_set_bindgroup(Self, UInt32) -> Self
+pub fn FrameStatsWgpuBindings::with_num_set_index_buffer(Self, UInt32) -> Self
+pub fn FrameStatsWgpuBindings::with_num_set_vertex_buffer(Self, UInt32) -> Self
+pub fn FrameStatsWgpuBindings::with_num_skip_redundant_bindgroup(Self, UInt32) -> Self
+pub fn FrameStatsWgpuBindings::with_num_skip_redundant_index_buffer(Self, UInt32) -> Self
+pub fn FrameStatsWgpuBindings::with_num_skip_redundant_vertex_buffer(Self, UInt32) -> Self
+
+pub type FrameStatsWgpuUniforms
+pub fn FrameStatsWgpuUniforms::native_handle(Self) -> @native.Handle
+pub fn FrameStatsWgpuUniforms::new() -> Self
+pub fn FrameStatsWgpuUniforms::num_set_bindgroup(Self) -> UInt32
+pub fn FrameStatsWgpuUniforms::size_write_buffer(Self) -> UInt32
+pub fn FrameStatsWgpuUniforms::unsafe_from_native(@native.Handle) -> Self
+pub fn FrameStatsWgpuUniforms::with_num_set_bindgroup(Self, UInt32) -> Self
+pub fn FrameStatsWgpuUniforms::with_size_write_buffer(Self, UInt32) -> Self
+
+pub type GlBufferInfo
+pub fn GlBufferInfo::active_slot(Self) -> Int32
+pub fn GlBufferInfo::buf(Self, Int32) -> UInt32
+pub fn GlBufferInfo::native_handle(Self) -> @native.Handle
+pub fn GlBufferInfo::new() -> Self
+pub fn GlBufferInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn GlBufferInfo::with_active_slot(Self, Int32) -> Self
+pub fn GlBufferInfo::with_buf(Self, Int32, UInt32) -> Self
+
+pub type GlImageInfo
+pub fn GlImageInfo::active_slot(Self) -> Int32
+pub fn GlImageInfo::native_handle(Self) -> @native.Handle
+pub fn GlImageInfo::new() -> Self
+pub fn GlImageInfo::tex(Self, Int32) -> UInt32
+pub fn GlImageInfo::tex_target(Self) -> UInt32
+pub fn GlImageInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn GlImageInfo::with_active_slot(Self, Int32) -> Self
+pub fn GlImageInfo::with_tex(Self, Int32, UInt32) -> Self
+pub fn GlImageInfo::with_tex_target(Self, UInt32) -> Self
+
+pub type GlSamplerInfo
+pub fn GlSamplerInfo::native_handle(Self) -> @native.Handle
+pub fn GlSamplerInfo::new() -> Self
+pub fn GlSamplerInfo::smp(Self) -> UInt32
+pub fn GlSamplerInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn GlSamplerInfo::with_smp(Self, UInt32) -> Self
+
+pub type GlShaderInfo
+pub fn GlShaderInfo::native_handle(Self) -> @native.Handle
+pub fn GlShaderInfo::new() -> Self
+pub fn GlShaderInfo::prog(Self) -> UInt32
+pub fn GlShaderInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn GlShaderInfo::with_prog(Self, UInt32) -> Self
+
+pub type GlSwapchain
+pub fn GlSwapchain::framebuffer(Self) -> UInt32
+pub fn GlSwapchain::native_handle(Self) -> @native.Handle
+pub fn GlSwapchain::new() -> Self
+pub fn GlSwapchain::unsafe_from_native(@native.Handle) -> Self
+pub fn GlSwapchain::with_framebuffer(Self, UInt32) -> Self
+
+pub type GlViewInfo
+pub fn GlViewInfo::msaa_render_buffer(Self) -> UInt32
+pub fn GlViewInfo::msaa_resolve_frame_buffer(Self) -> UInt32
+pub fn GlViewInfo::native_handle(Self) -> @native.Handle
+pub fn GlViewInfo::new() -> Self
+pub fn GlViewInfo::tex_view(Self, Int32) -> UInt32
+pub fn GlViewInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn GlViewInfo::with_msaa_render_buffer(Self, UInt32) -> Self
+pub fn GlViewInfo::with_msaa_resolve_frame_buffer(Self, UInt32) -> Self
+pub fn GlViewInfo::with_tex_view(Self, Int32, UInt32) -> Self
+
+pub type GlslShaderUniform
+pub fn GlslShaderUniform::array_count(Self) -> UInt16
+pub fn GlslShaderUniform::glsl_name(Self) -> String
+pub fn GlslShaderUniform::native_handle(Self) -> @native.Handle
+pub fn GlslShaderUniform::new() -> Self
+pub fn GlslShaderUniform::type_(Self) -> UniformType
+pub fn GlslShaderUniform::unsafe_from_native(@native.Handle) -> Self
+pub fn GlslShaderUniform::with_array_count(Self, UInt16) -> Self
+pub fn GlslShaderUniform::with_glsl_name(Self, String) -> Self
+pub fn GlslShaderUniform::with_type(Self, UniformType) -> Self
+
+pub type Image
+pub fn Image::id(Self) -> UInt32
+pub fn Image::native_handle(Self) -> @native.Handle
+pub fn Image::new() -> Self
+pub fn Image::unsafe_from_native(@native.Handle) -> Self
+pub fn Image::with_id(Self, UInt32) -> Self
+
+pub type ImageDesc
+pub fn ImageDesc::d3d11_texture(Self) -> @native.Handle
+pub fn ImageDesc::data(Self) -> Range
+pub fn ImageDesc::gl_texture(Self) -> UInt32
+pub fn ImageDesc::gl_texture_target(Self) -> UInt32
+pub fn ImageDesc::height(Self) -> Int32
+pub fn ImageDesc::label(Self) -> String
+pub fn ImageDesc::mtl_texture(Self) -> @native.Handle
+pub fn ImageDesc::native_handle(Self) -> @native.Handle
+pub fn ImageDesc::new() -> Self
+pub fn ImageDesc::num_mipmaps(Self) -> Int32
+pub fn ImageDesc::num_slices(Self) -> Int32
+pub fn ImageDesc::pixel_format(Self) -> PixelFormat
+pub fn ImageDesc::sample_count(Self) -> Int32
+pub fn ImageDesc::type_(Self) -> ImageType
+pub fn ImageDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn ImageDesc::usage(Self) -> ImageUsage
+pub fn ImageDesc::wgpu_texture(Self) -> @native.Handle
+pub fn ImageDesc::width(Self) -> Int32
+pub fn ImageDesc::with_d3d11_texture(Self, @native.Handle) -> Self
+pub fn ImageDesc::with_data(Self, Range) -> Self
+pub fn ImageDesc::with_gl_texture(Self, UInt32) -> Self
+pub fn ImageDesc::with_gl_texture_target(Self, UInt32) -> Self
+pub fn ImageDesc::with_height(Self, Int32) -> Self
+pub fn ImageDesc::with_label(Self, String) -> Self
+pub fn ImageDesc::with_mtl_texture(Self, @native.Handle) -> Self
+pub fn ImageDesc::with_num_mipmaps(Self, Int32) -> Self
+pub fn ImageDesc::with_num_slices(Self, Int32) -> Self
+pub fn ImageDesc::with_pixel_format(Self, PixelFormat) -> Self
+pub fn ImageDesc::with_sample_count(Self, Int32) -> Self
+pub fn ImageDesc::with_type(Self, ImageType) -> Self
+pub fn ImageDesc::with_usage(Self, ImageUsage) -> Self
+pub fn ImageDesc::with_wgpu_texture(Self, @native.Handle) -> Self
+pub fn ImageDesc::with_width(Self, Int32) -> Self
+
+pub type ImageExtent
+pub fn ImageExtent::height(Self) -> Int32
+pub fn ImageExtent::native_handle(Self) -> @native.Handle
+pub fn ImageExtent::new() -> Self
+pub fn ImageExtent::num_slices(Self) -> Int32
+pub fn ImageExtent::unsafe_from_native(@native.Handle) -> Self
+pub fn ImageExtent::width(Self) -> Int32
+pub fn ImageExtent::with_height(Self, Int32) -> Self
+pub fn ImageExtent::with_num_slices(Self, Int32) -> Self
+pub fn ImageExtent::with_width(Self, Int32) -> Self
+
+pub type ImageInfo
+pub fn ImageInfo::active_slot(Self) -> Int32
+pub fn ImageInfo::native_handle(Self) -> @native.Handle
+pub fn ImageInfo::new() -> Self
+pub fn ImageInfo::num_slots(Self) -> Int32
+pub fn ImageInfo::slot(Self) -> SlotInfo
+pub fn ImageInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn ImageInfo::with_active_slot(Self, Int32) -> Self
+pub fn ImageInfo::with_num_slots(Self, Int32) -> Self
+pub fn ImageInfo::with_slot(Self, SlotInfo) -> Self
+
+pub type ImageLocation
+pub fn ImageLocation::image(Self) -> Image
+pub fn ImageLocation::mip_level(Self) -> Int32
+pub fn ImageLocation::native_handle(Self) -> @native.Handle
+pub fn ImageLocation::new() -> Self
+pub fn ImageLocation::slice(Self) -> Int32
+pub fn ImageLocation::unsafe_from_native(@native.Handle) -> Self
+pub fn ImageLocation::with_image(Self, Image) -> Self
+pub fn ImageLocation::with_mip_level(Self, Int32) -> Self
+pub fn ImageLocation::with_slice(Self, Int32) -> Self
+pub fn ImageLocation::with_x(Self, Int32) -> Self
+pub fn ImageLocation::with_y(Self, Int32) -> Self
+pub fn ImageLocation::x(Self) -> Int32
+pub fn ImageLocation::y(Self) -> Int32
+
+#derive(Eq, @debug.Debug)
+pub(all) enum ImageSampleType {
+  Default
+  Float
+  Depth
+  Sint
+  Uint
+  UnfilterableFloat
+}
+pub fn ImageSampleType::equal(Self, Self) -> Bool
+pub fn ImageSampleType::not_equal(Self, Self) -> Bool
+pub fn ImageSampleType::to_int(Self) -> Int32
+pub fn ImageSampleType::to_repr(Self) -> @debug.Repr
+
+#derive(Eq, @debug.Debug)
+pub(all) enum ImageType {
+  Default
+  V2d
+  Cube
+  V3d
+  Array
+}
+pub fn ImageType::equal(Self, Self) -> Bool
+pub fn ImageType::not_equal(Self, Self) -> Bool
+pub fn ImageType::to_int(Self) -> Int32
+pub fn ImageType::to_repr(Self) -> @debug.Repr
+
+pub type ImageUsage
+pub fn ImageUsage::color_attachment(Self) -> Bool
+pub fn ImageUsage::copy_dst(Self) -> Bool
+pub fn ImageUsage::copy_src(Self) -> Bool
+pub fn ImageUsage::depth_stencil_attachment(Self) -> Bool
+pub fn ImageUsage::native_handle(Self) -> @native.Handle
+pub fn ImageUsage::new() -> Self
+pub fn ImageUsage::resolve_attachment(Self) -> Bool
+pub fn ImageUsage::storage_image(Self) -> Bool
+pub fn ImageUsage::unsafe_from_native(@native.Handle) -> Self
+pub fn ImageUsage::with_color_attachment(Self, Bool) -> Self
+pub fn ImageUsage::with_copy_dst(Self, Bool) -> Self
+pub fn ImageUsage::with_copy_src(Self, Bool) -> Self
+pub fn ImageUsage::with_depth_stencil_attachment(Self, Bool) -> Self
+pub fn ImageUsage::with_resolve_attachment(Self, Bool) -> Self
+pub fn ImageUsage::with_storage_image(Self, Bool) -> Self
+pub fn ImageUsage::with_write_transient(Self, Bool) -> Self
+pub fn ImageUsage::with_write_unsealed(Self, Bool) -> Self
+pub fn ImageUsage::write_transient(Self) -> Bool
+pub fn ImageUsage::write_unsealed(Self) -> Bool
+
+pub type ImageViewDesc
+pub fn ImageViewDesc::image(Self) -> Image
+pub fn ImageViewDesc::mip_level(Self) -> Int32
+pub fn ImageViewDesc::native_handle(Self) -> @native.Handle
+pub fn ImageViewDesc::new() -> Self
+pub fn ImageViewDesc::slice(Self) -> Int32
+pub fn ImageViewDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn ImageViewDesc::with_image(Self, Image) -> Self
+pub fn ImageViewDesc::with_mip_level(Self, Int32) -> Self
+pub fn ImageViewDesc::with_slice(Self, Int32) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum IndexType {
+  Default
+  None
+  Uint16
+  Uint32
+}
+pub fn IndexType::equal(Self, Self) -> Bool
+pub fn IndexType::not_equal(Self, Self) -> Bool
+pub fn IndexType::to_int(Self) -> Int32
+pub fn IndexType::to_repr(Self) -> @debug.Repr
+
+pub type Limits
+pub fn Limits::d3d11_max_unordered_access_views(Self) -> Int32
+pub fn Limits::gl_max_combined_texture_image_units(Self) -> Int32
+pub fn Limits::gl_max_vertex_uniform_components(Self) -> Int32
+pub fn Limits::max_color_attachments(Self) -> Int32
+pub fn Limits::max_image_array_layers(Self) -> Int32
+pub fn Limits::max_image_size_2d(Self) -> Int32
+pub fn Limits::max_image_size_3d(Self) -> Int32
+pub fn Limits::max_image_size_array(Self) -> Int32
+pub fn Limits::max_image_size_cube(Self) -> Int32
+pub fn Limits::max_storage_buffer_bindings_per_stage(Self) -> Int32
+pub fn Limits::max_storage_image_bindings_per_stage(Self) -> Int32
+pub fn Limits::max_texture_bindings_per_stage(Self) -> Int32
+pub fn Limits::max_vertex_attrs(Self) -> Int32
+pub fn Limits::native_handle(Self) -> @native.Handle
+pub fn Limits::new() -> Self
+pub fn Limits::unsafe_from_native(@native.Handle) -> Self
+pub fn Limits::vk_min_uniform_buffer_offset_alignment(Self) -> Int32
+pub fn Limits::with_d3d11_max_unordered_access_views(Self, Int32) -> Self
+pub fn Limits::with_gl_max_combined_texture_image_units(Self, Int32) -> Self
+pub fn Limits::with_gl_max_vertex_uniform_components(Self, Int32) -> Self
+pub fn Limits::with_max_color_attachments(Self, Int32) -> Self
+pub fn Limits::with_max_image_array_layers(Self, Int32) -> Self
+pub fn Limits::with_max_image_size_2d(Self, Int32) -> Self
+pub fn Limits::with_max_image_size_3d(Self, Int32) -> Self
+pub fn Limits::with_max_image_size_array(Self, Int32) -> Self
+pub fn Limits::with_max_image_size_cube(Self, Int32) -> Self
+pub fn Limits::with_max_storage_buffer_bindings_per_stage(Self, Int32) -> Self
+pub fn Limits::with_max_storage_image_bindings_per_stage(Self, Int32) -> Self
+pub fn Limits::with_max_texture_bindings_per_stage(Self, Int32) -> Self
+pub fn Limits::with_max_vertex_attrs(Self, Int32) -> Self
+pub fn Limits::with_vk_min_uniform_buffer_offset_alignment(Self, Int32) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum LoadAction {
+  Default
+  Clear
+  Load
+  Dontcare
+}
+pub fn LoadAction::equal(Self, Self) -> Bool
+pub fn LoadAction::not_equal(Self, Self) -> Bool
+pub fn LoadAction::to_int(Self) -> Int32
+pub fn LoadAction::to_repr(Self) -> @debug.Repr
+
+#derive(Eq, @debug.Debug)
+pub(all) enum LogItem {
+  Ok
+  MallocFailed
+  GlTextureFormatNotSupported
+  Gl3dTexturesNotSupported
+  GlArrayTexturesNotSupported
+  GlStoragebufferGlslBindingOutOfRange
+  GlStorageimageGlslBindingOutOfRange
+  GlShaderCompilationFailed
+  GlShaderLinkingFailed
+  GlVertexAttributeNotFoundInShader
+  GlUniformblockNameNotFoundInShader
+  GlImageSamplerNameNotFoundInShader
+  GlFramebufferStatusUndefined
+  GlFramebufferStatusIncompleteAttachment
+  GlFramebufferStatusIncompleteMissingAttachment
+  GlFramebufferStatusUnsupported
+  GlFramebufferStatusIncompleteMultisample
+  GlFramebufferStatusUnknown
+  GlApplePixelUnpackOffsetBug
+  D3d11FeatureLevel0Detected
+  D3d11CreateBufferFailed
+  D3d11CreateBufferSrvFailed
+  D3d11CreateBufferUavFailed
+  D3d11CreateDepthTextureUnsupportedPixelFormat
+  D3d11CreateDepthTextureFailed
+  D3d11Create2dTextureUnsupportedPixelFormat
+  D3d11Create2dTextureFailed
+  D3d11Create2dSrvFailed
+  D3d11Create3dTextureUnsupportedPixelFormat
+  D3d11Create3dTextureFailed
+  D3d11Create3dSrvFailed
+  D3d11CreateMsaaTextureFailed
+  D3d11CreateSamplerStateFailed
+  D3d11UniformblockHlslRegisterBOutOfRange
+  D3d11StoragebufferHlslRegisterTOutOfRange
+  D3d11StoragebufferHlslRegisterUOutOfRange
+  D3d11ImageHlslRegisterTOutOfRange
+  D3d11StorageimageHlslRegisterUOutOfRange
+  D3d11SamplerHlslRegisterSOutOfRange
+  D3d11LoadD3dcompiler47DllFailed
+  D3d11ShaderCompilationFailed
+  D3d11ShaderCompilationOutput
+  D3d11CreateConstantBufferFailed
+  D3d11CreateInputLayoutFailed
+  D3d11CreateRasterizerStateFailed
+  D3d11CreateDepthStencilStateFailed
+  D3d11CreateBlendStateFailed
+  D3d11CreateRtvFailed
+  D3d11CreateDsvFailed
+  D3d11CreateUavFailed
+  D3d11MapForWriteBufferTransientFailed
+  MetalCreateBufferFailed
+  MetalTextureFormatNotSupported
+  MetalCreateTextureFailed
+  MetalCreateSamplerFailed
+  MetalShaderCompilationFailed
+  MetalShaderCreationFailed
+  MetalShaderCompilationOutput
+  MetalShaderEntryNotFound
+  MetalUniformblockMslBufferSlotOutOfRange
+  MetalStoragebufferMslBufferSlotOutOfRange
+  MetalStorageimageMslTextureSlotOutOfRange
+  MetalImageMslTextureSlotOutOfRange
+  MetalSamplerMslSamplerSlotOutOfRange
+  MetalCreateCpsFailed
+  MetalCreateCpsOutput
+  MetalCreateRpsFailed
+  MetalCreateRpsOutput
+  MetalCreateDssFailed
+  MetalCreateTextureviewFailed
+  WgpuBindgroupsPoolExhausted
+  WgpuBindgroupscacheSizeGreaterOne
+  WgpuBindgroupscacheSizePow2
+  WgpuCreatebindgroupFailed
+  WgpuCreateBufferFailed
+  WgpuCreateTextureFailed
+  WgpuCreateTextureViewFailed
+  WgpuCreateSamplerFailed
+  WgpuCreateShaderModuleFailed
+  WgpuShaderCreateBindgroupLayoutFailed
+  WgpuUniformblockWgslGroup0BindingOutOfRange
+  WgpuTextureWgslGroup1BindingOutOfRange
+  WgpuStoragebufferWgslGroup1BindingOutOfRange
+  WgpuStorageimageWgslGroup1BindingOutOfRange
+  WgpuSamplerWgslGroup1BindingOutOfRange
+  WgpuCreatePipelineLayoutFailed
+  WgpuCreateRenderPipelineFailed
+  WgpuCreateComputePipelineFailed
+  VulkanRequiredExtensionFunctionMissing
+  VulkanAllocDeviceMemoryNoSuitableMemoryType
+  VulkanAllocateMemoryFailed
+  VulkanAllocBufferDeviceMemoryFailed
+  VulkanAllocImageDeviceMemoryFailed
+  VulkanDeleteQueueExhausted
+  VulkanStagingCreateBufferFailed
+  VulkanStagingAllocateMemoryFailed
+  VulkanStagingBindBufferMemoryFailed
+  VulkanStagingTransientBufferOverflow
+  VulkanStagingImageRowPitchGreaterStagingBuffer
+  VulkanCreateSharedBufferFailed
+  VulkanAllocateSharedBufferMemoryFailed
+  VulkanBindSharedBufferMemoryFailed
+  VulkanMapSharedBufferMemoryFailed
+  VulkanCreateBufferFailed
+  VulkanBindBufferMemoryFailed
+  VulkanCreateImageFailed
+  VulkanBindImageMemoryFailed
+  VulkanCreateShaderModuleFailed
+  VulkanUniformblockSpirvSet0BindingOutOfRange
+  VulkanTextureSpirvSet1BindingOutOfRange
+  VulkanStoragebufferSpirvSet1BindingOutOfRange
+  VulkanStorageimageSpirvSet1BindingOutOfRange
+  VulkanSamplerSpirvSet1BindingOutOfRange
+  VulkanCreateDescriptorSetLayoutFailed
+  VulkanShaderUniformDescriptorSetSizeVsCacheSize
+  VulkanCreatePipelineLayoutFailed
+  VulkanCreateGraphicsPipelineFailed
+  VulkanCreateComputePipelineFailed
+  VulkanCreateImageViewFailed
+  VulkanViewMaxDescriptorSize
+  VulkanCreateSamplerFailed
+  VulkanSamplerMaxDescriptorSize
+  VulkanWaitForFenceFailed
+  VulkanUniformBufferOverflow
+  VulkanDescriptorBufferOverflow
+  IdenticalCommitListener
+  CommitListenerArrayFull
+  TraceHooksNotEnabled
+  DeallocBufferInvalidState
+  DeallocImageInvalidState
+  DeallocSamplerInvalidState
+  DeallocShaderInvalidState
+  DeallocPipelineInvalidState
+  DeallocViewInvalidState
+  InitBufferInvalidState
+  InitImageInvalidState
+  InitSamplerInvalidState
+  InitShaderInvalidState
+  InitPipelineInvalidState
+  InitViewInvalidState
+  UninitBufferInvalidState
+  UninitImageInvalidState
+  UninitSamplerInvalidState
+  UninitShaderInvalidState
+  UninitPipelineInvalidState
+  UninitViewInvalidState
+  FailBufferInvalidState
+  FailImageInvalidState
+  FailSamplerInvalidState
+  FailShaderInvalidState
+  FailPipelineInvalidState
+  FailViewInvalidState
+  BufferPoolExhausted
+  ImagePoolExhausted
+  SamplerPoolExhausted
+  ShaderPoolExhausted
+  PipelinePoolExhausted
+  ViewPoolExhausted
+  BeginpassTooManyColorAttachments
+  BeginpassTooManyResolveAttachments
+  BeginpassAttachmentsAlive
+  DrawWithoutBindings
+  WriteBufferTransientBufferAlive
+  WriteBufferTransientBufferValid
+  WriteImageTransientImageAlive
+  WriteImageTransientImageValid
+  WriteBufferUnsealedBufferAlive
+  WriteBufferUnsealedBufferUnsealed
+  WriteImageUnsealedImageAlive
+  WriteImageUnsealedImageUnsealed
+  SealBufferAlive
+  SealImageAlive
+  CopyBufferToBufferSrcAlive
+  CopyBufferToBufferDstAlive
+  CopyBufferToBufferSrcValid
+  CopyBufferToBufferDstValid
+  CopyBufferToImageSrcAlive
+  CopyBufferToImageDstAlive
+  CopyBufferToImageSrcValid
+  CopyBufferToImageDstValid
+  CopyImageToImageSrcAlive
+  CopyImageToImageDstAlive
+  CopyImageToImageSrcValid
+  CopyImageToImageDstValid
+  ShaderdescTooManyVertexstageTextures
+  ShaderdescTooManyFragmentstageTextures
+  ShaderdescTooManyComputestageTextures
+  ShaderdescTooManyVertexstageStoragebuffers
+  ShaderdescTooManyFragmentstageStoragebuffers
+  ShaderdescTooManyComputestageStoragebuffers
+  ShaderdescTooManyVertexstageStorageimages
+  ShaderdescTooManyFragmentstageStorageimages
+  ShaderdescTooManyComputestageStorageimages
+  ShaderdescTooManyVertexstageTexturesamplerpairs
+  ShaderdescTooManyFragmentstageTexturesamplerpairs
+  ShaderdescTooManyComputestageTexturesamplerpairs
+  ValidateBufferdescCanary
+  ValidateBufferdescExpectNonzeroSize
+  ValidateBufferdescStagingVsVertexbuffer
+  ValidateBufferdescStagingVsIndexbuffer
+  ValidateBufferdescStagingVsStoragebuffer
+  ValidateBufferdescStagingVsInjected
+  ValidateBufferdescStagingVsCopydst
+  ValidateBufferdescStagingVsInitialdata
+  ValidateBufferdescStagingCopysrc
+  ValidateBufferdescSeparateBufferTypes
+  ValidateBufferdescWriteunsealedVsWritetransient
+  ValidateBufferdescWriteunsealedVsStaging
+  ValidateBufferdescWriteunsealedVsInitialdata
+  ValidateBufferdescWritetransientVsCopydst
+  ValidateBufferdescWritetransientVsInitialdata
+  ValidateBufferdescWritetransientVsInjected
+  ValidateBufferdescExpectMatchingDataSize
+  ValidateBufferdescExpectZeroDataSize
+  ValidateBufferdescExpectData
+  ValidateBufferdescStoragebufferSupported
+  ValidateBufferdescStoragebufferSizeMultiple4
+  ValidateImagedescDataSize
+  ValidateImagedescCanary
+  ValidateImagedescAnyAttachmentVsCopydst
+  ValidateImagedescAnyAttachmentVsInitialdata
+  ValidateImagedescAnyAttachmentVsWritetransient
+  ValidateImagedescAnyAttachmentVsWriteunsealed
+  ValidateImagedescColorAttachmentPixelformat
+  ValidateImagedescColorAttachmentVsDepthstencilAttachment
+  ValidateImagedescResolveAttachmentExpectNoMsaa
+  ValidateImagedescResolveAttachmentVsDepthstencilAttachment
+  ValidateImagedescDepthformatVsInitialdata
+  ValidateImagedescDepthformatVsWriteunsealed
+  ValidateImagedescDepthformat3dImage
+  ValidateImagedescDepthformatAttachmentOrCopydst
+  ValidateImagedescDepthstencilAttachmentPixelformat
+  ValidateImagedescDepthstencilAttachmentVsStorageimage
+  ValidateImagedescStorageimageVsWritetransient
+  ValidateImagedescWritetransientVsCopydst
+  ValidateImagedescWritetransientVsInitialdata
+  ValidateImagedescWritetransientVsInjected
+  ValidateImagedescWriteunsealedVsInitialdata
+  ValidateImagedescWriteunsealedVsWritetransient
+  ValidateImagedescInitialDataRequired
+  ValidateImagedescInjectedExpectNoData
+  ValidateImagedescNoDataButSizeSet
+  ValidateImagedescImagetype2dNumslices
+  ValidateImagedescImagetypeCubeNumslices
+  ValidateImagedescImagetypeArrayNumslices
+  ValidateImagedescImagetype3dNumslices
+  ValidateImagedescWidth
+  ValidateImagedescHeight
+  ValidateImagedescNumMipmaps
+  ValidateImagedescMsaaButNoAttachment
+  ValidateImagedescAttachmentPixelformat
+  ValidateImagedescAttachmentMsaaVsCopy
+  ValidateImagedescAttachmentNoMsaaSupport
+  ValidateImagedescAttachmentMsaaNumMipmaps
+  ValidateImagedescAttachmentMsaa3dImage
+  ValidateImagedescAttachmentMsaaCubeImage
+  ValidateImagedescAttachmentMsaaArrayImage
+  ValidateImagedescStorageimagePixelformat
+  ValidateImagedescStorageimageExpectNoMsaa
+  ValidateSamplerdescCanary
+  ValidateSamplerdescAnistropicRequiresLinearFiltering
+  ValidateShaderdescCanary
+  ValidateShaderdescVertexSource
+  ValidateShaderdescFragmentSource
+  ValidateShaderdescComputeSource
+  ValidateShaderdescVertexSourceOrBytecode
+  ValidateShaderdescFragmentSourceOrBytecode
+  ValidateShaderdescComputeSourceOrBytecode
+  ValidateShaderdescInvalidShaderCombo
+  ValidateShaderdescNoBytecodeSize
+  ValidateShaderdescMetalThreadsPerThreadgroupInitialized
+  ValidateShaderdescMetalThreadsPerThreadgroupMultiple32
+  ValidateShaderdescUniformblockNoContMembers
+  ValidateShaderdescUniformblockSizeIsZero
+  ValidateShaderdescUniformblockMetalBufferSlotCollision
+  ValidateShaderdescUniformblockHlslRegisterBCollision
+  ValidateShaderdescUniformblockWgslGroup0BindingCollision
+  ValidateShaderdescUniformblockSpirvSet0BindingCollision
+  ValidateShaderdescUniformblockNoMembers
+  ValidateShaderdescUniformblockUniformGlslName
+  ValidateShaderdescUniformblockSizeMismatch
+  ValidateShaderdescUniformblockArrayCount
+  ValidateShaderdescUniformblockStd140ArrayType
+  ValidateShaderdescViewStoragebufferVertexshaderReadwrite
+  ValidateShaderdescViewStoragebufferMetalBufferSlotCollision
+  ValidateShaderdescViewStoragebufferHlslRegisterTCollision
+  ValidateShaderdescViewStoragebufferHlslRegisterUCollision
+  ValidateShaderdescViewStoragebufferGlslBindingCollision
+  ValidateShaderdescViewStoragebufferWgslGroup1BindingCollision
+  ValidateShaderdescViewStoragebufferSpirvSet1BindingCollision
+  ValidateShaderdescViewStorageimageExpectComputeStage
+  ValidateShaderdescViewStorageimageMetalTextureSlotCollision
+  ValidateShaderdescViewStorageimageHlslRegisterUCollision
+  ValidateShaderdescViewStorageimageGlslBindingCollision
+  ValidateShaderdescViewStorageimageWgslGroup1BindingCollision
+  ValidateShaderdescViewStorageimageSpirvSet1BindingCollision
+  ValidateShaderdescViewTextureMetalTextureSlotCollision
+  ValidateShaderdescViewTextureHlslRegisterTCollision
+  ValidateShaderdescViewTextureWgslGroup1BindingCollision
+  ValidateShaderdescViewTextureSpirvSet1BindingCollision
+  ValidateShaderdescSamplerMetalSamplerSlotCollision
+  ValidateShaderdescSamplerHlslRegisterSCollision
+  ValidateShaderdescSamplerWgslGroup1BindingCollision
+  ValidateShaderdescSamplerSpirvSet1BindingCollision
+  ValidateShaderdescTextureSamplerPairViewSlotOutOfRange
+  ValidateShaderdescTextureSamplerPairSamplerSlotOutOfRange
+  ValidateShaderdescTextureSamplerPairTextureStageMismatch
+  ValidateShaderdescTextureSamplerPairExpectTextureView
+  ValidateShaderdescTextureSamplerPairSamplerStageMismatch
+  ValidateShaderdescTextureSamplerPairGlslName
+  ValidateShaderdescNonfilteringSamplerRequired
+  ValidateShaderdescComparisonSamplerRequired
+  ValidateShaderdescTexviewNotReferencedByTextureSamplerPairs
+  ValidateShaderdescSamplerNotReferencedByTextureSamplerPairs
+  ValidateShaderdescAttrStringTooLong
+  ValidatePipelinedescCanary
+  ValidatePipelinedescShader
+  ValidatePipelinedescComputeShaderExpected
+  ValidatePipelinedescNoComputeShaderExpected
+  ValidatePipelinedescNoContAttrs
+  ValidatePipelinedescAttrBasetypeMismatch
+  ValidatePipelinedescAttrVertexformatInt10N2NotSupported
+  ValidatePipelinedescLayoutStride4
+  ValidatePipelinedescAttrSemantics
+  ValidatePipelinedescShaderReadonlyStoragebuffers
+  ValidatePipelinedescShaderHlslRegisterUVsColorCount
+  ValidatePipelinedescShaderHlslRegisterULimit
+  ValidatePipelinedescBlendopMinmaxRequiresBlendfactorOne
+  ValidatePipelinedescDualSourceBlendingNotSupported
+  ValidatePipelinedescDepthFormatNoneButDepthWriteEnabled
+  ValidatePipelinedescDepthFormatNoneCompareFuncMismatch
+  ValidatePipelinedescColorCount
+  ValidateViewdescCanary
+  ValidateViewdescUniqueViewtype
+  ValidateViewdescAnyViewtype
+  ValidateViewdescResourceAlive
+  ValidateViewdescResourceValid
+  ValidateViewdescImageValidUnsealed
+  ValidateViewdescStoragebufferOffsetVsBufferSize
+  ValidateViewdescStoragebufferOffsetMultiple256
+  ValidateViewdescStoragebufferUsage
+  ValidateViewdescStorageimageUsage
+  ValidateViewdescColorattachmentUsage
+  ValidateViewdescResolveattachmentUsage
+  ValidateViewdescDepthstencilattachmentUsage
+  ValidateViewdescImageMiplevel
+  ValidateViewdescImage2dSlice
+  ValidateViewdescImageCubemapSlice
+  ValidateViewdescImageArraySlice
+  ValidateViewdescImage3dSlice
+  ValidateViewdescTextureExpectNoMsaa
+  ValidateViewdescTextureMiplevels
+  ValidateViewdescTexture2dSlices
+  ValidateViewdescTextureCubemapSlices
+  ValidateViewdescTextureArraySlices
+  ValidateViewdescTexture3dSlices
+  ValidateBeginpassCanary
+  ValidateBeginpassComputepassExpectNoAttachments
+  ValidateBeginpassSwapchainExpectWidth
+  ValidateBeginpassSwapchainExpectWidthNotset
+  ValidateBeginpassSwapchainExpectHeight
+  ValidateBeginpassSwapchainExpectHeightNotset
+  ValidateBeginpassSwapchainExpectSamplecount
+  ValidateBeginpassSwapchainExpectSamplecountNotset
+  ValidateBeginpassSwapchainExpectColorformat
+  ValidateBeginpassSwapchainExpectColorformatNotset
+  ValidateBeginpassSwapchainExpectDepthformatNotset
+  ValidateBeginpassSwapchainMetalExpectCurrentdrawable
+  ValidateBeginpassSwapchainMetalExpectCurrentdrawableNotset
+  ValidateBeginpassSwapchainMetalExpectDepthstenciltexture
+  ValidateBeginpassSwapchainMetalExpectDepthstenciltextureNotset
+  ValidateBeginpassSwapchainMetalExpectMsaacolortexture
+  ValidateBeginpassSwapchainMetalExpectMsaacolortextureNotset
+  ValidateBeginpassSwapchainD3d11ExpectRenderview
+  ValidateBeginpassSwapchainD3d11ExpectRenderviewNotset
+  ValidateBeginpassSwapchainD3d11ExpectResolveview
+  ValidateBeginpassSwapchainD3d11ExpectResolveviewNotset
+  ValidateBeginpassSwapchainD3d11ExpectDepthstencilview
+  ValidateBeginpassSwapchainD3d11ExpectDepthstencilviewNotset
+  ValidateBeginpassSwapchainWgpuExpectRenderview
+  ValidateBeginpassSwapchainWgpuExpectRenderviewNotset
+  ValidateBeginpassSwapchainWgpuExpectResolveview
+  ValidateBeginpassSwapchainWgpuExpectResolveviewNotset
+  ValidateBeginpassSwapchainWgpuExpectDepthstencilview
+  ValidateBeginpassSwapchainWgpuExpectDepthstencilviewNotset
+  ValidateBeginpassSwapchainGlExpectFramebufferNotset
+  ValidateBeginpassSwapchainVulkanExpectRenderimage
+  ValidateBeginpassSwapchainVulkanExpectRenderimageNotset
+  ValidateBeginpassSwapchainVulkanExpectRenderview
+  ValidateBeginpassSwapchainVulkanExpectRenderviewNotset
+  ValidateBeginpassSwapchainVulkanExpectDepthstencilimage
+  ValidateBeginpassSwapchainVulkanExpectDepthstencilimageNotset
+  ValidateBeginpassSwapchainVulkanExpectDepthstencilview
+  ValidateBeginpassSwapchainVulkanExpectDepthstencilviewNotset
+  ValidateBeginpassSwapchainVulkanExpectResolveimage
+  ValidateBeginpassSwapchainVulkanExpectResolveimageNotset
+  ValidateBeginpassSwapchainVulkanExpectResolveview
+  ValidateBeginpassSwapchainVulkanExpectResolveviewNotset
+  ValidateBeginpassSwapchainVulkanExpectRenderfinishedsemaphore
+  ValidateBeginpassSwapchainVulkanExpectRenderfinishedsemaphoreNotset
+  ValidateBeginpassSwapchainVulkanExpectPresentcompletesemaphore
+  ValidateBeginpassSwapchainVulkanExpectPresentcompletesemaphoreNotset
+  ValidateBeginpassColorattachmentviewsContinuous
+  ValidateBeginpassColorattachmentviewAlive
+  ValidateBeginpassColorattachmentviewValid
+  ValidateBeginpassColorattachmentviewType
+  ValidateBeginpassColorattachmentviewImageAlive
+  ValidateBeginpassColorattachmentviewImageValid
+  ValidateBeginpassColorattachmentviewSizes
+  ValidateBeginpassColorattachmentviewSamplecount
+  ValidateBeginpassColorattachmentviewSamplecountsEqual
+  ValidateBeginpassResolveattachmentviewNoColorattachmentview
+  ValidateBeginpassResolveattachmentviewAlive
+  ValidateBeginpassResolveattachmentviewValid
+  ValidateBeginpassResolveattachmentviewType
+  ValidateBeginpassResolveattachmentviewImageAlive
+  ValidateBeginpassResolveattachmentviewImageValid
+  ValidateBeginpassResolveattachmentviewSizes
+  ValidateBeginpassDepthstencilattachmentviewAlive
+  ValidateBeginpassDepthstencilattachmentviewValid
+  ValidateBeginpassDepthstencilattachmentviewType
+  ValidateBeginpassDepthstencilattachmentviewImageAlive
+  ValidateBeginpassDepthstencilattachmentviewImageValid
+  ValidateBeginpassDepthstencilattachmentviewSizes
+  ValidateBeginpassDepthstencilattachmentviewSamplecount
+  ValidateBeginpassAttachmentsExpected
+  ValidateAvpRenderpassExpected
+  ValidateAsrRenderpassExpected
+  ValidateApipPipelineValidId
+  ValidateApipPipelineExists
+  ValidateApipPipelineValid
+  ValidateApipPassExpected
+  ValidateApipPipelineShaderAlive
+  ValidateApipPipelineShaderValid
+  ValidateApipComputepassExpected
+  ValidateApipRenderpassExpected
+  ValidateApipSwapchainColorCount
+  ValidateApipSwapchainColorFormat
+  ValidateApipSwapchainDepthFormat
+  ValidateApipSwapchainSampleCount
+  ValidateApipAttachmentsAlive
+  ValidateApipColorattachmentsCount
+  ValidateApipColorattachmentsViewValid
+  ValidateApipColorattachmentsImageValid
+  ValidateApipColorattachmentsFormat
+  ValidateApipDepthstencilattachmentViewValid
+  ValidateApipDepthstencilattachmentImageValid
+  ValidateApipDepthstencilattachmentFormat
+  ValidateApipAttachmentSampleCount
+  ValidateAbndPassExpected
+  ValidateAbndEmptyBindings
+  ValidateAbndNoPipeline
+  ValidateAbndPipelineAlive
+  ValidateAbndPipelineValid
+  ValidateAbndPipelineShaderAlive
+  ValidateAbndPipelineShaderValid
+  ValidateAbndComputeExpectedNoVbufs
+  ValidateAbndComputeExpectedNoIbuf
+  ValidateAbndExpectedVbuf
+  ValidateAbndVbufAlive
+  ValidateAbndVbufUsage
+  ValidateAbndVbufVsSbviewReadwrite
+  ValidateAbndExpectedNoIbuf
+  ValidateAbndExpectedIbuf
+  ValidateAbndIbufAlive
+  ValidateAbndIbufUsage
+  ValidateAbndIbufVsSbviewReadwrite
+  ValidateAbndExpectedViewBinding
+  ValidateAbndViewAlive
+  ValidateAbndExpectTexview
+  ValidateAbndExpectSbview
+  ValidateAbndSbviewReadwriteVsWritetransient
+  ValidateAbndSbviewReadonlyVsReadwrite
+  ValidateAbndSbviewReadwriteVsRead
+  ValidateAbndExpectSimgview
+  ValidateAbndTexviewImagetypeMismatch
+  ValidateAbndTexviewExpectedMultisampledImage
+  ValidateAbndTexviewExpectedNonMultisampledImage
+  ValidateAbndTexviewExpectedFilterableImage
+  ValidateAbndTexviewExpectedDepthImage
+  ValidateAbndSimgviewComputePassExpected
+  ValidateAbndSimgviewImagetypeMismatch
+  ValidateAbndSimgviewAccessformat
+  ValidateAbndExpectedSamplerBinding
+  ValidateAbndUnexpectedSamplerCompareNever
+  ValidateAbndExpectedSamplerCompareNever
+  ValidateAbndExpectedNonfilteringSampler
+  ValidateAbndSamplerAlive
+  ValidateAbndSamplerValid
+  ValidateAbndTextureBindingVsDepthstencilAttachment
+  ValidateAbndTextureBindingVsColorAttachment
+  ValidateAbndTextureBindingVsResolveAttachment
+  ValidateAbndTextureVsStorageimageBinding
+  ValidateAuPassExpected
+  ValidateAuNoPipeline
+  ValidateAuPipelineAlive
+  ValidateAuPipelineValid
+  ValidateAuPipelineShaderAlive
+  ValidateAuPipelineShaderValid
+  ValidateAuNoUniformblockAtSlot
+  ValidateAuSize
+  ValidateDrawRenderpassExpected
+  ValidateDrawBaseelementGeZero
+  ValidateDrawNumelementsGeZero
+  ValidateDrawNuminstancesGeZero
+  ValidateDrawExRenderpassExpected
+  ValidateDrawExBaseelementGeZero
+  ValidateDrawExNumelementsGeZero
+  ValidateDrawExNuminstancesGeZero
+  ValidateDrawExBaseinstanceGeZero
+  ValidateDrawExBasevertexVsIndexed
+  ValidateDrawExBaseinstanceVsInstanced
+  ValidateDrawExBasevertexNotSupported
+  ValidateDrawExBaseinstanceNotSupported
+  ValidateDrawRequiredBindingsOrUniformsMissing
+  ValidateDrawWriteBufferTransientMissing
+  ValidateDrawWriteImageTransientMissing
+  ValidateDispatchComputepassExpected
+  ValidateDispatchNumgroupsx
+  ValidateDispatchNumgroupsy
+  ValidateDispatchNumgroupsz
+  ValidateDispatchWriteBufferTransientMissing
+  ValidateDispatchWriteImageTransientMissing
+  ValidateWritebufferunsealedUsage
+  ValidateWritebuffertransientUsage
+  ValidateWritebuffertransientWriteBeforeBind
+  ValidateWritebuffertransientWriteBeforeCopy
+  ValidateWritebuffertransientDstOffsetAlignment
+  ValidateWritebufferSrcDataPointer
+  ValidateWritebufferSrcDataSize
+  ValidateWritebufferSize
+  ValidateWritebufferWriteOverflow
+  ValidateWritebufferReadOverflow
+  ValidateWriteimageunsealedUsage
+  ValidateWriteimagetransientUsage
+  ValidateWriteimagetransientWriteBeforeBind
+  ValidateWriteimagetransientWriteBeforeCopy
+  ValidateWriteimageSrcDataPointer
+  ValidateWriteimageSrcDataSize
+  ValidateWriteimageBytesperrow
+  ValidateWriteimageBytesperslice
+  ValidateWriteimageBytesperrowTooSmall
+  ValidateWriteimageBytespersliceTooSmall
+  ValidateWriteimageMiplevel
+  ValidateWriteimageWidth
+  ValidateWriteimageHeight
+  ValidateWriteimageNumslices
+  ValidateWriteimageReadOverflow
+  ValidateWriteimageDstXRange
+  ValidateWriteimageDstYRange
+  ValidateWriteimageDstSliceRange
+  ValidateWriteimageWriteWidthOverflow
+  ValidateWriteimageWriteHeightOverflow
+  ValidateWriteimageWriteNumslicesOverflow
+  ValidateWriteimageDstXAlignment
+  ValidateWriteimageDstYAlignment
+  ValidateWriteimageWidthMultiple
+  ValidateWriteimageHeightMultiple
+  ValidateSealbufferResourcestate
+  ValidateSealimageResourcestate
+  ValidateCopybuffertobufferInsidePass
+  ValidateCopybuffertobufferSrcVsDstBuffer
+  ValidateCopybuffertobufferCopySrc
+  ValidateCopybuffertobufferCopyDst
+  ValidateCopybuffertobufferZeroSize
+  ValidateCopybuffertobufferSrcOffsetAlignment
+  ValidateCopybuffertobufferDstOffsetAlignment
+  ValidateCopybuffertobufferSrcOverflow
+  ValidateCopybuffertobufferDstOverflow
+  ValidateCopybuffertobufferWebgl2IndexBuffer
+  ValidateCopybuffertobufferSrcTransientMissing
+  ValidateCopybuffertoimageDepthFormatNotAllowed
+  ValidateCopybuffertoimageWebgl2IndexBuffer
+  ValidateCopybuffertoimageBytesperrowTooSmall
+  ValidateCopybuffertoimageBytespersliceTooSmall
+  ValidateCopybuffertoimageSrcStagingIndexBuffer
+  ValidateCopybuffertoimageSrcStagingBuffer
+  ValidateCopybuffertoimageInsidePass
+  ValidateCopybuffertoimageCopySrc
+  ValidateCopybuffertoimageCopyDst
+  ValidateCopybuffertoimageSrcOffsetAlignment
+  ValidateCopybuffertoimageBytesperrowMultipleBlocksize
+  ValidateCopybuffertoimageBytesperrowMultiple256
+  ValidateCopybuffertoimageBytesperslice
+  ValidateCopybuffertoimageSrcOverflow
+  ValidateCopybuffertoimageDstMiplevel
+  ValidateCopybuffertoimageDstWidth
+  ValidateCopybuffertoimageDstHeight
+  ValidateCopybuffertoimageDstWidthMultiple
+  ValidateCopybuffertoimageDstHeightMultiple
+  ValidateCopybuffertoimageDstNumslices
+  ValidateCopybuffertoimageDstXRange
+  ValidateCopybuffertoimageDstYRange
+  ValidateCopybuffertoimageDstXAlignment
+  ValidateCopybuffertoimageDstYAlignment
+  ValidateCopybuffertoimageDstSliceRange
+  ValidateCopybuffertoimageDstWidthOverflow
+  ValidateCopybuffertoimageDstHeightOverflow
+  ValidateCopybuffertoimageDstNumslicesOverflow
+  ValidateCopybuffertoimageSrcTransientMissing
+  ValidateCopyimagetoimageSrcVsDstImage
+  ValidateCopyimagetoimageInsidePass
+  ValidateCopyimagetoimageCopySrc
+  ValidateCopyimagetoimageCopyDst
+  ValidateCopyimagetoimage3dVsOther
+  ValidateCopyimagetoimageSrcVsDstFormat
+  ValidateCopyimagetoimageRenderable
+  ValidateCopyimagetoimageMsaa
+  ValidateCopyimagetoimageWholeMiplevel
+  ValidateCopyimagetoimageSrcVsDstSize
+  ValidateCopyimagetoimageSrcMiplevel
+  ValidateCopyimagetoimageSrcWidth
+  ValidateCopyimagetoimageSrcHeight
+  ValidateCopyimagetoimageDstMiplevel
+  ValidateCopyimagetoimageDstWidth
+  ValidateCopyimagetoimageDstHeight
+  ValidateCopyimagetoimageSrcWidthMultiple
+  ValidateCopyimagetoimageSrcHeightMultiple
+  ValidateCopyimagetoimageDstWidthMultiple
+  ValidateCopyimagetoimageDstHeightMultiple
+  ValidateCopyimagetoimageSrcNumslices
+  ValidateCopyimagetoimageDstNumslices
+  ValidateCopyimagetoimageSrcXRange
+  ValidateCopyimagetoimageDstXRange
+  ValidateCopyimagetoimageSrcYRange
+  ValidateCopyimagetoimageDstYRange
+  ValidateCopyimagetoimageSrcXAlignment
+  ValidateCopyimagetoimageDstXAlignment
+  ValidateCopyimagetoimageSrcYAlignment
+  ValidateCopyimagetoimageDstYAlignment
+  ValidateCopyimagetoimageSrcSliceRange
+  ValidateCopyimagetoimageDstSliceRange
+  ValidateCopyimagetoimageSrcWidthOverflow
+  ValidateCopyimagetoimageDstWidthOverflow
+  ValidateCopyimagetoimageSrcHeightOverflow
+  ValidateCopyimagetoimageDstHeightOverflow
+  ValidateCopyimagetoimageSrcNumslicesOverflow
+  ValidateCopyimagetoimageDstNumslicesOverflow
+  ValidateCopyimagetoimageSrcTransientMissing
+  ValidationFailed
+}
+pub fn LogItem::equal(Self, Self) -> Bool
+pub fn LogItem::not_equal(Self, Self) -> Bool
+pub fn LogItem::to_int(Self) -> Int32
+pub fn LogItem::to_repr(Self) -> @debug.Repr
+
+pub type Logger
+pub fn Logger::default() -> Self
+pub fn Logger::func(Self) -> @native.Handle
+pub fn Logger::native_handle(Self) -> @native.Handle
+pub fn Logger::new() -> Self
+pub fn Logger::unsafe_from_native(@native.Handle) -> Self
+pub fn Logger::user_data(Self) -> @native.Handle
+pub fn Logger::with_func(Self, @native.Handle) -> Self
+pub fn Logger::with_user_data(Self, @native.Handle) -> Self
+
+pub type MetalDesc
+pub fn MetalDesc::force_managed_storage_mode(Self) -> Bool
+pub fn MetalDesc::native_handle(Self) -> @native.Handle
+pub fn MetalDesc::new() -> Self
+pub fn MetalDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn MetalDesc::use_command_buffer_with_retained_references(Self) -> Bool
+pub fn MetalDesc::with_force_managed_storage_mode(Self, Bool) -> Self
+pub fn MetalDesc::with_use_command_buffer_with_retained_references(Self, Bool) -> Self
+
+pub type MetalEnvironment
+pub fn MetalEnvironment::device(Self) -> @native.Handle
+pub fn MetalEnvironment::native_handle(Self) -> @native.Handle
+pub fn MetalEnvironment::new() -> Self
+pub fn MetalEnvironment::unsafe_from_native(@native.Handle) -> Self
+pub fn MetalEnvironment::with_device(Self, @native.Handle) -> Self
+
+pub type MetalSwapchain
+pub fn MetalSwapchain::current_drawable(Self) -> @native.Handle
+pub fn MetalSwapchain::depth_stencil_texture(Self) -> @native.Handle
+pub fn MetalSwapchain::msaa_color_texture(Self) -> @native.Handle
+pub fn MetalSwapchain::native_handle(Self) -> @native.Handle
+pub fn MetalSwapchain::new() -> Self
+pub fn MetalSwapchain::unsafe_from_native(@native.Handle) -> Self
+pub fn MetalSwapchain::with_current_drawable(Self, @native.Handle) -> Self
+pub fn MetalSwapchain::with_depth_stencil_texture(Self, @native.Handle) -> Self
+pub fn MetalSwapchain::with_msaa_color_texture(Self, @native.Handle) -> Self
+
+pub type MtlBufferInfo
+pub fn MtlBufferInfo::active_slot(Self) -> Int32
+pub fn MtlBufferInfo::buf(Self, Int32) -> @native.Handle
+pub fn MtlBufferInfo::native_handle(Self) -> @native.Handle
+pub fn MtlBufferInfo::new() -> Self
+pub fn MtlBufferInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn MtlBufferInfo::with_active_slot(Self, Int32) -> Self
+pub fn MtlBufferInfo::with_buf(Self, Int32, @native.Handle) -> Self
+
+pub type MtlImageInfo
+pub fn MtlImageInfo::active_slot(Self) -> Int32
+pub fn MtlImageInfo::native_handle(Self) -> @native.Handle
+pub fn MtlImageInfo::new() -> Self
+pub fn MtlImageInfo::tex(Self, Int32) -> @native.Handle
+pub fn MtlImageInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn MtlImageInfo::with_active_slot(Self, Int32) -> Self
+pub fn MtlImageInfo::with_tex(Self, Int32, @native.Handle) -> Self
+
+pub type MtlPipelineInfo
+pub fn MtlPipelineInfo::dss(Self) -> @native.Handle
+pub fn MtlPipelineInfo::native_handle(Self) -> @native.Handle
+pub fn MtlPipelineInfo::new() -> Self
+pub fn MtlPipelineInfo::rps(Self) -> @native.Handle
+pub fn MtlPipelineInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn MtlPipelineInfo::with_dss(Self, @native.Handle) -> Self
+pub fn MtlPipelineInfo::with_rps(Self, @native.Handle) -> Self
+
+pub type MtlSamplerInfo
+pub fn MtlSamplerInfo::native_handle(Self) -> @native.Handle
+pub fn MtlSamplerInfo::new() -> Self
+pub fn MtlSamplerInfo::smp(Self) -> @native.Handle
+pub fn MtlSamplerInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn MtlSamplerInfo::with_smp(Self, @native.Handle) -> Self
+
+pub type MtlShaderInfo
+pub fn MtlShaderInfo::fragment_func(Self) -> @native.Handle
+pub fn MtlShaderInfo::fragment_lib(Self) -> @native.Handle
+pub fn MtlShaderInfo::native_handle(Self) -> @native.Handle
+pub fn MtlShaderInfo::new() -> Self
+pub fn MtlShaderInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn MtlShaderInfo::vertex_func(Self) -> @native.Handle
+pub fn MtlShaderInfo::vertex_lib(Self) -> @native.Handle
+pub fn MtlShaderInfo::with_fragment_func(Self, @native.Handle) -> Self
+pub fn MtlShaderInfo::with_fragment_lib(Self, @native.Handle) -> Self
+pub fn MtlShaderInfo::with_vertex_func(Self, @native.Handle) -> Self
+pub fn MtlShaderInfo::with_vertex_lib(Self, @native.Handle) -> Self
+
+pub type MtlShaderThreadsPerThreadgroup
+pub fn MtlShaderThreadsPerThreadgroup::native_handle(Self) -> @native.Handle
+pub fn MtlShaderThreadsPerThreadgroup::new() -> Self
+pub fn MtlShaderThreadsPerThreadgroup::unsafe_from_native(@native.Handle) -> Self
+pub fn MtlShaderThreadsPerThreadgroup::with_x(Self, Int32) -> Self
+pub fn MtlShaderThreadsPerThreadgroup::with_y(Self, Int32) -> Self
+pub fn MtlShaderThreadsPerThreadgroup::with_z(Self, Int32) -> Self
+pub fn MtlShaderThreadsPerThreadgroup::x(Self) -> Int32
+pub fn MtlShaderThreadsPerThreadgroup::y(Self) -> Int32
+pub fn MtlShaderThreadsPerThreadgroup::z(Self) -> Int32
+
+pub type Pass
+pub fn Pass::action(Self) -> PassAction
+pub fn Pass::attachments(Self) -> Attachments
+pub fn Pass::compute(Self) -> Bool
+pub fn Pass::label(Self) -> String
+pub fn Pass::native_handle(Self) -> @native.Handle
+pub fn Pass::new() -> Self
+pub fn Pass::swapchain(Self) -> Swapchain
+pub fn Pass::unsafe_from_native(@native.Handle) -> Self
+pub fn Pass::with_action(Self, PassAction) -> Self
+pub fn Pass::with_attachments(Self, Attachments) -> Self
+pub fn Pass::with_compute(Self, Bool) -> Self
+pub fn Pass::with_label(Self, String) -> Self
+pub fn Pass::with_swapchain(Self, Swapchain) -> Self
+
+pub type PassAction
+pub fn PassAction::colors(Self, Int32) -> ColorAttachmentAction
+pub fn PassAction::depth(Self) -> DepthAttachmentAction
+pub fn PassAction::native_handle(Self) -> @native.Handle
+pub fn PassAction::new() -> Self
+pub fn PassAction::stencil(Self) -> StencilAttachmentAction
+pub fn PassAction::unsafe_from_native(@native.Handle) -> Self
+pub fn PassAction::with_colors(Self, Int32, ColorAttachmentAction) -> Self
+pub fn PassAction::with_depth(Self, DepthAttachmentAction) -> Self
+pub fn PassAction::with_stencil(Self, StencilAttachmentAction) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum PassState {
+  None
+  Render
+  Compute
+}
+pub fn PassState::equal(Self, Self) -> Bool
+pub fn PassState::not_equal(Self, Self) -> Bool
+pub fn PassState::to_int(Self) -> Int32
+pub fn PassState::to_repr(Self) -> @debug.Repr
+
+pub type Pipeline
+pub fn Pipeline::id(Self) -> UInt32
+pub fn Pipeline::native_handle(Self) -> @native.Handle
+pub fn Pipeline::new() -> Self
+pub fn Pipeline::unsafe_from_native(@native.Handle) -> Self
+pub fn Pipeline::with_id(Self, UInt32) -> Self
+
+pub type PipelineDesc
+pub fn PipelineDesc::alpha_to_coverage_enabled(Self) -> Bool
+pub fn PipelineDesc::blend_color(Self) -> Color
+pub fn PipelineDesc::color_count(Self) -> Int32
+pub fn PipelineDesc::colors(Self, Int32) -> ColorTargetState
+pub fn PipelineDesc::compute(Self) -> Bool
+pub fn PipelineDesc::cull_mode(Self) -> CullMode
+pub fn PipelineDesc::depth(Self) -> DepthState
+pub fn PipelineDesc::face_winding(Self) -> FaceWinding
+pub fn PipelineDesc::index_type(Self) -> IndexType
+pub fn PipelineDesc::label(Self) -> String
+pub fn PipelineDesc::layout(Self) -> VertexLayoutState
+pub fn PipelineDesc::native_handle(Self) -> @native.Handle
+pub fn PipelineDesc::new() -> Self
+pub fn PipelineDesc::primitive_type(Self) -> PrimitiveType
+pub fn PipelineDesc::sample_count(Self) -> Int32
+pub fn PipelineDesc::shader(Self) -> Shader
+pub fn PipelineDesc::stencil(Self) -> StencilState
+pub fn PipelineDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn PipelineDesc::with_alpha_to_coverage_enabled(Self, Bool) -> Self
+pub fn PipelineDesc::with_blend_color(Self, Color) -> Self
+pub fn PipelineDesc::with_color_count(Self, Int32) -> Self
+pub fn PipelineDesc::with_colors(Self, Int32, ColorTargetState) -> Self
+pub fn PipelineDesc::with_compute(Self, Bool) -> Self
+pub fn PipelineDesc::with_cull_mode(Self, CullMode) -> Self
+pub fn PipelineDesc::with_depth(Self, DepthState) -> Self
+pub fn PipelineDesc::with_face_winding(Self, FaceWinding) -> Self
+pub fn PipelineDesc::with_index_type(Self, IndexType) -> Self
+pub fn PipelineDesc::with_label(Self, String) -> Self
+pub fn PipelineDesc::with_layout(Self, VertexLayoutState) -> Self
+pub fn PipelineDesc::with_primitive_type(Self, PrimitiveType) -> Self
+pub fn PipelineDesc::with_sample_count(Self, Int32) -> Self
+pub fn PipelineDesc::with_shader(Self, Shader) -> Self
+pub fn PipelineDesc::with_stencil(Self, StencilState) -> Self
+
+pub type PipelineInfo
+pub fn PipelineInfo::native_handle(Self) -> @native.Handle
+pub fn PipelineInfo::new() -> Self
+pub fn PipelineInfo::slot(Self) -> SlotInfo
+pub fn PipelineInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn PipelineInfo::with_slot(Self, SlotInfo) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum PixelFormat {
+  Default
+  None
+  R8
+  R8sn
+  R8ui
+  R8si
+  R16
+  R16sn
+  R16ui
+  R16si
+  R16f
+  Rg8
+  Rg8sn
+  Rg8ui
+  Rg8si
+  R32ui
+  R32si
+  R32f
+  Rg16
+  Rg16sn
+  Rg16ui
+  Rg16si
+  Rg16f
+  Rgba8
+  Srgb8a8
+  Rgba8sn
+  Rgba8ui
+  Rgba8si
+  Bgra8
+  Sbgr8a8
+  Rgb10a2
+  Rg11b10f
+  Rgb9e5
+  Rg32ui
+  Rg32si
+  Rg32f
+  Rgba16
+  Rgba16sn
+  Rgba16ui
+  Rgba16si
+  Rgba16f
+  Rgba32ui
+  Rgba32si
+  Rgba32f
+  Depth
+  DepthStencil
+  Bc1Rgba
+  Bc2Rgba
+  Bc3Rgba
+  Bc3Srgba
+  Bc4R
+  Bc4Rsn
+  Bc5Rg
+  Bc5Rgsn
+  Bc6hRgbf
+  Bc6hRgbuf
+  Bc7Rgba
+  Bc7Srgba
+  Etc2Rgb8
+  Etc2Srgb8
+  Etc2Rgb8a1
+  Etc2Rgba8
+  Etc2Srgb8a8
+  EacR11
+  EacR11sn
+  EacRg11
+  EacRg11sn
+  Astc4x4Rgba
+  Astc4x4Srgba
+}
+pub fn PixelFormat::equal(Self, Self) -> Bool
+pub fn PixelFormat::not_equal(Self, Self) -> Bool
+pub fn PixelFormat::to_int(Self) -> Int32
+pub fn PixelFormat::to_repr(Self) -> @debug.Repr
+
+pub type PixelformatInfo
+pub fn PixelformatInfo::blend(Self) -> Bool
+pub fn PixelformatInfo::bytes_per_pixel(Self) -> Int32
+pub fn PixelformatInfo::compressed(Self) -> Bool
+pub fn PixelformatInfo::depth(Self) -> Bool
+pub fn PixelformatInfo::filter(Self) -> Bool
+pub fn PixelformatInfo::msaa(Self) -> Bool
+pub fn PixelformatInfo::native_handle(Self) -> @native.Handle
+pub fn PixelformatInfo::new() -> Self
+pub fn PixelformatInfo::read(Self) -> Bool
+pub fn PixelformatInfo::render(Self) -> Bool
+pub fn PixelformatInfo::sample(Self) -> Bool
+pub fn PixelformatInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn PixelformatInfo::with_blend(Self, Bool) -> Self
+pub fn PixelformatInfo::with_bytes_per_pixel(Self, Int32) -> Self
+pub fn PixelformatInfo::with_compressed(Self, Bool) -> Self
+pub fn PixelformatInfo::with_depth(Self, Bool) -> Self
+pub fn PixelformatInfo::with_filter(Self, Bool) -> Self
+pub fn PixelformatInfo::with_msaa(Self, Bool) -> Self
+pub fn PixelformatInfo::with_read(Self, Bool) -> Self
+pub fn PixelformatInfo::with_render(Self, Bool) -> Self
+pub fn PixelformatInfo::with_sample(Self, Bool) -> Self
+pub fn PixelformatInfo::with_write(Self, Bool) -> Self
+pub fn PixelformatInfo::write(Self) -> Bool
+
+#derive(Eq, @debug.Debug)
+pub(all) enum PrimitiveType {
+  Default
+  Points
+  Lines
+  LineStrip
+  Triangles
+  TriangleStrip
+}
+pub fn PrimitiveType::equal(Self, Self) -> Bool
+pub fn PrimitiveType::not_equal(Self, Self) -> Bool
+pub fn PrimitiveType::to_int(Self) -> Int32
+pub fn PrimitiveType::to_repr(Self) -> @debug.Repr
+
+pub type Range
+pub fn Range::bytes(Self) -> Bytes
+pub fn Range::from_bytes(Bytes) -> Self
+pub fn Range::from_floats(FixedArray[Float]) -> Self
+pub fn Range::from_uints(FixedArray[UInt32]) -> Self
+pub fn Range::from_ushorts(FixedArray[UInt16]) -> Self
+pub fn Range::native_handle(Self) -> @native.Handle
+pub fn Range::new() -> Self
+pub fn Range::size(Self) -> UInt64
+pub fn Range::unsafe_from_native(@native.Handle) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum ResourceState {
+  Initial
+  Alloc
+  Unsealed
+  Valid
+  Failed
+  Invalid
+}
+pub fn ResourceState::equal(Self, Self) -> Bool
+pub fn ResourceState::not_equal(Self, Self) -> Bool
+pub fn ResourceState::to_int(Self) -> Int32
+pub fn ResourceState::to_repr(Self) -> @debug.Repr
+
+pub type Sampler
+pub fn Sampler::id(Self) -> UInt32
+pub fn Sampler::native_handle(Self) -> @native.Handle
+pub fn Sampler::new() -> Self
+pub fn Sampler::unsafe_from_native(@native.Handle) -> Self
+pub fn Sampler::with_id(Self, UInt32) -> Self
+
+pub type SamplerDesc
+pub fn SamplerDesc::border_color(Self) -> BorderColor
+pub fn SamplerDesc::compare(Self) -> CompareFunc
+pub fn SamplerDesc::d3d11_sampler(Self) -> @native.Handle
+pub fn SamplerDesc::gl_sampler(Self) -> UInt32
+pub fn SamplerDesc::label(Self) -> String
+pub fn SamplerDesc::mag_filter(Self) -> Filter
+pub fn SamplerDesc::max_anisotropy(Self) -> UInt32
+pub fn SamplerDesc::max_lod(Self) -> Float
+pub fn SamplerDesc::min_filter(Self) -> Filter
+pub fn SamplerDesc::min_lod(Self) -> Float
+pub fn SamplerDesc::mipmap_filter(Self) -> Filter
+pub fn SamplerDesc::mtl_sampler(Self) -> @native.Handle
+pub fn SamplerDesc::native_handle(Self) -> @native.Handle
+pub fn SamplerDesc::new() -> Self
+pub fn SamplerDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn SamplerDesc::wgpu_sampler(Self) -> @native.Handle
+pub fn SamplerDesc::with_border_color(Self, BorderColor) -> Self
+pub fn SamplerDesc::with_compare(Self, CompareFunc) -> Self
+pub fn SamplerDesc::with_d3d11_sampler(Self, @native.Handle) -> Self
+pub fn SamplerDesc::with_gl_sampler(Self, UInt32) -> Self
+pub fn SamplerDesc::with_label(Self, String) -> Self
+pub fn SamplerDesc::with_mag_filter(Self, Filter) -> Self
+pub fn SamplerDesc::with_max_anisotropy(Self, UInt32) -> Self
+pub fn SamplerDesc::with_max_lod(Self, Float) -> Self
+pub fn SamplerDesc::with_min_filter(Self, Filter) -> Self
+pub fn SamplerDesc::with_min_lod(Self, Float) -> Self
+pub fn SamplerDesc::with_mipmap_filter(Self, Filter) -> Self
+pub fn SamplerDesc::with_mtl_sampler(Self, @native.Handle) -> Self
+pub fn SamplerDesc::with_wgpu_sampler(Self, @native.Handle) -> Self
+pub fn SamplerDesc::with_wrap_u(Self, Wrap) -> Self
+pub fn SamplerDesc::with_wrap_v(Self, Wrap) -> Self
+pub fn SamplerDesc::with_wrap_w(Self, Wrap) -> Self
+pub fn SamplerDesc::wrap_u(Self) -> Wrap
+pub fn SamplerDesc::wrap_v(Self) -> Wrap
+pub fn SamplerDesc::wrap_w(Self) -> Wrap
+
+pub type SamplerInfo
+pub fn SamplerInfo::native_handle(Self) -> @native.Handle
+pub fn SamplerInfo::new() -> Self
+pub fn SamplerInfo::slot(Self) -> SlotInfo
+pub fn SamplerInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn SamplerInfo::with_slot(Self, SlotInfo) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum SamplerType {
+  Default
+  Filtering
+  Nonfiltering
+  Comparison
+}
+pub fn SamplerType::equal(Self, Self) -> Bool
+pub fn SamplerType::not_equal(Self, Self) -> Bool
+pub fn SamplerType::to_int(Self) -> Int32
+pub fn SamplerType::to_repr(Self) -> @debug.Repr
+
+pub type Shader
+pub fn Shader::id(Self) -> UInt32
+pub fn Shader::native_handle(Self) -> @native.Handle
+pub fn Shader::new() -> Self
+pub fn Shader::unsafe_from_native(@native.Handle) -> Self
+pub fn Shader::with_id(Self, UInt32) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum ShaderAttrBaseType {
+  Undefined
+  Float
+  Sint
+  Uint
+}
+pub fn ShaderAttrBaseType::equal(Self, Self) -> Bool
+pub fn ShaderAttrBaseType::not_equal(Self, Self) -> Bool
+pub fn ShaderAttrBaseType::to_int(Self) -> Int32
+pub fn ShaderAttrBaseType::to_repr(Self) -> @debug.Repr
+
+pub type ShaderDesc
+pub fn ShaderDesc::attrs(Self, Int32) -> ShaderVertexAttr
+pub fn ShaderDesc::compute_func(Self) -> ShaderFunction
+pub fn ShaderDesc::fragment_func(Self) -> ShaderFunction
+pub fn ShaderDesc::label(Self) -> String
+pub fn ShaderDesc::mtl_threads_per_threadgroup(Self) -> MtlShaderThreadsPerThreadgroup
+pub fn ShaderDesc::native_handle(Self) -> @native.Handle
+pub fn ShaderDesc::new() -> Self
+pub fn ShaderDesc::samplers(Self, Int32) -> ShaderSampler
+pub fn ShaderDesc::texture_sampler_pairs(Self, Int32) -> ShaderTextureSamplerPair
+pub fn ShaderDesc::uniform_blocks(Self, Int32) -> ShaderUniformBlock
+pub fn ShaderDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn ShaderDesc::vertex_func(Self) -> ShaderFunction
+pub fn ShaderDesc::views(Self, Int32) -> ShaderView
+pub fn ShaderDesc::with_attrs(Self, Int32, ShaderVertexAttr) -> Self
+pub fn ShaderDesc::with_compute_func(Self, ShaderFunction) -> Self
+pub fn ShaderDesc::with_fragment_func(Self, ShaderFunction) -> Self
+pub fn ShaderDesc::with_label(Self, String) -> Self
+pub fn ShaderDesc::with_mtl_threads_per_threadgroup(Self, MtlShaderThreadsPerThreadgroup) -> Self
+pub fn ShaderDesc::with_samplers(Self, Int32, ShaderSampler) -> Self
+pub fn ShaderDesc::with_texture_sampler_pairs(Self, Int32, ShaderTextureSamplerPair) -> Self
+pub fn ShaderDesc::with_uniform_blocks(Self, Int32, ShaderUniformBlock) -> Self
+pub fn ShaderDesc::with_vertex_func(Self, ShaderFunction) -> Self
+pub fn ShaderDesc::with_views(Self, Int32, ShaderView) -> Self
+
+pub type ShaderFunction
+pub fn ShaderFunction::bytecode(Self) -> Range
+pub fn ShaderFunction::d3d11_filepath(Self) -> String
+pub fn ShaderFunction::d3d11_target(Self) -> String
+pub fn ShaderFunction::entry(Self) -> String
+pub fn ShaderFunction::native_handle(Self) -> @native.Handle
+pub fn ShaderFunction::new() -> Self
+pub fn ShaderFunction::source(Self) -> String
+pub fn ShaderFunction::unsafe_from_native(@native.Handle) -> Self
+pub fn ShaderFunction::with_bytecode(Self, Range) -> Self
+pub fn ShaderFunction::with_d3d11_filepath(Self, String) -> Self
+pub fn ShaderFunction::with_d3d11_target(Self, String) -> Self
+pub fn ShaderFunction::with_entry(Self, String) -> Self
+pub fn ShaderFunction::with_source(Self, String) -> Self
+
+pub type ShaderInfo
+pub fn ShaderInfo::native_handle(Self) -> @native.Handle
+pub fn ShaderInfo::new() -> Self
+pub fn ShaderInfo::slot(Self) -> SlotInfo
+pub fn ShaderInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn ShaderInfo::with_slot(Self, SlotInfo) -> Self
+
+pub type ShaderSampler
+pub fn ShaderSampler::hlsl_register_s_n(Self) -> Byte
+pub fn ShaderSampler::msl_sampler_n(Self) -> Byte
+pub fn ShaderSampler::native_handle(Self) -> @native.Handle
+pub fn ShaderSampler::new() -> Self
+pub fn ShaderSampler::sampler_type(Self) -> SamplerType
+pub fn ShaderSampler::spirv_set1_binding_n(Self) -> Byte
+pub fn ShaderSampler::stage(Self) -> ShaderStage
+pub fn ShaderSampler::unsafe_from_native(@native.Handle) -> Self
+pub fn ShaderSampler::wgsl_group1_binding_n(Self) -> Byte
+pub fn ShaderSampler::with_hlsl_register_s_n(Self, Byte) -> Self
+pub fn ShaderSampler::with_msl_sampler_n(Self, Byte) -> Self
+pub fn ShaderSampler::with_sampler_type(Self, SamplerType) -> Self
+pub fn ShaderSampler::with_spirv_set1_binding_n(Self, Byte) -> Self
+pub fn ShaderSampler::with_stage(Self, ShaderStage) -> Self
+pub fn ShaderSampler::with_wgsl_group1_binding_n(Self, Byte) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum ShaderStage {
+  None
+  Vertex
+  Fragment
+  Compute
+}
+pub fn ShaderStage::equal(Self, Self) -> Bool
+pub fn ShaderStage::not_equal(Self, Self) -> Bool
+pub fn ShaderStage::to_int(Self) -> Int32
+pub fn ShaderStage::to_repr(Self) -> @debug.Repr
+
+pub type ShaderStorageBufferView
+pub fn ShaderStorageBufferView::glsl_binding_n(Self) -> Byte
+pub fn ShaderStorageBufferView::hlsl_register_t_n(Self) -> Byte
+pub fn ShaderStorageBufferView::hlsl_register_u_n(Self) -> Byte
+pub fn ShaderStorageBufferView::msl_buffer_n(Self) -> Byte
+pub fn ShaderStorageBufferView::native_handle(Self) -> @native.Handle
+pub fn ShaderStorageBufferView::new() -> Self
+pub fn ShaderStorageBufferView::readonly_(Self) -> Bool
+pub fn ShaderStorageBufferView::spirv_set1_binding_n(Self) -> Byte
+pub fn ShaderStorageBufferView::stage(Self) -> ShaderStage
+pub fn ShaderStorageBufferView::unsafe_from_native(@native.Handle) -> Self
+pub fn ShaderStorageBufferView::wgsl_group1_binding_n(Self) -> Byte
+pub fn ShaderStorageBufferView::with_glsl_binding_n(Self, Byte) -> Self
+pub fn ShaderStorageBufferView::with_hlsl_register_t_n(Self, Byte) -> Self
+pub fn ShaderStorageBufferView::with_hlsl_register_u_n(Self, Byte) -> Self
+pub fn ShaderStorageBufferView::with_msl_buffer_n(Self, Byte) -> Self
+pub fn ShaderStorageBufferView::with_readonly(Self, Bool) -> Self
+pub fn ShaderStorageBufferView::with_spirv_set1_binding_n(Self, Byte) -> Self
+pub fn ShaderStorageBufferView::with_stage(Self, ShaderStage) -> Self
+pub fn ShaderStorageBufferView::with_wgsl_group1_binding_n(Self, Byte) -> Self
+
+pub type ShaderStorageImageView
+pub fn ShaderStorageImageView::access_format(Self) -> PixelFormat
+pub fn ShaderStorageImageView::glsl_binding_n(Self) -> Byte
+pub fn ShaderStorageImageView::hlsl_register_u_n(Self) -> Byte
+pub fn ShaderStorageImageView::image_type(Self) -> ImageType
+pub fn ShaderStorageImageView::msl_texture_n(Self) -> Byte
+pub fn ShaderStorageImageView::native_handle(Self) -> @native.Handle
+pub fn ShaderStorageImageView::new() -> Self
+pub fn ShaderStorageImageView::spirv_set1_binding_n(Self) -> Byte
+pub fn ShaderStorageImageView::stage(Self) -> ShaderStage
+pub fn ShaderStorageImageView::unsafe_from_native(@native.Handle) -> Self
+pub fn ShaderStorageImageView::wgsl_group1_binding_n(Self) -> Byte
+pub fn ShaderStorageImageView::with_access_format(Self, PixelFormat) -> Self
+pub fn ShaderStorageImageView::with_glsl_binding_n(Self, Byte) -> Self
+pub fn ShaderStorageImageView::with_hlsl_register_u_n(Self, Byte) -> Self
+pub fn ShaderStorageImageView::with_image_type(Self, ImageType) -> Self
+pub fn ShaderStorageImageView::with_msl_texture_n(Self, Byte) -> Self
+pub fn ShaderStorageImageView::with_spirv_set1_binding_n(Self, Byte) -> Self
+pub fn ShaderStorageImageView::with_stage(Self, ShaderStage) -> Self
+pub fn ShaderStorageImageView::with_wgsl_group1_binding_n(Self, Byte) -> Self
+pub fn ShaderStorageImageView::with_writeonly(Self, Bool) -> Self
+pub fn ShaderStorageImageView::writeonly(Self) -> Bool
+
+pub type ShaderTextureSamplerPair
+pub fn ShaderTextureSamplerPair::glsl_name(Self) -> String
+pub fn ShaderTextureSamplerPair::native_handle(Self) -> @native.Handle
+pub fn ShaderTextureSamplerPair::new() -> Self
+pub fn ShaderTextureSamplerPair::sampler_slot(Self) -> Byte
+pub fn ShaderTextureSamplerPair::stage(Self) -> ShaderStage
+pub fn ShaderTextureSamplerPair::unsafe_from_native(@native.Handle) -> Self
+pub fn ShaderTextureSamplerPair::view_slot(Self) -> Byte
+pub fn ShaderTextureSamplerPair::with_glsl_name(Self, String) -> Self
+pub fn ShaderTextureSamplerPair::with_sampler_slot(Self, Byte) -> Self
+pub fn ShaderTextureSamplerPair::with_stage(Self, ShaderStage) -> Self
+pub fn ShaderTextureSamplerPair::with_view_slot(Self, Byte) -> Self
+
+pub type ShaderTextureView
+pub fn ShaderTextureView::hlsl_register_t_n(Self) -> Byte
+pub fn ShaderTextureView::image_type(Self) -> ImageType
+pub fn ShaderTextureView::msl_texture_n(Self) -> Byte
+pub fn ShaderTextureView::multisampled(Self) -> Bool
+pub fn ShaderTextureView::native_handle(Self) -> @native.Handle
+pub fn ShaderTextureView::new() -> Self
+pub fn ShaderTextureView::sample_type(Self) -> ImageSampleType
+pub fn ShaderTextureView::spirv_set1_binding_n(Self) -> Byte
+pub fn ShaderTextureView::stage(Self) -> ShaderStage
+pub fn ShaderTextureView::unsafe_from_native(@native.Handle) -> Self
+pub fn ShaderTextureView::wgsl_group1_binding_n(Self) -> Byte
+pub fn ShaderTextureView::with_hlsl_register_t_n(Self, Byte) -> Self
+pub fn ShaderTextureView::with_image_type(Self, ImageType) -> Self
+pub fn ShaderTextureView::with_msl_texture_n(Self, Byte) -> Self
+pub fn ShaderTextureView::with_multisampled(Self, Bool) -> Self
+pub fn ShaderTextureView::with_sample_type(Self, ImageSampleType) -> Self
+pub fn ShaderTextureView::with_spirv_set1_binding_n(Self, Byte) -> Self
+pub fn ShaderTextureView::with_stage(Self, ShaderStage) -> Self
+pub fn ShaderTextureView::with_wgsl_group1_binding_n(Self, Byte) -> Self
+
+pub type ShaderUniformBlock
+pub fn ShaderUniformBlock::glsl_uniforms(Self, Int32) -> GlslShaderUniform
+pub fn ShaderUniformBlock::hlsl_register_b_n(Self) -> Byte
+pub fn ShaderUniformBlock::layout(Self) -> UniformLayout
+pub fn ShaderUniformBlock::msl_buffer_n(Self) -> Byte
+pub fn ShaderUniformBlock::native_handle(Self) -> @native.Handle
+pub fn ShaderUniformBlock::new() -> Self
+pub fn ShaderUniformBlock::size(Self) -> UInt32
+pub fn ShaderUniformBlock::spirv_set0_binding_n(Self) -> Byte
+pub fn ShaderUniformBlock::stage(Self) -> ShaderStage
+pub fn ShaderUniformBlock::unsafe_from_native(@native.Handle) -> Self
+pub fn ShaderUniformBlock::wgsl_group0_binding_n(Self) -> Byte
+pub fn ShaderUniformBlock::with_glsl_uniforms(Self, Int32, GlslShaderUniform) -> Self
+pub fn ShaderUniformBlock::with_hlsl_register_b_n(Self, Byte) -> Self
+pub fn ShaderUniformBlock::with_layout(Self, UniformLayout) -> Self
+pub fn ShaderUniformBlock::with_msl_buffer_n(Self, Byte) -> Self
+pub fn ShaderUniformBlock::with_size(Self, UInt32) -> Self
+pub fn ShaderUniformBlock::with_spirv_set0_binding_n(Self, Byte) -> Self
+pub fn ShaderUniformBlock::with_stage(Self, ShaderStage) -> Self
+pub fn ShaderUniformBlock::with_wgsl_group0_binding_n(Self, Byte) -> Self
+
+pub type ShaderVertexAttr
+pub fn ShaderVertexAttr::base_type(Self) -> ShaderAttrBaseType
+pub fn ShaderVertexAttr::glsl_name(Self) -> String
+pub fn ShaderVertexAttr::hlsl_sem_index(Self) -> Byte
+pub fn ShaderVertexAttr::hlsl_sem_name(Self) -> String
+pub fn ShaderVertexAttr::native_handle(Self) -> @native.Handle
+pub fn ShaderVertexAttr::new() -> Self
+pub fn ShaderVertexAttr::unsafe_from_native(@native.Handle) -> Self
+pub fn ShaderVertexAttr::with_base_type(Self, ShaderAttrBaseType) -> Self
+pub fn ShaderVertexAttr::with_glsl_name(Self, String) -> Self
+pub fn ShaderVertexAttr::with_hlsl_sem_index(Self, Byte) -> Self
+pub fn ShaderVertexAttr::with_hlsl_sem_name(Self, String) -> Self
+
+pub type ShaderView
+pub fn ShaderView::native_handle(Self) -> @native.Handle
+pub fn ShaderView::new() -> Self
+pub fn ShaderView::storage_buffer(Self) -> ShaderStorageBufferView
+pub fn ShaderView::storage_image(Self) -> ShaderStorageImageView
+pub fn ShaderView::texture(Self) -> ShaderTextureView
+pub fn ShaderView::unsafe_from_native(@native.Handle) -> Self
+pub fn ShaderView::with_storage_buffer(Self, ShaderStorageBufferView) -> Self
+pub fn ShaderView::with_storage_image(Self, ShaderStorageImageView) -> Self
+pub fn ShaderView::with_texture(Self, ShaderTextureView) -> Self
+
+pub type SlotInfo
+pub fn SlotInfo::native_handle(Self) -> @native.Handle
+pub fn SlotInfo::new() -> Self
+pub fn SlotInfo::res_id(Self) -> UInt32
+pub fn SlotInfo::state(Self) -> ResourceState
+pub fn SlotInfo::uninit_count(Self) -> UInt32
+pub fn SlotInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn SlotInfo::with_res_id(Self, UInt32) -> Self
+pub fn SlotInfo::with_state(Self, ResourceState) -> Self
+pub fn SlotInfo::with_uninit_count(Self, UInt32) -> Self
+
+pub type Stats
+pub fn Stats::cur_frame(Self) -> FrameStats
+pub fn Stats::native_handle(Self) -> @native.Handle
+pub fn Stats::new() -> Self
+pub fn Stats::prev_frame(Self) -> FrameStats
+pub fn Stats::total(Self) -> TotalStats
+pub fn Stats::unsafe_from_native(@native.Handle) -> Self
+pub fn Stats::with_cur_frame(Self, FrameStats) -> Self
+pub fn Stats::with_prev_frame(Self, FrameStats) -> Self
+pub fn Stats::with_total(Self, TotalStats) -> Self
+
+pub type StencilAttachmentAction
+pub fn StencilAttachmentAction::clear_value(Self) -> Byte
+pub fn StencilAttachmentAction::load_action(Self) -> LoadAction
+pub fn StencilAttachmentAction::native_handle(Self) -> @native.Handle
+pub fn StencilAttachmentAction::new() -> Self
+pub fn StencilAttachmentAction::store_action(Self) -> StoreAction
+pub fn StencilAttachmentAction::unsafe_from_native(@native.Handle) -> Self
+pub fn StencilAttachmentAction::with_clear_value(Self, Byte) -> Self
+pub fn StencilAttachmentAction::with_load_action(Self, LoadAction) -> Self
+pub fn StencilAttachmentAction::with_store_action(Self, StoreAction) -> Self
+
+pub type StencilFaceState
+pub fn StencilFaceState::compare(Self) -> CompareFunc
+pub fn StencilFaceState::depth_fail_op(Self) -> StencilOp
+pub fn StencilFaceState::fail_op(Self) -> StencilOp
+pub fn StencilFaceState::native_handle(Self) -> @native.Handle
+pub fn StencilFaceState::new() -> Self
+pub fn StencilFaceState::pass_op(Self) -> StencilOp
+pub fn StencilFaceState::unsafe_from_native(@native.Handle) -> Self
+pub fn StencilFaceState::with_compare(Self, CompareFunc) -> Self
+pub fn StencilFaceState::with_depth_fail_op(Self, StencilOp) -> Self
+pub fn StencilFaceState::with_fail_op(Self, StencilOp) -> Self
+pub fn StencilFaceState::with_pass_op(Self, StencilOp) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum StencilOp {
+  Default
+  Keep
+  Zero
+  Replace
+  IncrClamp
+  DecrClamp
+  Invert
+  IncrWrap
+  DecrWrap
+}
+pub fn StencilOp::equal(Self, Self) -> Bool
+pub fn StencilOp::not_equal(Self, Self) -> Bool
+pub fn StencilOp::to_int(Self) -> Int32
+pub fn StencilOp::to_repr(Self) -> @debug.Repr
+
+pub type StencilState
+pub fn StencilState::back(Self) -> StencilFaceState
+pub fn StencilState::enabled(Self) -> Bool
+pub fn StencilState::front(Self) -> StencilFaceState
+pub fn StencilState::native_handle(Self) -> @native.Handle
+pub fn StencilState::new() -> Self
+pub fn StencilState::read_mask(Self) -> Byte
+pub fn StencilState::ref_(Self) -> Byte
+pub fn StencilState::unsafe_from_native(@native.Handle) -> Self
+pub fn StencilState::with_back(Self, StencilFaceState) -> Self
+pub fn StencilState::with_enabled(Self, Bool) -> Self
+pub fn StencilState::with_front(Self, StencilFaceState) -> Self
+pub fn StencilState::with_read_mask(Self, Byte) -> Self
+pub fn StencilState::with_ref(Self, Byte) -> Self
+pub fn StencilState::with_write_mask(Self, Byte) -> Self
+pub fn StencilState::write_mask(Self) -> Byte
+
+#derive(Eq, @debug.Debug)
+pub(all) enum StoreAction {
+  Default
+  Store
+  Dontcare
+}
+pub fn StoreAction::equal(Self, Self) -> Bool
+pub fn StoreAction::not_equal(Self, Self) -> Bool
+pub fn StoreAction::to_int(Self) -> Int32
+pub fn StoreAction::to_repr(Self) -> @debug.Repr
+
+pub type Swapchain
+pub fn Swapchain::color_format(Self) -> PixelFormat
+pub fn Swapchain::d3d11(Self) -> D3d11Swapchain
+pub fn Swapchain::depth_format(Self) -> PixelFormat
+pub fn Swapchain::gl(Self) -> GlSwapchain
+pub fn Swapchain::height(Self) -> Int32
+pub fn Swapchain::invalid(Self) -> Bool
+pub fn Swapchain::metal(Self) -> MetalSwapchain
+pub fn Swapchain::native_handle(Self) -> @native.Handle
+pub fn Swapchain::new() -> Self
+pub fn Swapchain::sample_count(Self) -> Int32
+pub fn Swapchain::unsafe_from_native(@native.Handle) -> Self
+pub fn Swapchain::vulkan(Self) -> VulkanSwapchain
+pub fn Swapchain::wgpu(Self) -> WgpuSwapchain
+pub fn Swapchain::width(Self) -> Int32
+pub fn Swapchain::with_color_format(Self, PixelFormat) -> Self
+pub fn Swapchain::with_d3d11(Self, D3d11Swapchain) -> Self
+pub fn Swapchain::with_depth_format(Self, PixelFormat) -> Self
+pub fn Swapchain::with_gl(Self, GlSwapchain) -> Self
+pub fn Swapchain::with_height(Self, Int32) -> Self
+pub fn Swapchain::with_invalid(Self, Bool) -> Self
+pub fn Swapchain::with_metal(Self, MetalSwapchain) -> Self
+pub fn Swapchain::with_sample_count(Self, Int32) -> Self
+pub fn Swapchain::with_vulkan(Self, VulkanSwapchain) -> Self
+pub fn Swapchain::with_wgpu(Self, WgpuSwapchain) -> Self
+pub fn Swapchain::with_width(Self, Int32) -> Self
+
+pub type TextureViewDesc
+pub fn TextureViewDesc::image(Self) -> Image
+pub fn TextureViewDesc::mip_levels(Self) -> TextureViewRange
+pub fn TextureViewDesc::native_handle(Self) -> @native.Handle
+pub fn TextureViewDesc::new() -> Self
+pub fn TextureViewDesc::slices(Self) -> TextureViewRange
+pub fn TextureViewDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn TextureViewDesc::with_image(Self, Image) -> Self
+pub fn TextureViewDesc::with_mip_levels(Self, TextureViewRange) -> Self
+pub fn TextureViewDesc::with_slices(Self, TextureViewRange) -> Self
+
+pub type TextureViewRange
+pub fn TextureViewRange::base(Self) -> Int32
+pub fn TextureViewRange::count(Self) -> Int32
+pub fn TextureViewRange::native_handle(Self) -> @native.Handle
+pub fn TextureViewRange::new() -> Self
+pub fn TextureViewRange::unsafe_from_native(@native.Handle) -> Self
+pub fn TextureViewRange::with_base(Self, Int32) -> Self
+pub fn TextureViewRange::with_count(Self, Int32) -> Self
+
+pub type TotalResourceStats
+pub fn TotalResourceStats::alive(Self) -> UInt32
+pub fn TotalResourceStats::allocated(Self) -> UInt32
+pub fn TotalResourceStats::deallocated(Self) -> UInt32
+pub fn TotalResourceStats::free(Self) -> UInt32
+pub fn TotalResourceStats::inited(Self) -> UInt32
+pub fn TotalResourceStats::native_handle(Self) -> @native.Handle
+pub fn TotalResourceStats::new() -> Self
+pub fn TotalResourceStats::uninited(Self) -> UInt32
+pub fn TotalResourceStats::unsafe_from_native(@native.Handle) -> Self
+pub fn TotalResourceStats::with_alive(Self, UInt32) -> Self
+pub fn TotalResourceStats::with_allocated(Self, UInt32) -> Self
+pub fn TotalResourceStats::with_deallocated(Self, UInt32) -> Self
+pub fn TotalResourceStats::with_free(Self, UInt32) -> Self
+pub fn TotalResourceStats::with_inited(Self, UInt32) -> Self
+pub fn TotalResourceStats::with_uninited(Self, UInt32) -> Self
+
+pub type TotalStats
+pub fn TotalStats::buffers(Self) -> TotalResourceStats
+pub fn TotalStats::images(Self) -> TotalResourceStats
+pub fn TotalStats::native_handle(Self) -> @native.Handle
+pub fn TotalStats::new() -> Self
+pub fn TotalStats::pipelines(Self) -> TotalResourceStats
+pub fn TotalStats::samplers(Self) -> TotalResourceStats
+pub fn TotalStats::shaders(Self) -> TotalResourceStats
+pub fn TotalStats::unsafe_from_native(@native.Handle) -> Self
+pub fn TotalStats::views(Self) -> TotalResourceStats
+pub fn TotalStats::with_buffers(Self, TotalResourceStats) -> Self
+pub fn TotalStats::with_images(Self, TotalResourceStats) -> Self
+pub fn TotalStats::with_pipelines(Self, TotalResourceStats) -> Self
+pub fn TotalStats::with_samplers(Self, TotalResourceStats) -> Self
+pub fn TotalStats::with_shaders(Self, TotalResourceStats) -> Self
+pub fn TotalStats::with_views(Self, TotalResourceStats) -> Self
+
+pub type TraceHooks
+pub fn TraceHooks::alloc_buffer(Self) -> @native.Handle
+pub fn TraceHooks::alloc_image(Self) -> @native.Handle
+pub fn TraceHooks::alloc_pipeline(Self) -> @native.Handle
+pub fn TraceHooks::alloc_sampler(Self) -> @native.Handle
+pub fn TraceHooks::alloc_shader(Self) -> @native.Handle
+pub fn TraceHooks::alloc_view(Self) -> @native.Handle
+pub fn TraceHooks::apply_bindings(Self) -> @native.Handle
+pub fn TraceHooks::apply_pipeline(Self) -> @native.Handle
+pub fn TraceHooks::apply_scissor_rect(Self) -> @native.Handle
+pub fn TraceHooks::apply_uniforms(Self) -> @native.Handle
+pub fn TraceHooks::apply_viewport(Self) -> @native.Handle
+pub fn TraceHooks::begin_pass(Self) -> @native.Handle
+pub fn TraceHooks::commit(Self) -> @native.Handle
+pub fn TraceHooks::copy_buffer_to_buffer(Self) -> @native.Handle
+pub fn TraceHooks::copy_buffer_to_image(Self) -> @native.Handle
+pub fn TraceHooks::copy_image_to_image(Self) -> @native.Handle
+pub fn TraceHooks::dealloc_buffer(Self) -> @native.Handle
+pub fn TraceHooks::dealloc_image(Self) -> @native.Handle
+pub fn TraceHooks::dealloc_pipeline(Self) -> @native.Handle
+pub fn TraceHooks::dealloc_sampler(Self) -> @native.Handle
+pub fn TraceHooks::dealloc_shader(Self) -> @native.Handle
+pub fn TraceHooks::dealloc_view(Self) -> @native.Handle
+pub fn TraceHooks::destroy_buffer(Self) -> @native.Handle
+pub fn TraceHooks::destroy_image(Self) -> @native.Handle
+pub fn TraceHooks::destroy_pipeline(Self) -> @native.Handle
+pub fn TraceHooks::destroy_sampler(Self) -> @native.Handle
+pub fn TraceHooks::destroy_shader(Self) -> @native.Handle
+pub fn TraceHooks::destroy_view(Self) -> @native.Handle
+pub fn TraceHooks::dispatch(Self) -> @native.Handle
+pub fn TraceHooks::draw(Self) -> @native.Handle
+pub fn TraceHooks::draw_ex(Self) -> @native.Handle
+pub fn TraceHooks::end_pass(Self) -> @native.Handle
+pub fn TraceHooks::fail_buffer(Self) -> @native.Handle
+pub fn TraceHooks::fail_image(Self) -> @native.Handle
+pub fn TraceHooks::fail_pipeline(Self) -> @native.Handle
+pub fn TraceHooks::fail_sampler(Self) -> @native.Handle
+pub fn TraceHooks::fail_shader(Self) -> @native.Handle
+pub fn TraceHooks::fail_view(Self) -> @native.Handle
+pub fn TraceHooks::init_buffer(Self) -> @native.Handle
+pub fn TraceHooks::init_image(Self) -> @native.Handle
+pub fn TraceHooks::init_pipeline(Self) -> @native.Handle
+pub fn TraceHooks::init_sampler(Self) -> @native.Handle
+pub fn TraceHooks::init_shader(Self) -> @native.Handle
+pub fn TraceHooks::init_view(Self) -> @native.Handle
+pub fn TraceHooks::make_buffer(Self) -> @native.Handle
+pub fn TraceHooks::make_image(Self) -> @native.Handle
+pub fn TraceHooks::make_pipeline(Self) -> @native.Handle
+pub fn TraceHooks::make_sampler(Self) -> @native.Handle
+pub fn TraceHooks::make_shader(Self) -> @native.Handle
+pub fn TraceHooks::make_view(Self) -> @native.Handle
+pub fn TraceHooks::native_handle(Self) -> @native.Handle
+pub fn TraceHooks::new() -> Self
+pub fn TraceHooks::on_alloc_buffer(Self, (Buffer) -> Unit) -> Self
+pub fn TraceHooks::on_alloc_image(Self, (Image) -> Unit) -> Self
+pub fn TraceHooks::on_alloc_pipeline(Self, (Pipeline) -> Unit) -> Self
+pub fn TraceHooks::on_alloc_sampler(Self, (Sampler) -> Unit) -> Self
+pub fn TraceHooks::on_alloc_shader(Self, (Shader) -> Unit) -> Self
+pub fn TraceHooks::on_alloc_view(Self, (View) -> Unit) -> Self
+pub fn TraceHooks::on_apply_bindings(Self, (Bindings) -> Unit) -> Self
+pub fn TraceHooks::on_apply_pipeline(Self, (Pipeline) -> Unit) -> Self
+pub fn TraceHooks::on_apply_scissor_rect(Self, (Int32, Int32, Int32, Int32, Bool) -> Unit) -> Self
+pub fn TraceHooks::on_apply_uniforms(Self, (Int32, Range) -> Unit) -> Self
+pub fn TraceHooks::on_apply_viewport(Self, (Int32, Int32, Int32, Int32, Bool) -> Unit) -> Self
+pub fn TraceHooks::on_begin_pass(Self, (Pass) -> Unit) -> Self
+pub fn TraceHooks::on_commit(Self, () -> Unit) -> Self
+pub fn TraceHooks::on_copy_buffer_to_buffer(Self, (CopyBufferToBufferDesc) -> Unit) -> Self
+pub fn TraceHooks::on_copy_buffer_to_image(Self, (CopyBufferToImageDesc) -> Unit) -> Self
+pub fn TraceHooks::on_copy_image_to_image(Self, (CopyImageToImageDesc) -> Unit) -> Self
+pub fn TraceHooks::on_dealloc_buffer(Self, (Buffer) -> Unit) -> Self
+pub fn TraceHooks::on_dealloc_image(Self, (Image) -> Unit) -> Self
+pub fn TraceHooks::on_dealloc_pipeline(Self, (Pipeline) -> Unit) -> Self
+pub fn TraceHooks::on_dealloc_sampler(Self, (Sampler) -> Unit) -> Self
+pub fn TraceHooks::on_dealloc_shader(Self, (Shader) -> Unit) -> Self
+pub fn TraceHooks::on_dealloc_view(Self, (View) -> Unit) -> Self
+pub fn TraceHooks::on_destroy_buffer(Self, (Buffer) -> Unit) -> Self
+pub fn TraceHooks::on_destroy_image(Self, (Image) -> Unit) -> Self
+pub fn TraceHooks::on_destroy_pipeline(Self, (Pipeline) -> Unit) -> Self
+pub fn TraceHooks::on_destroy_sampler(Self, (Sampler) -> Unit) -> Self
+pub fn TraceHooks::on_destroy_shader(Self, (Shader) -> Unit) -> Self
+pub fn TraceHooks::on_destroy_view(Self, (View) -> Unit) -> Self
+pub fn TraceHooks::on_dispatch(Self, (Int32, Int32, Int32) -> Unit) -> Self
+pub fn TraceHooks::on_draw(Self, (Int32, Int32, Int32) -> Unit) -> Self
+pub fn TraceHooks::on_draw_ex(Self, (Int32, Int32, Int32, Int32, Int32) -> Unit) -> Self
+pub fn TraceHooks::on_end_pass(Self, () -> Unit) -> Self
+pub fn TraceHooks::on_fail_buffer(Self, (Buffer) -> Unit) -> Self
+pub fn TraceHooks::on_fail_image(Self, (Image) -> Unit) -> Self
+pub fn TraceHooks::on_fail_pipeline(Self, (Pipeline) -> Unit) -> Self
+pub fn TraceHooks::on_fail_sampler(Self, (Sampler) -> Unit) -> Self
+pub fn TraceHooks::on_fail_shader(Self, (Shader) -> Unit) -> Self
+pub fn TraceHooks::on_fail_view(Self, (View) -> Unit) -> Self
+pub fn TraceHooks::on_init_buffer(Self, (Buffer, BufferDesc) -> Unit) -> Self
+pub fn TraceHooks::on_init_image(Self, (Image, ImageDesc) -> Unit) -> Self
+pub fn TraceHooks::on_init_pipeline(Self, (Pipeline, PipelineDesc) -> Unit) -> Self
+pub fn TraceHooks::on_init_sampler(Self, (Sampler, SamplerDesc) -> Unit) -> Self
+pub fn TraceHooks::on_init_shader(Self, (Shader, ShaderDesc) -> Unit) -> Self
+pub fn TraceHooks::on_init_view(Self, (View, ViewDesc) -> Unit) -> Self
+pub fn TraceHooks::on_make_buffer(Self, (BufferDesc, Buffer) -> Unit) -> Self
+pub fn TraceHooks::on_make_image(Self, (ImageDesc, Image) -> Unit) -> Self
+pub fn TraceHooks::on_make_pipeline(Self, (PipelineDesc, Pipeline) -> Unit) -> Self
+pub fn TraceHooks::on_make_sampler(Self, (SamplerDesc, Sampler) -> Unit) -> Self
+pub fn TraceHooks::on_make_shader(Self, (ShaderDesc, Shader) -> Unit) -> Self
+pub fn TraceHooks::on_make_view(Self, (ViewDesc, View) -> Unit) -> Self
+pub fn TraceHooks::on_pop_debug_group(Self, () -> Unit) -> Self
+pub fn TraceHooks::on_push_debug_group(Self, (String) -> Unit) -> Self
+pub fn TraceHooks::on_reset_state_cache(Self, () -> Unit) -> Self
+pub fn TraceHooks::on_seal_buffer(Self, (Buffer) -> Unit) -> Self
+pub fn TraceHooks::on_seal_image(Self, (Image) -> Unit) -> Self
+pub fn TraceHooks::on_uninit_buffer(Self, (Buffer) -> Unit) -> Self
+pub fn TraceHooks::on_uninit_image(Self, (Image) -> Unit) -> Self
+pub fn TraceHooks::on_uninit_pipeline(Self, (Pipeline) -> Unit) -> Self
+pub fn TraceHooks::on_uninit_sampler(Self, (Sampler) -> Unit) -> Self
+pub fn TraceHooks::on_uninit_shader(Self, (Shader) -> Unit) -> Self
+pub fn TraceHooks::on_uninit_view(Self, (View) -> Unit) -> Self
+pub fn TraceHooks::on_write_buffer_transient(Self, (WriteBufferDesc) -> Unit) -> Self
+pub fn TraceHooks::on_write_buffer_unsealed(Self, (WriteBufferDesc) -> Unit) -> Self
+pub fn TraceHooks::on_write_image_transient(Self, (WriteImageDesc) -> Unit) -> Self
+pub fn TraceHooks::on_write_image_unsealed(Self, (WriteImageDesc) -> Unit) -> Self
+pub fn TraceHooks::pop_debug_group(Self) -> @native.Handle
+pub fn TraceHooks::push_debug_group(Self) -> @native.Handle
+pub fn TraceHooks::reset_state_cache(Self) -> @native.Handle
+pub fn TraceHooks::seal_buffer(Self) -> @native.Handle
+pub fn TraceHooks::seal_image(Self) -> @native.Handle
+pub fn TraceHooks::uninit_buffer(Self) -> @native.Handle
+pub fn TraceHooks::uninit_image(Self) -> @native.Handle
+pub fn TraceHooks::uninit_pipeline(Self) -> @native.Handle
+pub fn TraceHooks::uninit_sampler(Self) -> @native.Handle
+pub fn TraceHooks::uninit_shader(Self) -> @native.Handle
+pub fn TraceHooks::uninit_view(Self) -> @native.Handle
+pub fn TraceHooks::unsafe_from_native(@native.Handle) -> Self
+pub fn TraceHooks::user_data(Self) -> @native.Handle
+pub fn TraceHooks::with_alloc_buffer(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_alloc_image(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_alloc_pipeline(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_alloc_sampler(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_alloc_shader(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_alloc_view(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_apply_bindings(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_apply_pipeline(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_apply_scissor_rect(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_apply_uniforms(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_apply_viewport(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_begin_pass(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_commit(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_copy_buffer_to_buffer(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_copy_buffer_to_image(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_copy_image_to_image(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_dealloc_buffer(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_dealloc_image(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_dealloc_pipeline(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_dealloc_sampler(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_dealloc_shader(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_dealloc_view(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_destroy_buffer(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_destroy_image(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_destroy_pipeline(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_destroy_sampler(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_destroy_shader(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_destroy_view(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_dispatch(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_draw(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_draw_ex(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_end_pass(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_fail_buffer(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_fail_image(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_fail_pipeline(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_fail_sampler(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_fail_shader(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_fail_view(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_init_buffer(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_init_image(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_init_pipeline(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_init_sampler(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_init_shader(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_init_view(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_make_buffer(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_make_image(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_make_pipeline(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_make_sampler(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_make_shader(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_make_view(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_pop_debug_group(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_push_debug_group(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_reset_state_cache(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_seal_buffer(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_seal_image(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_uninit_buffer(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_uninit_image(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_uninit_pipeline(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_uninit_sampler(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_uninit_shader(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_uninit_view(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_user_data(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_write_buffer_transient(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_write_buffer_unsealed(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_write_image_transient(Self, @native.Handle) -> Self
+pub fn TraceHooks::with_write_image_unsealed(Self, @native.Handle) -> Self
+pub fn TraceHooks::write_buffer_transient(Self) -> @native.Handle
+pub fn TraceHooks::write_buffer_unsealed(Self) -> @native.Handle
+pub fn TraceHooks::write_image_transient(Self) -> @native.Handle
+pub fn TraceHooks::write_image_unsealed(Self) -> @native.Handle
+
+#derive(Eq, @debug.Debug)
+pub(all) enum UniformLayout {
+  Default
+  Native
+  Std140
+}
+pub fn UniformLayout::equal(Self, Self) -> Bool
+pub fn UniformLayout::not_equal(Self, Self) -> Bool
+pub fn UniformLayout::to_int(Self) -> Int32
+pub fn UniformLayout::to_repr(Self) -> @debug.Repr
+
+#derive(Eq, @debug.Debug)
+pub(all) enum UniformType {
+  Invalid
+  Float
+  Float2
+  Float3
+  Float4
+  Int
+  Int2
+  Int3
+  Int4
+  Mat4
+}
+pub fn UniformType::equal(Self, Self) -> Bool
+pub fn UniformType::not_equal(Self, Self) -> Bool
+pub fn UniformType::to_int(Self) -> Int32
+pub fn UniformType::to_repr(Self) -> @debug.Repr
+
+pub type VertexAttrState
+pub fn VertexAttrState::buffer_index(Self) -> Int32
+pub fn VertexAttrState::format(Self) -> VertexFormat
+pub fn VertexAttrState::native_handle(Self) -> @native.Handle
+pub fn VertexAttrState::new() -> Self
+pub fn VertexAttrState::offset(Self) -> Int32
+pub fn VertexAttrState::unsafe_from_native(@native.Handle) -> Self
+pub fn VertexAttrState::with_buffer_index(Self, Int32) -> Self
+pub fn VertexAttrState::with_format(Self, VertexFormat) -> Self
+pub fn VertexAttrState::with_offset(Self, Int32) -> Self
+
+pub type VertexBufferLayoutState
+pub fn VertexBufferLayoutState::native_handle(Self) -> @native.Handle
+pub fn VertexBufferLayoutState::new() -> Self
+pub fn VertexBufferLayoutState::step_func(Self) -> VertexStep
+pub fn VertexBufferLayoutState::step_rate(Self) -> Int32
+pub fn VertexBufferLayoutState::stride(Self) -> Int32
+pub fn VertexBufferLayoutState::unsafe_from_native(@native.Handle) -> Self
+pub fn VertexBufferLayoutState::with_step_func(Self, VertexStep) -> Self
+pub fn VertexBufferLayoutState::with_step_rate(Self, Int32) -> Self
+pub fn VertexBufferLayoutState::with_stride(Self, Int32) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum VertexFormat {
+  Invalid
+  Float
+  Float2
+  Float3
+  Float4
+  Int
+  Int2
+  Int3
+  Int4
+  Uint
+  Uint2
+  Uint3
+  Uint4
+  Byte4
+  Byte4n
+  Ubyte4
+  Ubyte4n
+  Short2
+  Short2n
+  Ushort2
+  Ushort2n
+  Short4
+  Short4n
+  Ushort4
+  Ushort4n
+  Int10N2
+  Uint10N2
+  Half2
+  Half4
+}
+pub fn VertexFormat::equal(Self, Self) -> Bool
+pub fn VertexFormat::not_equal(Self, Self) -> Bool
+pub fn VertexFormat::to_int(Self) -> Int32
+pub fn VertexFormat::to_repr(Self) -> @debug.Repr
+
+pub type VertexLayoutState
+pub fn VertexLayoutState::attrs(Self, Int32) -> VertexAttrState
+pub fn VertexLayoutState::buffers(Self, Int32) -> VertexBufferLayoutState
+pub fn VertexLayoutState::native_handle(Self) -> @native.Handle
+pub fn VertexLayoutState::new() -> Self
+pub fn VertexLayoutState::unsafe_from_native(@native.Handle) -> Self
+pub fn VertexLayoutState::with_attrs(Self, Int32, VertexAttrState) -> Self
+pub fn VertexLayoutState::with_buffers(Self, Int32, VertexBufferLayoutState) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum VertexStep {
+  Default
+  PerVertex
+  PerInstance
+}
+pub fn VertexStep::equal(Self, Self) -> Bool
+pub fn VertexStep::not_equal(Self, Self) -> Bool
+pub fn VertexStep::to_int(Self) -> Int32
+pub fn VertexStep::to_repr(Self) -> @debug.Repr
+
+pub type View
+pub fn View::id(Self) -> UInt32
+pub fn View::native_handle(Self) -> @native.Handle
+pub fn View::new() -> Self
+pub fn View::unsafe_from_native(@native.Handle) -> Self
+pub fn View::with_id(Self, UInt32) -> Self
+
+pub type ViewDesc
+pub fn ViewDesc::color_attachment(Self) -> ImageViewDesc
+pub fn ViewDesc::depth_stencil_attachment(Self) -> ImageViewDesc
+pub fn ViewDesc::label(Self) -> String
+pub fn ViewDesc::native_handle(Self) -> @native.Handle
+pub fn ViewDesc::new() -> Self
+pub fn ViewDesc::resolve_attachment(Self) -> ImageViewDesc
+pub fn ViewDesc::storage_buffer(Self) -> BufferViewDesc
+pub fn ViewDesc::storage_image(Self) -> ImageViewDesc
+pub fn ViewDesc::texture(Self) -> TextureViewDesc
+pub fn ViewDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn ViewDesc::with_color_attachment(Self, ImageViewDesc) -> Self
+pub fn ViewDesc::with_depth_stencil_attachment(Self, ImageViewDesc) -> Self
+pub fn ViewDesc::with_label(Self, String) -> Self
+pub fn ViewDesc::with_resolve_attachment(Self, ImageViewDesc) -> Self
+pub fn ViewDesc::with_storage_buffer(Self, BufferViewDesc) -> Self
+pub fn ViewDesc::with_storage_image(Self, ImageViewDesc) -> Self
+pub fn ViewDesc::with_texture(Self, TextureViewDesc) -> Self
+
+pub type ViewInfo
+pub fn ViewInfo::native_handle(Self) -> @native.Handle
+pub fn ViewInfo::new() -> Self
+pub fn ViewInfo::slot(Self) -> SlotInfo
+pub fn ViewInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn ViewInfo::with_slot(Self, SlotInfo) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum ViewType {
+  Invalid
+  Storagebuffer
+  Storageimage
+  Texture
+  Colorattachment
+  Resolveattachment
+  Depthstencilattachment
+}
+pub fn ViewType::equal(Self, Self) -> Bool
+pub fn ViewType::not_equal(Self, Self) -> Bool
+pub fn ViewType::to_int(Self) -> Int32
+pub fn ViewType::to_repr(Self) -> @debug.Repr
+
+pub type VulkanDesc
+pub fn VulkanDesc::copy_staging_buffer_size(Self) -> Int32
+pub fn VulkanDesc::descriptor_buffer_size(Self) -> Int32
+pub fn VulkanDesc::native_handle(Self) -> @native.Handle
+pub fn VulkanDesc::new() -> Self
+pub fn VulkanDesc::transient_staging_buffer_size(Self) -> Int32
+pub fn VulkanDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn VulkanDesc::with_copy_staging_buffer_size(Self, Int32) -> Self
+pub fn VulkanDesc::with_descriptor_buffer_size(Self, Int32) -> Self
+pub fn VulkanDesc::with_transient_staging_buffer_size(Self, Int32) -> Self
+
+pub type VulkanEnvironment
+pub fn VulkanEnvironment::device(Self) -> @native.Handle
+pub fn VulkanEnvironment::instance(Self) -> @native.Handle
+pub fn VulkanEnvironment::native_handle(Self) -> @native.Handle
+pub fn VulkanEnvironment::new() -> Self
+pub fn VulkanEnvironment::physical_device(Self) -> @native.Handle
+pub fn VulkanEnvironment::queue(Self) -> @native.Handle
+pub fn VulkanEnvironment::queue_family_index(Self) -> UInt32
+pub fn VulkanEnvironment::unsafe_from_native(@native.Handle) -> Self
+pub fn VulkanEnvironment::with_device(Self, @native.Handle) -> Self
+pub fn VulkanEnvironment::with_instance(Self, @native.Handle) -> Self
+pub fn VulkanEnvironment::with_physical_device(Self, @native.Handle) -> Self
+pub fn VulkanEnvironment::with_queue(Self, @native.Handle) -> Self
+pub fn VulkanEnvironment::with_queue_family_index(Self, UInt32) -> Self
+
+pub type VulkanSwapchain
+pub fn VulkanSwapchain::depth_stencil_image(Self) -> @native.Handle
+pub fn VulkanSwapchain::depth_stencil_view(Self) -> @native.Handle
+pub fn VulkanSwapchain::native_handle(Self) -> @native.Handle
+pub fn VulkanSwapchain::new() -> Self
+pub fn VulkanSwapchain::present_complete_semaphore(Self) -> @native.Handle
+pub fn VulkanSwapchain::render_finished_semaphore(Self) -> @native.Handle
+pub fn VulkanSwapchain::render_image(Self) -> @native.Handle
+pub fn VulkanSwapchain::render_view(Self) -> @native.Handle
+pub fn VulkanSwapchain::resolve_image(Self) -> @native.Handle
+pub fn VulkanSwapchain::resolve_view(Self) -> @native.Handle
+pub fn VulkanSwapchain::unsafe_from_native(@native.Handle) -> Self
+pub fn VulkanSwapchain::with_depth_stencil_image(Self, @native.Handle) -> Self
+pub fn VulkanSwapchain::with_depth_stencil_view(Self, @native.Handle) -> Self
+pub fn VulkanSwapchain::with_present_complete_semaphore(Self, @native.Handle) -> Self
+pub fn VulkanSwapchain::with_render_finished_semaphore(Self, @native.Handle) -> Self
+pub fn VulkanSwapchain::with_render_image(Self, @native.Handle) -> Self
+pub fn VulkanSwapchain::with_render_view(Self, @native.Handle) -> Self
+pub fn VulkanSwapchain::with_resolve_image(Self, @native.Handle) -> Self
+pub fn VulkanSwapchain::with_resolve_view(Self, @native.Handle) -> Self
+
+pub type WgpuBufferInfo
+pub fn WgpuBufferInfo::buf(Self) -> @native.Handle
+pub fn WgpuBufferInfo::native_handle(Self) -> @native.Handle
+pub fn WgpuBufferInfo::new() -> Self
+pub fn WgpuBufferInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn WgpuBufferInfo::with_buf(Self, @native.Handle) -> Self
+
+pub type WgpuDesc
+pub fn WgpuDesc::bindgroups_cache_size(Self) -> Int32
+pub fn WgpuDesc::disable_bindgroups_cache(Self) -> Bool
+pub fn WgpuDesc::native_handle(Self) -> @native.Handle
+pub fn WgpuDesc::new() -> Self
+pub fn WgpuDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn WgpuDesc::with_bindgroups_cache_size(Self, Int32) -> Self
+pub fn WgpuDesc::with_disable_bindgroups_cache(Self, Bool) -> Self
+
+pub type WgpuEnvironment
+pub fn WgpuEnvironment::device(Self) -> @native.Handle
+pub fn WgpuEnvironment::native_handle(Self) -> @native.Handle
+pub fn WgpuEnvironment::new() -> Self
+pub fn WgpuEnvironment::unsafe_from_native(@native.Handle) -> Self
+pub fn WgpuEnvironment::with_device(Self, @native.Handle) -> Self
+
+pub type WgpuImageInfo
+pub fn WgpuImageInfo::native_handle(Self) -> @native.Handle
+pub fn WgpuImageInfo::new() -> Self
+pub fn WgpuImageInfo::tex(Self) -> @native.Handle
+pub fn WgpuImageInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn WgpuImageInfo::with_tex(Self, @native.Handle) -> Self
+
+pub type WgpuPipelineInfo
+pub fn WgpuPipelineInfo::compute_pipeline(Self) -> @native.Handle
+pub fn WgpuPipelineInfo::native_handle(Self) -> @native.Handle
+pub fn WgpuPipelineInfo::new() -> Self
+pub fn WgpuPipelineInfo::render_pipeline(Self) -> @native.Handle
+pub fn WgpuPipelineInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn WgpuPipelineInfo::with_compute_pipeline(Self, @native.Handle) -> Self
+pub fn WgpuPipelineInfo::with_render_pipeline(Self, @native.Handle) -> Self
+
+pub type WgpuSamplerInfo
+pub fn WgpuSamplerInfo::native_handle(Self) -> @native.Handle
+pub fn WgpuSamplerInfo::new() -> Self
+pub fn WgpuSamplerInfo::smp(Self) -> @native.Handle
+pub fn WgpuSamplerInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn WgpuSamplerInfo::with_smp(Self, @native.Handle) -> Self
+
+pub type WgpuShaderInfo
+pub fn WgpuShaderInfo::bgl(Self) -> @native.Handle
+pub fn WgpuShaderInfo::fs_mod(Self) -> @native.Handle
+pub fn WgpuShaderInfo::native_handle(Self) -> @native.Handle
+pub fn WgpuShaderInfo::new() -> Self
+pub fn WgpuShaderInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn WgpuShaderInfo::vs_mod(Self) -> @native.Handle
+pub fn WgpuShaderInfo::with_bgl(Self, @native.Handle) -> Self
+pub fn WgpuShaderInfo::with_fs_mod(Self, @native.Handle) -> Self
+pub fn WgpuShaderInfo::with_vs_mod(Self, @native.Handle) -> Self
+
+pub type WgpuSwapchain
+pub fn WgpuSwapchain::depth_stencil_view(Self) -> @native.Handle
+pub fn WgpuSwapchain::native_handle(Self) -> @native.Handle
+pub fn WgpuSwapchain::new() -> Self
+pub fn WgpuSwapchain::render_view(Self) -> @native.Handle
+pub fn WgpuSwapchain::resolve_view(Self) -> @native.Handle
+pub fn WgpuSwapchain::unsafe_from_native(@native.Handle) -> Self
+pub fn WgpuSwapchain::with_depth_stencil_view(Self, @native.Handle) -> Self
+pub fn WgpuSwapchain::with_render_view(Self, @native.Handle) -> Self
+pub fn WgpuSwapchain::with_resolve_view(Self, @native.Handle) -> Self
+
+pub type WgpuViewInfo
+pub fn WgpuViewInfo::native_handle(Self) -> @native.Handle
+pub fn WgpuViewInfo::new() -> Self
+pub fn WgpuViewInfo::unsafe_from_native(@native.Handle) -> Self
+pub fn WgpuViewInfo::view(Self) -> @native.Handle
+pub fn WgpuViewInfo::with_view(Self, @native.Handle) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Wrap {
+  Default
+  Repeat
+  ClampToEdge
+  ClampToBorder
+  MirroredRepeat
+}
+pub fn Wrap::equal(Self, Self) -> Bool
+pub fn Wrap::not_equal(Self, Self) -> Bool
+pub fn Wrap::to_int(Self) -> Int32
+pub fn Wrap::to_repr(Self) -> @debug.Repr
+
+pub type WriteBufferDesc
+pub fn WriteBufferDesc::dst(Self) -> BufferLocation
+pub fn WriteBufferDesc::native_handle(Self) -> @native.Handle
+pub fn WriteBufferDesc::new() -> Self
+pub fn WriteBufferDesc::size(Self) -> UInt64
+pub fn WriteBufferDesc::src(Self) -> WriteBufferSource
+pub fn WriteBufferDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn WriteBufferDesc::with_dst(Self, BufferLocation) -> Self
+pub fn WriteBufferDesc::with_size(Self, UInt64) -> Self
+pub fn WriteBufferDesc::with_src(Self, WriteBufferSource) -> Self
+
+pub type WriteBufferSource
+pub fn WriteBufferSource::data(Self) -> Range
+pub fn WriteBufferSource::native_handle(Self) -> @native.Handle
+pub fn WriteBufferSource::new() -> Self
+pub fn WriteBufferSource::offset(Self) -> UInt64
+pub fn WriteBufferSource::unsafe_from_native(@native.Handle) -> Self
+pub fn WriteBufferSource::with_data(Self, Range) -> Self
+pub fn WriteBufferSource::with_offset(Self, UInt64) -> Self
+
+pub type WriteImageDesc
+pub fn WriteImageDesc::dst(Self) -> ImageLocation
+pub fn WriteImageDesc::native_handle(Self) -> @native.Handle
+pub fn WriteImageDesc::new() -> Self
+pub fn WriteImageDesc::size(Self) -> ImageExtent
+pub fn WriteImageDesc::src(Self) -> WriteImageSource
+pub fn WriteImageDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn WriteImageDesc::with_dst(Self, ImageLocation) -> Self
+pub fn WriteImageDesc::with_size(Self, ImageExtent) -> Self
+pub fn WriteImageDesc::with_src(Self, WriteImageSource) -> Self
+
+pub type WriteImageSource
+pub fn WriteImageSource::bytes_per_row(Self) -> Int32
+pub fn WriteImageSource::bytes_per_slice(Self) -> Int32
+pub fn WriteImageSource::data(Self) -> Range
+pub fn WriteImageSource::native_handle(Self) -> @native.Handle
+pub fn WriteImageSource::new() -> Self
+pub fn WriteImageSource::offset(Self) -> UInt64
+pub fn WriteImageSource::unsafe_from_native(@native.Handle) -> Self
+pub fn WriteImageSource::with_bytes_per_row(Self, Int32) -> Self
+pub fn WriteImageSource::with_bytes_per_slice(Self, Int32) -> Self
+pub fn WriteImageSource::with_data(Self, Range) -> Self
+pub fn WriteImageSource::with_offset(Self, UInt64) -> Self
+
+// Type aliases
+
+// Traits

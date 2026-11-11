@@ -1,0 +1,11 @@
+import {
+  "Milky2018/sokol/native",
+  "moonbitlang/core/encoding/utf8",
+}
+
+supported_targets = "native"
+
+options(
+  "native-stub": [ "support.c" ],
+  link: { "native": { "stub-cc-flags": "" } },
+)

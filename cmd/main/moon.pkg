@@ -1,0 +1,15 @@
+import {
+  "Milky2018/sokol/app",
+  "Milky2018/sokol/gfx",
+  "Milky2018/sokol/glue",
+  "Milky2018/sokol/examples/shaders",
+  "moonbitlang/core/env",
+}
+
+pkgtype(kind: "executable")
+
+supported_targets = "native"
+
+options(
+  link: { "native": { } },
+)

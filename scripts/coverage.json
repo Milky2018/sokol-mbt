@@ -1,0 +1,80 @@
+{
+  "gfx": {
+    "functions": 155,
+    "generated": 151,
+    "custom": [
+      "sg_shutdown",
+      "sg_install_trace_hooks",
+      "sg_add_commit_listener",
+      "sg_remove_commit_listener"
+    ],
+    "structs": 130,
+    "enums": 29
+  },
+  "app": {
+    "functions": 56,
+    "generated": 54,
+    "custom": [
+      "sapp_run",
+      "sapp_html5_fetch_dropped_file"
+    ],
+    "structs": 28,
+    "enums": 9
+  },
+  "audio": {
+    "functions": 11,
+    "generated": 10,
+    "custom": [
+      "saudio_push"
+    ],
+    "structs": 5,
+    "enums": 2
+  },
+  "fetch": {
+    "functions": 14,
+    "generated": 9,
+    "custom": [
+      "sfetch_shutdown",
+      "sfetch_send",
+      "sfetch_dowork",
+      "sfetch_bind_buffer",
+      "sfetch_unbind_buffer"
+    ],
+    "structs": 7,
+    "enums": 2
+  },
+  "args": {
+    "functions": 12,
+    "generated": 11,
+    "custom": [
+      "sargs_setup"
+    ],
+    "structs": 2,
+    "enums": 0
+  },
+  "time": {
+    "functions": 10,
+    "generated": 9,
+    "custom": [
+      "stm_laptime"
+    ],
+    "structs": 0,
+    "enums": 0
+  },
+  "log": {
+    "functions": 1,
+    "generated": 0,
+    "custom": [
+      "slog_func"
+    ],
+    "structs": 0,
+    "enums": 0
+  },
+  "glue": {
+    "functions": 2,
+    "generated": 2,
+    "custom": [],
+    "structs": 0,
+    "enums": 0
+  }
+}

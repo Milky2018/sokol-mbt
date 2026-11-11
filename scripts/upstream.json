@@ -1,0 +1,15 @@
+{
+  "repository": "https://github.com/floooh/sokol",
+  "revision": "93aa187b5d387cc24b7290b3ca3f13f61e139e7c",
+  "files": {
+    "sokol_app.h": "10391208bd09e402ade01c7776565f224b8ea218530f098cb85a9d84773fa71b",
+    "sokol_args.h": "a16687264a61e8bd252c7ff09d9a9c5271d1a090117a54aebf1f33f5e8658486",
+    "sokol_audio.h": "e6fb7d85289a2cee2e6ed6b261f4a02f6f349d866b54d59d515b7e18815ac1e8",
+    "sokol_fetch.h": "4eb36a21ac62670ed2504b857f9e31581e92dd94318853c9a579a9992860bb5f",
+    "sokol_gfx.h": "ae3f1035ddaf5a306d04f5bdf01cc47591c34abb268777fba0d8b172fbaba4ac",
+    "sokol_glue.h": "6207d08f7ea5da43154f980c7fe314429eafb75922c6b41108ce2936f8240753",
+    "sokol_log.h": "a8d55de21694410740e752ea8e57c4103d5951d20339ba9712e24232adef9a42",
+    "sokol_time.h": "0eeb8c1bc9ac2ec4438090f68e2ab0eb85d1daf10643158dec11383a8e8b1872",
+    "SOKOL-LICENSE": "72f9367756dba68918b8955092c14503934681862eee33cc16495a02f40025ef"
+  }
+}

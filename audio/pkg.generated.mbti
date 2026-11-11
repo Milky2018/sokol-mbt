@@ -1,0 +1,160 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "Milky2018/sokol/audio"
+
+import {
+  "Milky2018/sokol/native",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn buffer_frames() -> Int32
+
+pub fn channels() -> Int32
+
+pub fn expect() -> Int32
+
+pub fn is_headless() -> Bool
+
+pub fn isvalid() -> Bool
+
+pub fn push(FixedArray[Float]) -> Int32
+
+pub fn query_desc() -> Desc
+
+pub fn sample_rate() -> Int32
+
+pub fn setup(Desc) -> Unit
+
+pub fn shutdown() -> Unit
+
+pub fn suspended() -> Bool
+
+pub fn userdata() -> @native.Handle
+
+// Errors
+
+// Types and methods
+pub type Allocator
+pub fn Allocator::alloc_fn(Self) -> @native.Handle
+pub fn Allocator::free_fn(Self) -> @native.Handle
+pub fn Allocator::native_handle(Self) -> @native.Handle
+pub fn Allocator::new() -> Self
+pub fn Allocator::unsafe_from_native(@native.Handle) -> Self
+pub fn Allocator::user_data(Self) -> @native.Handle
+pub fn Allocator::with_alloc_fn(Self, @native.Handle) -> Self
+pub fn Allocator::with_free_fn(Self, @native.Handle) -> Self
+pub fn Allocator::with_user_data(Self, @native.Handle) -> Self
+
+pub type Desc
+pub fn Desc::allocator(Self) -> Allocator
+pub fn Desc::buffer_frames(Self) -> Int32
+pub fn Desc::logger(Self) -> Logger
+pub fn Desc::n3ds(Self) -> N3dsDesc
+pub fn Desc::native_handle(Self) -> @native.Handle
+pub fn Desc::new() -> Self
+pub fn Desc::num_channels(Self) -> Int32
+pub fn Desc::num_packets(Self) -> Int32
+pub fn Desc::packet_frames(Self) -> Int32
+pub fn Desc::sample_rate(Self) -> Int32
+pub fn Desc::stream_cb(Self) -> @native.Handle
+pub fn Desc::stream_userdata_cb(Self) -> @native.Handle
+pub fn Desc::unsafe_from_native(@native.Handle) -> Self
+pub fn Desc::user_data(Self) -> @native.Handle
+pub fn Desc::win32(Self) -> Win32Desc
+pub fn Desc::with_allocator(Self, Allocator) -> Self
+pub fn Desc::with_buffer_frames(Self, Int32) -> Self
+pub fn Desc::with_logger(Self, Logger) -> Self
+pub fn Desc::with_n3ds(Self, N3dsDesc) -> Self
+pub fn Desc::with_num_channels(Self, Int32) -> Self
+pub fn Desc::with_num_packets(Self, Int32) -> Self
+pub fn Desc::with_packet_frames(Self, Int32) -> Self
+pub fn Desc::with_sample_rate(Self, Int32) -> Self
+pub fn Desc::with_stream_cb(Self, @native.Handle) -> Self
+pub fn Desc::with_stream_userdata_cb(Self, @native.Handle) -> Self
+pub fn Desc::with_user_data(Self, @native.Handle) -> Self
+pub fn Desc::with_win32(Self, Win32Desc) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum LogItem {
+  Ok
+  MallocFailed
+  AlsaSndPcmOpenFailed
+  AlsaFloatSamplesNotSupported
+  AlsaRequestedBufferSizeNotSupported
+  AlsaRequestedChannelCountNotSupported
+  AlsaSndPcmHwParamsSetRateNearFailed
+  AlsaSndPcmHwParamsFailed
+  AlsaPthreadCreateFailed
+  PulseaudioInvalidSampleSpec
+  PulseaudioSimpleNewFailed
+  PulseaudioSimpleWriteFailed
+  PulseaudioPthreadCreateFailed
+  WasapiCreateEventFailed
+  WasapiCreateDeviceEnumeratorFailed
+  WasapiGetDefaultAudioEndpointFailed
+  WasapiDeviceActivateFailed
+  WasapiAudioClientInitializeFailed
+  WasapiAudioClientGetBufferSizeFailed
+  WasapiAudioClientGetServiceFailed
+  WasapiAudioClientSetEventHandleFailed
+  WasapiCreateThreadFailed
+  AaudioStreambuilderOpenStreamFailed
+  AaudioPthreadCreateFailed
+  AaudioRestartingStreamAfterError
+  UsingAaudioBackend
+  AaudioCreateStreambuilderFailed
+  CoreaudioNewOutputFailed
+  CoreaudioAllocateBufferFailed
+  CoreaudioStartFailed
+  BackendBufferSizeIsntMultipleOfPacketSize
+  VitaSceaudioOpenFailed
+  VitaPthreadCreateFailed
+  N3dsNdspOpenFailed
+}
+pub fn LogItem::equal(Self, Self) -> Bool
+pub fn LogItem::not_equal(Self, Self) -> Bool
+pub fn LogItem::to_int(Self) -> Int32
+pub fn LogItem::to_repr(Self) -> @debug.Repr
+
+pub type Logger
+pub fn Logger::default() -> Self
+pub fn Logger::func(Self) -> @native.Handle
+pub fn Logger::native_handle(Self) -> @native.Handle
+pub fn Logger::new() -> Self
+pub fn Logger::unsafe_from_native(@native.Handle) -> Self
+pub fn Logger::user_data(Self) -> @native.Handle
+pub fn Logger::with_func(Self, @native.Handle) -> Self
+pub fn Logger::with_user_data(Self, @native.Handle) -> Self
+
+pub type N3dsDesc
+pub fn N3dsDesc::channel_id(Self) -> Int32
+pub fn N3dsDesc::interpolation_type(Self) -> N3dsNdspinterptype
+pub fn N3dsDesc::native_handle(Self) -> @native.Handle
+pub fn N3dsDesc::new() -> Self
+pub fn N3dsDesc::queue_count(Self) -> Int32
+pub fn N3dsDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn N3dsDesc::with_channel_id(Self, Int32) -> Self
+pub fn N3dsDesc::with_interpolation_type(Self, N3dsNdspinterptype) -> Self
+pub fn N3dsDesc::with_queue_count(Self, Int32) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum N3dsNdspinterptype {
+  Polyphase
+  Linear
+  None
+}
+pub fn N3dsNdspinterptype::equal(Self, Self) -> Bool
+pub fn N3dsNdspinterptype::not_equal(Self, Self) -> Bool
+pub fn N3dsNdspinterptype::to_int(Self) -> Int32
+pub fn N3dsNdspinterptype::to_repr(Self) -> @debug.Repr
+
+pub type Win32Desc
+pub fn Win32Desc::native_handle(Self) -> @native.Handle
+pub fn Win32Desc::new() -> Self
+pub fn Win32Desc::skip_coinitialize(Self) -> Bool
+pub fn Win32Desc::unsafe_from_native(@native.Handle) -> Self
+pub fn Win32Desc::with_skip_coinitialize(Self, Bool) -> Self
+
+// Type aliases
+
+// Traits

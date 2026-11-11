@@ -1,0 +1,35 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "Milky2018/sokol/time"
+
+import {
+  "moonbitlang/core/ref",
+}
+
+// Values
+pub fn diff(UInt64, UInt64) -> UInt64
+
+pub fn laptime(@ref.Ref[UInt64]) -> UInt64
+
+pub fn ms(UInt64) -> Double
+
+pub fn now() -> UInt64
+
+pub fn ns(UInt64) -> Double
+
+pub fn round_to_common_refresh_rate(UInt64) -> UInt64
+
+pub fn sec(UInt64) -> Double
+
+pub fn setup() -> Unit
+
+pub fn since(UInt64) -> UInt64
+
+pub fn us(UInt64) -> Double
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

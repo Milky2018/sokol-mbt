@@ -1,0 +1,9 @@
+import {
+}
+
+supported_targets = "native"
+
+options(
+  "native-stub": [ "support.c" ],
+  link: { "native": { "stub-cc-flags": "" } },
+)

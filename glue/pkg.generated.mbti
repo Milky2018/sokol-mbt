@@ -1,0 +1,19 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "Milky2018/sokol/glue"
+
+import {
+  "Milky2018/sokol/gfx",
+}
+
+// Values
+pub fn environment() -> @gfx.Environment
+
+pub fn swapchain() -> @gfx.Swapchain
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

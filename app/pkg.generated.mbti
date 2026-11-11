@@ -1,0 +1,990 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "Milky2018/sokol/app"
+
+import {
+  "Milky2018/sokol/native",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub const MAX_ICONIMAGES : Int32 = 8
+
+pub const MAX_KEYCODES : Int32 = 512
+
+pub const MAX_MOUSEBUTTONS : Int32 = 3
+
+pub const MAX_TOUCHPOINTS : Int32 = 8
+
+pub const MODIFIER_ALT : Int32 = 4
+
+pub const MODIFIER_CTRL : Int32 = 2
+
+pub const MODIFIER_LMB : Int32 = 256
+
+pub const MODIFIER_MMB : Int32 = 1024
+
+pub const MODIFIER_RMB : Int32 = 512
+
+pub const MODIFIER_SHIFT : Int32 = 1
+
+pub const MODIFIER_SUPER : Int32 = 8
+
+pub fn acquire_swapchain() -> Swapchain
+
+pub fn android_get_native_activity() -> @native.Handle
+
+pub fn android_get_native_window() -> @native.Handle
+
+pub fn bind_mouse_cursor_image(MouseCursor, ImageDesc) -> MouseCursor
+
+pub fn cancel_quit() -> Unit
+
+pub fn color_format() -> PixelFormat
+
+pub fn consume_event() -> Unit
+
+pub fn d3d11_get_swap_chain() -> @native.Handle
+
+pub fn depth_format() -> PixelFormat
+
+pub fn dpi_scale() -> Float
+
+pub fn egl_get_context() -> @native.Handle
+
+pub fn egl_get_display() -> @native.Handle
+
+pub fn frame_count() -> UInt64
+
+pub fn frame_duration() -> Double
+
+pub fn frame_duration_unfiltered() -> Double
+
+pub fn get_clipboard_string() -> String
+
+pub fn get_dropped_file_path(Int32) -> String
+
+pub fn get_environment() -> Environment
+
+pub fn get_mouse_cursor() -> MouseCursor
+
+pub fn get_num_dropped_files() -> Int32
+
+pub fn gl_get_major_version() -> Int32
+
+pub fn gl_get_minor_version() -> Int32
+
+pub fn gl_is_gles() -> Bool
+
+pub fn height() -> Int32
+
+pub fn heightf() -> Float
+
+pub fn high_dpi() -> Bool
+
+pub fn html5_ask_leave_site(Bool) -> Unit
+
+pub fn html5_fetch_dropped_file_native(Html5FetchRequest) -> Unit
+
+pub fn html5_get_dropped_file_size(Int32) -> UInt32
+
+pub fn ios_get_window() -> @native.Handle
+
+pub fn is_fullscreen() -> Bool
+
+pub fn isvalid() -> Bool
+
+pub fn keyboard_shown() -> Bool
+
+pub fn lock_mouse(Bool) -> Unit
+
+pub fn macos_get_window() -> @native.Handle
+
+pub fn mouse_locked() -> Bool
+
+pub fn mouse_shown() -> Bool
+
+pub fn query_desc() -> Desc
+
+pub fn quit() -> Unit
+
+pub fn request_quit() -> Unit
+
+pub fn run(Desc, init~ : () -> Unit, frame~ : () -> Unit, cleanup? : () -> Unit, event? : (Event) -> Unit) -> Unit
+
+pub fn run_native(Desc) -> Unit
+
+pub fn sample_count() -> Int32
+
+pub fn set_clipboard_string(String) -> Unit
+
+pub fn set_icon(IconDesc) -> Unit
+
+pub fn set_mouse_cursor(MouseCursor) -> Unit
+
+pub fn set_window_title(String) -> Unit
+
+pub fn show_keyboard(Bool) -> Unit
+
+pub fn show_mouse(Bool) -> Unit
+
+pub fn toggle_fullscreen() -> Unit
+
+pub fn unbind_mouse_cursor_image(MouseCursor) -> Unit
+
+pub fn userdata() -> @native.Handle
+
+pub fn width() -> Int32
+
+pub fn widthf() -> Float
+
+pub fn win32_get_hwnd() -> @native.Handle
+
+pub fn x11_get_display() -> @native.Handle
+
+pub fn x11_get_window() -> @native.Handle
+
+// Errors
+
+// Types and methods
+pub type Allocator
+pub fn Allocator::alloc_fn(Self) -> @native.Handle
+pub fn Allocator::free_fn(Self) -> @native.Handle
+pub fn Allocator::native_handle(Self) -> @native.Handle
+pub fn Allocator::new() -> Self
+pub fn Allocator::unsafe_from_native(@native.Handle) -> Self
+pub fn Allocator::user_data(Self) -> @native.Handle
+pub fn Allocator::with_alloc_fn(Self, @native.Handle) -> Self
+pub fn Allocator::with_free_fn(Self, @native.Handle) -> Self
+pub fn Allocator::with_user_data(Self, @native.Handle) -> Self
+
+pub type AndroidDesc
+pub fn AndroidDesc::native_event_cb(Self) -> @native.Handle
+pub fn AndroidDesc::native_handle(Self) -> @native.Handle
+pub fn AndroidDesc::new() -> Self
+pub fn AndroidDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn AndroidDesc::with_native_event_cb(Self, @native.Handle) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum AndroidTooltype {
+  Unknown
+  Finger
+  Stylus
+  Mouse
+}
+pub fn AndroidTooltype::equal(Self, Self) -> Bool
+pub fn AndroidTooltype::not_equal(Self, Self) -> Bool
+pub fn AndroidTooltype::to_int(Self) -> Int32
+pub fn AndroidTooltype::to_repr(Self) -> @debug.Repr
+
+#derive(Eq, @debug.Debug)
+pub(all) enum CompositeMode {
+  Default
+  Opaque
+  Premultiplied
+}
+pub fn CompositeMode::equal(Self, Self) -> Bool
+pub fn CompositeMode::not_equal(Self, Self) -> Bool
+pub fn CompositeMode::to_int(Self) -> Int32
+pub fn CompositeMode::to_repr(Self) -> @debug.Repr
+
+pub type D3d11Environment
+pub fn D3d11Environment::device(Self) -> @native.Handle
+pub fn D3d11Environment::device_context(Self) -> @native.Handle
+pub fn D3d11Environment::native_handle(Self) -> @native.Handle
+pub fn D3d11Environment::new() -> Self
+pub fn D3d11Environment::unsafe_from_native(@native.Handle) -> Self
+pub fn D3d11Environment::with_device(Self, @native.Handle) -> Self
+pub fn D3d11Environment::with_device_context(Self, @native.Handle) -> Self
+
+pub type D3d11Swapchain
+pub fn D3d11Swapchain::depth_stencil_view(Self) -> @native.Handle
+pub fn D3d11Swapchain::native_handle(Self) -> @native.Handle
+pub fn D3d11Swapchain::new() -> Self
+pub fn D3d11Swapchain::render_view(Self) -> @native.Handle
+pub fn D3d11Swapchain::resolve_view(Self) -> @native.Handle
+pub fn D3d11Swapchain::unsafe_from_native(@native.Handle) -> Self
+pub fn D3d11Swapchain::with_depth_stencil_view(Self, @native.Handle) -> Self
+pub fn D3d11Swapchain::with_render_view(Self, @native.Handle) -> Self
+pub fn D3d11Swapchain::with_resolve_view(Self, @native.Handle) -> Self
+
+pub type Desc
+pub fn Desc::allocator(Self) -> Allocator
+pub fn Desc::android(Self) -> AndroidDesc
+pub fn Desc::cleanup_cb(Self) -> @native.Handle
+pub fn Desc::cleanup_userdata_cb(Self) -> @native.Handle
+pub fn Desc::clipboard_size(Self) -> Int32
+pub fn Desc::composite_mode(Self) -> CompositeMode
+pub fn Desc::depth_format(Self) -> PixelFormat
+pub fn Desc::disable_vsync(Self) -> Bool
+pub fn Desc::enable_clipboard(Self) -> Bool
+pub fn Desc::enable_dragndrop(Self) -> Bool
+pub fn Desc::event_cb(Self) -> @native.Handle
+pub fn Desc::event_userdata_cb(Self) -> @native.Handle
+pub fn Desc::frame_cb(Self) -> @native.Handle
+pub fn Desc::frame_userdata_cb(Self) -> @native.Handle
+pub fn Desc::fullscreen(Self) -> Bool
+pub fn Desc::gl(Self) -> GlDesc
+pub fn Desc::hdr(Self) -> Bool
+pub fn Desc::height(Self) -> Int32
+pub fn Desc::high_dpi(Self) -> Bool
+pub fn Desc::html5(Self) -> Html5Desc
+pub fn Desc::icon(Self) -> IconDesc
+pub fn Desc::init_cb(Self) -> @native.Handle
+pub fn Desc::init_userdata_cb(Self) -> @native.Handle
+pub fn Desc::ios(Self) -> IosDesc
+pub fn Desc::logger(Self) -> Logger
+pub fn Desc::max_dropped_file_path_length(Self) -> Int32
+pub fn Desc::max_dropped_files(Self) -> Int32
+pub fn Desc::metal(Self) -> MetalDesc
+pub fn Desc::native_handle(Self) -> @native.Handle
+pub fn Desc::new() -> Self
+pub fn Desc::sample_count(Self) -> Int32
+pub fn Desc::srgb(Self) -> Bool
+pub fn Desc::swap_interval(Self) -> Int32
+pub fn Desc::unsafe_from_native(@native.Handle) -> Self
+pub fn Desc::user_data(Self) -> @native.Handle
+pub fn Desc::width(Self) -> Int32
+pub fn Desc::win32(Self) -> Win32Desc
+pub fn Desc::window_title(Self) -> String
+pub fn Desc::with_allocator(Self, Allocator) -> Self
+pub fn Desc::with_android(Self, AndroidDesc) -> Self
+pub fn Desc::with_cleanup_cb(Self, @native.Handle) -> Self
+pub fn Desc::with_cleanup_userdata_cb(Self, @native.Handle) -> Self
+pub fn Desc::with_clipboard_size(Self, Int32) -> Self
+pub fn Desc::with_composite_mode(Self, CompositeMode) -> Self
+pub fn Desc::with_depth_format(Self, PixelFormat) -> Self
+pub fn Desc::with_disable_vsync(Self, Bool) -> Self
+pub fn Desc::with_enable_clipboard(Self, Bool) -> Self
+pub fn Desc::with_enable_dragndrop(Self, Bool) -> Self
+pub fn Desc::with_event_cb(Self, @native.Handle) -> Self
+pub fn Desc::with_event_userdata_cb(Self, @native.Handle) -> Self
+pub fn Desc::with_frame_cb(Self, @native.Handle) -> Self
+pub fn Desc::with_frame_userdata_cb(Self, @native.Handle) -> Self
+pub fn Desc::with_fullscreen(Self, Bool) -> Self
+pub fn Desc::with_gl(Self, GlDesc) -> Self
+pub fn Desc::with_hdr(Self, Bool) -> Self
+pub fn Desc::with_height(Self, Int32) -> Self
+pub fn Desc::with_high_dpi(Self, Bool) -> Self
+pub fn Desc::with_html5(Self, Html5Desc) -> Self
+pub fn Desc::with_icon(Self, IconDesc) -> Self
+pub fn Desc::with_init_cb(Self, @native.Handle) -> Self
+pub fn Desc::with_init_userdata_cb(Self, @native.Handle) -> Self
+pub fn Desc::with_ios(Self, IosDesc) -> Self
+pub fn Desc::with_logger(Self, Logger) -> Self
+pub fn Desc::with_max_dropped_file_path_length(Self, Int32) -> Self
+pub fn Desc::with_max_dropped_files(Self, Int32) -> Self
+pub fn Desc::with_metal(Self, MetalDesc) -> Self
+pub fn Desc::with_sample_count(Self, Int32) -> Self
+pub fn Desc::with_srgb(Self, Bool) -> Self
+pub fn Desc::with_swap_interval(Self, Int32) -> Self
+pub fn Desc::with_user_data(Self, @native.Handle) -> Self
+pub fn Desc::with_width(Self, Int32) -> Self
+pub fn Desc::with_win32(Self, Win32Desc) -> Self
+pub fn Desc::with_window_title(Self, String) -> Self
+
+pub type Environment
+pub fn Environment::d3d11(Self) -> D3d11Environment
+pub fn Environment::defaults(Self) -> EnvironmentDefaults
+pub fn Environment::metal(Self) -> MetalEnvironment
+pub fn Environment::native_handle(Self) -> @native.Handle
+pub fn Environment::new() -> Self
+pub fn Environment::unsafe_from_native(@native.Handle) -> Self
+pub fn Environment::vulkan(Self) -> VulkanEnvironment
+pub fn Environment::wgpu(Self) -> WgpuEnvironment
+pub fn Environment::with_d3d11(Self, D3d11Environment) -> Self
+pub fn Environment::with_defaults(Self, EnvironmentDefaults) -> Self
+pub fn Environment::with_metal(Self, MetalEnvironment) -> Self
+pub fn Environment::with_vulkan(Self, VulkanEnvironment) -> Self
+pub fn Environment::with_wgpu(Self, WgpuEnvironment) -> Self
+
+pub type EnvironmentDefaults
+pub fn EnvironmentDefaults::color_format(Self) -> PixelFormat
+pub fn EnvironmentDefaults::depth_format(Self) -> PixelFormat
+pub fn EnvironmentDefaults::native_handle(Self) -> @native.Handle
+pub fn EnvironmentDefaults::new() -> Self
+pub fn EnvironmentDefaults::sample_count(Self) -> Int32
+pub fn EnvironmentDefaults::unsafe_from_native(@native.Handle) -> Self
+pub fn EnvironmentDefaults::with_color_format(Self, PixelFormat) -> Self
+pub fn EnvironmentDefaults::with_depth_format(Self, PixelFormat) -> Self
+pub fn EnvironmentDefaults::with_sample_count(Self, Int32) -> Self
+
+pub type Event
+pub fn Event::char_code(Self) -> UInt32
+pub fn Event::frame_count(Self) -> UInt64
+pub fn Event::framebuffer_height(Self) -> Int32
+pub fn Event::framebuffer_width(Self) -> Int32
+pub fn Event::key_code(Self) -> Keycode
+pub fn Event::key_repeat(Self) -> Bool
+pub fn Event::modifiers(Self) -> UInt32
+pub fn Event::mouse_button(Self) -> Mousebutton
+pub fn Event::mouse_dx(Self) -> Float
+pub fn Event::mouse_dy(Self) -> Float
+pub fn Event::mouse_x(Self) -> Float
+pub fn Event::mouse_y(Self) -> Float
+pub fn Event::native_handle(Self) -> @native.Handle
+pub fn Event::new() -> Self
+pub fn Event::num_touches(Self) -> Int32
+pub fn Event::scroll_x(Self) -> Float
+pub fn Event::scroll_y(Self) -> Float
+pub fn Event::touches(Self, Int32) -> Touchpoint
+pub fn Event::type_(Self) -> EventType
+pub fn Event::unsafe_from_native(@native.Handle) -> Self
+pub fn Event::window_height(Self) -> Int32
+pub fn Event::window_width(Self) -> Int32
+pub fn Event::with_char_code(Self, UInt32) -> Self
+pub fn Event::with_frame_count(Self, UInt64) -> Self
+pub fn Event::with_framebuffer_height(Self, Int32) -> Self
+pub fn Event::with_framebuffer_width(Self, Int32) -> Self
+pub fn Event::with_key_code(Self, Keycode) -> Self
+pub fn Event::with_key_repeat(Self, Bool) -> Self
+pub fn Event::with_modifiers(Self, UInt32) -> Self
+pub fn Event::with_mouse_button(Self, Mousebutton) -> Self
+pub fn Event::with_mouse_dx(Self, Float) -> Self
+pub fn Event::with_mouse_dy(Self, Float) -> Self
+pub fn Event::with_mouse_x(Self, Float) -> Self
+pub fn Event::with_mouse_y(Self, Float) -> Self
+pub fn Event::with_num_touches(Self, Int32) -> Self
+pub fn Event::with_scroll_x(Self, Float) -> Self
+pub fn Event::with_scroll_y(Self, Float) -> Self
+pub fn Event::with_touches(Self, Int32, Touchpoint) -> Self
+pub fn Event::with_type(Self, EventType) -> Self
+pub fn Event::with_window_height(Self, Int32) -> Self
+pub fn Event::with_window_width(Self, Int32) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum EventType {
+  Invalid
+  KeyDown
+  KeyUp
+  Char
+  MouseDown
+  MouseUp
+  MouseScroll
+  MouseMove
+  MouseEnter
+  MouseLeave
+  TouchesBegan
+  TouchesMoved
+  TouchesEnded
+  TouchesCancelled
+  Resized
+  Iconified
+  Restored
+  Focused
+  Unfocused
+  Suspended
+  Resumed
+  QuitRequested
+  ClipboardPasted
+  FilesDropped
+  AndroidBack
+}
+pub fn EventType::equal(Self, Self) -> Bool
+pub fn EventType::not_equal(Self, Self) -> Bool
+pub fn EventType::to_int(Self) -> Int32
+pub fn EventType::to_repr(Self) -> @debug.Repr
+
+pub type GlDesc
+pub fn GlDesc::major_version(Self) -> Int32
+pub fn GlDesc::minor_version(Self) -> Int32
+pub fn GlDesc::native_handle(Self) -> @native.Handle
+pub fn GlDesc::new() -> Self
+pub fn GlDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn GlDesc::with_major_version(Self, Int32) -> Self
+pub fn GlDesc::with_minor_version(Self, Int32) -> Self
+
+pub type GlSwapchain
+pub fn GlSwapchain::framebuffer(Self) -> UInt32
+pub fn GlSwapchain::native_handle(Self) -> @native.Handle
+pub fn GlSwapchain::new() -> Self
+pub fn GlSwapchain::unsafe_from_native(@native.Handle) -> Self
+pub fn GlSwapchain::with_framebuffer(Self, UInt32) -> Self
+
+pub type Html5Desc
+pub fn Html5Desc::ask_leave_site(Self) -> Bool
+pub fn Html5Desc::bubble_char_events(Self) -> Bool
+pub fn Html5Desc::bubble_key_events(Self) -> Bool
+pub fn Html5Desc::bubble_mouse_events(Self) -> Bool
+pub fn Html5Desc::bubble_touch_events(Self) -> Bool
+pub fn Html5Desc::bubble_wheel_events(Self) -> Bool
+pub fn Html5Desc::canvas_resize(Self) -> Bool
+pub fn Html5Desc::canvas_selector(Self) -> String
+pub fn Html5Desc::emsc_set_main_loop_simulate_infinite_loop(Self) -> Bool
+pub fn Html5Desc::native_handle(Self) -> @native.Handle
+pub fn Html5Desc::new() -> Self
+pub fn Html5Desc::preserve_drawing_buffer(Self) -> Bool
+pub fn Html5Desc::unsafe_from_native(@native.Handle) -> Self
+pub fn Html5Desc::update_document_title(Self) -> Bool
+pub fn Html5Desc::use_emsc_set_main_loop(Self) -> Bool
+pub fn Html5Desc::with_ask_leave_site(Self, Bool) -> Self
+pub fn Html5Desc::with_bubble_char_events(Self, Bool) -> Self
+pub fn Html5Desc::with_bubble_key_events(Self, Bool) -> Self
+pub fn Html5Desc::with_bubble_mouse_events(Self, Bool) -> Self
+pub fn Html5Desc::with_bubble_touch_events(Self, Bool) -> Self
+pub fn Html5Desc::with_bubble_wheel_events(Self, Bool) -> Self
+pub fn Html5Desc::with_canvas_resize(Self, Bool) -> Self
+pub fn Html5Desc::with_canvas_selector(Self, String) -> Self
+pub fn Html5Desc::with_emsc_set_main_loop_simulate_infinite_loop(Self, Bool) -> Self
+pub fn Html5Desc::with_preserve_drawing_buffer(Self, Bool) -> Self
+pub fn Html5Desc::with_update_document_title(Self, Bool) -> Self
+pub fn Html5Desc::with_use_emsc_set_main_loop(Self, Bool) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Html5FetchError {
+  NoError
+  BufferTooSmall
+  Other
+}
+pub fn Html5FetchError::equal(Self, Self) -> Bool
+pub fn Html5FetchError::not_equal(Self, Self) -> Bool
+pub fn Html5FetchError::to_int(Self) -> Int32
+pub fn Html5FetchError::to_repr(Self) -> @debug.Repr
+
+pub type Html5FetchRequest
+pub fn Html5FetchRequest::buffer(Self) -> Range
+pub fn Html5FetchRequest::callback(Self) -> @native.Handle
+pub fn Html5FetchRequest::dropped_file_index(Self) -> Int32
+pub fn Html5FetchRequest::native_handle(Self) -> @native.Handle
+pub fn Html5FetchRequest::new() -> Self
+pub fn Html5FetchRequest::unsafe_from_native(@native.Handle) -> Self
+pub fn Html5FetchRequest::user_data(Self) -> @native.Handle
+pub fn Html5FetchRequest::with_buffer(Self, Range) -> Self
+pub fn Html5FetchRequest::with_callback(Self, @native.Handle) -> Self
+pub fn Html5FetchRequest::with_dropped_file_index(Self, Int32) -> Self
+pub fn Html5FetchRequest::with_user_data(Self, @native.Handle) -> Self
+
+pub type Html5FetchResponse
+pub fn Html5FetchResponse::buffer(Self) -> Range
+pub fn Html5FetchResponse::data(Self) -> Range
+pub fn Html5FetchResponse::error_code(Self) -> Html5FetchError
+pub fn Html5FetchResponse::file_index(Self) -> Int32
+pub fn Html5FetchResponse::native_handle(Self) -> @native.Handle
+pub fn Html5FetchResponse::new() -> Self
+pub fn Html5FetchResponse::succeeded(Self) -> Bool
+pub fn Html5FetchResponse::unsafe_from_native(@native.Handle) -> Self
+pub fn Html5FetchResponse::user_data(Self) -> @native.Handle
+pub fn Html5FetchResponse::with_buffer(Self, Range) -> Self
+pub fn Html5FetchResponse::with_data(Self, Range) -> Self
+pub fn Html5FetchResponse::with_error_code(Self, Html5FetchError) -> Self
+pub fn Html5FetchResponse::with_file_index(Self, Int32) -> Self
+pub fn Html5FetchResponse::with_succeeded(Self, Bool) -> Self
+pub fn Html5FetchResponse::with_user_data(Self, @native.Handle) -> Self
+
+pub type IconDesc
+pub fn IconDesc::images(Self, Int32) -> ImageDesc
+pub fn IconDesc::native_handle(Self) -> @native.Handle
+pub fn IconDesc::new() -> Self
+pub fn IconDesc::sokol_default(Self) -> Bool
+pub fn IconDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn IconDesc::with_images(Self, Int32, ImageDesc) -> Self
+pub fn IconDesc::with_sokol_default(Self, Bool) -> Self
+
+pub type ImageDesc
+pub fn ImageDesc::cursor_hotspot_x(Self) -> Int32
+pub fn ImageDesc::cursor_hotspot_y(Self) -> Int32
+pub fn ImageDesc::height(Self) -> Int32
+pub fn ImageDesc::native_handle(Self) -> @native.Handle
+pub fn ImageDesc::new() -> Self
+pub fn ImageDesc::pixels(Self) -> Range
+pub fn ImageDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn ImageDesc::width(Self) -> Int32
+pub fn ImageDesc::with_cursor_hotspot_x(Self, Int32) -> Self
+pub fn ImageDesc::with_cursor_hotspot_y(Self, Int32) -> Self
+pub fn ImageDesc::with_height(Self, Int32) -> Self
+pub fn ImageDesc::with_pixels(Self, Range) -> Self
+pub fn ImageDesc::with_width(Self, Int32) -> Self
+
+pub type IosDesc
+pub fn IosDesc::keyboard_resizes_canvas(Self) -> Bool
+pub fn IosDesc::native_handle(Self) -> @native.Handle
+pub fn IosDesc::new() -> Self
+pub fn IosDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn IosDesc::with_keyboard_resizes_canvas(Self, Bool) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Keycode {
+  Invalid
+  Space
+  Apostrophe
+  Comma
+  Minus
+  Period
+  Slash
+  V0
+  V1
+  V2
+  V3
+  V4
+  V5
+  V6
+  V7
+  V8
+  V9
+  Semicolon
+  Equal
+  A
+  B
+  C
+  D
+  E
+  F
+  G
+  H
+  I
+  J
+  K
+  L
+  M
+  N
+  O
+  P
+  Q
+  R
+  S
+  T
+  U
+  V
+  W
+  X
+  Y
+  Z
+  LeftBracket
+  Backslash
+  RightBracket
+  GraveAccent
+  World1
+  World2
+  Escape
+  Enter
+  Tab
+  Backspace
+  Insert
+  Delete
+  Right
+  Left
+  Down
+  Up
+  PageUp
+  PageDown
+  Home
+  End
+  CapsLock
+  ScrollLock
+  NumLock
+  PrintScreen
+  Pause
+  F1
+  F2
+  F3
+  F4
+  F5
+  F6
+  F7
+  F8
+  F9
+  F10
+  F11
+  F12
+  F13
+  F14
+  F15
+  F16
+  F17
+  F18
+  F19
+  F20
+  F21
+  F22
+  F23
+  F24
+  F25
+  Kp0
+  Kp1
+  Kp2
+  Kp3
+  Kp4
+  Kp5
+  Kp6
+  Kp7
+  Kp8
+  Kp9
+  KpDecimal
+  KpDivide
+  KpMultiply
+  KpSubtract
+  KpAdd
+  KpEnter
+  KpEqual
+  LeftShift
+  LeftControl
+  LeftAlt
+  LeftSuper
+  RightShift
+  RightControl
+  RightAlt
+  RightSuper
+  Menu
+}
+pub fn Keycode::equal(Self, Self) -> Bool
+pub fn Keycode::not_equal(Self, Self) -> Bool
+pub fn Keycode::to_int(Self) -> Int32
+pub fn Keycode::to_repr(Self) -> @debug.Repr
+
+#derive(Eq, @debug.Debug)
+pub(all) enum LogItem {
+  Ok
+  MallocFailed
+  SwapchainDepthformatInvalid
+  MacosInvalidNsopenglProfile
+  MetalCreateSwapchainDepthTextureFailed
+  MetalCreateSwapchainMsaaTextureFailed
+  Win32LoadOpengl32DllFailed
+  Win32CreateHelperWindowFailed
+  Win32HelperWindowGetdcFailed
+  Win32DummyContextSetPixelformatFailed
+  Win32CreateDummyContextFailed
+  Win32DummyContextMakeCurrentFailed
+  Win32GetPixelformatAttribFailed
+  Win32WglFindPixelformatFailed
+  Win32WglDescribePixelformatFailed
+  Win32WglSetPixelformatFailed
+  Win32WglArbCreateContextRequired
+  Win32WglArbCreateContextProfileRequired
+  Win32WglOpenglVersionNotSupported
+  Win32WglOpenglProfileNotSupported
+  Win32WglIncompatibleDeviceContext
+  Win32WglCreateContextAttribsFailedOther
+  Win32D3d11CreateDeviceWithDebugFailed
+  Win32D3d11CreateDeviceFailed
+  Win32D3d11GetIdxgifactoryFailed
+  Win32D3d11GetIdxgiadapterFailed
+  Win32D3d11QueryInterfaceIdxgidevice1Failed
+  Win32D3d11CreateSwapchainFailed
+  Win32RegisterRawInputDevicesFailedMouseLock
+  Win32RegisterRawInputDevicesFailedMouseUnlock
+  Win32GetRawInputDataFailed
+  Win32DestroyiconForCursorFailed
+  LinuxGlxLoadLibglFailed
+  LinuxGlxLoadEntryPointsFailed
+  LinuxGlxExtensionNotFound
+  LinuxGlxQueryVersionFailed
+  LinuxGlxVersionTooLow
+  LinuxGlxNoGlxfbconfigs
+  LinuxGlxNoSuitableGlxfbconfig
+  LinuxGlxGetVisualFromFbconfigFailed
+  LinuxGlxRequiredExtensionsMissing
+  LinuxGlxCreateContextFailed
+  LinuxGlxCreateWindowFailed
+  LinuxX11CreateWindowFailed
+  LinuxEglBindOpenglApiFailed
+  LinuxEglBindOpenglEsApiFailed
+  LinuxEglGetDisplayFailed
+  LinuxEglInitializeFailed
+  LinuxEglNoConfigs
+  LinuxEglNoNativeVisual
+  LinuxEglGetVisualInfoFailed
+  LinuxEglCreateWindowSurfaceFailed
+  LinuxEglCreateContextFailed
+  LinuxEglMakeCurrentFailed
+  LinuxX11OpenDisplayFailed
+  LinuxX11QuerySystemDpiFailed
+  LinuxX11DroppedFileUriWrongScheme
+  LinuxX11FailedToBecomeOwnerOfClipboard
+  AndroidUnsupportedInputEventInputCb
+  AndroidUnsupportedInputEventMainCb
+  AndroidReadMsgFailed
+  AndroidWriteMsgFailed
+  AndroidMsgCreate
+  AndroidMsgResume
+  AndroidMsgPause
+  AndroidMsgFocus
+  AndroidMsgNoFocus
+  AndroidMsgSetNativeWindow
+  AndroidMsgSetInputQueue
+  AndroidMsgDestroy
+  AndroidUnknownMsg
+  AndroidLoopThreadStarted
+  AndroidLoopThreadDone
+  AndroidNativeActivityOnstart
+  AndroidNativeActivityOnresume
+  AndroidNativeActivityOnsaveinstancestate
+  AndroidNativeActivityOnwindowfocuschanged
+  AndroidNativeActivityOnpause
+  AndroidNativeActivityOnstop
+  AndroidNativeActivityOnnativewindowcreated
+  AndroidNativeActivityOnnativewindowdestroyed
+  AndroidNativeActivityOninputqueuecreated
+  AndroidNativeActivityOninputqueuedestroyed
+  AndroidNativeActivityOnconfigurationchanged
+  AndroidNativeActivityOnlowmemory
+  AndroidNativeActivityOndestroy
+  AndroidNativeActivityDone
+  AndroidNativeActivityOncreate
+  AndroidCreateThreadPipeFailed
+  AndroidNativeActivityCreateSuccess
+  AndroidChoreographerEnabled
+  AndroidChoreographerUnavailable
+  WgpuDeviceLost
+  WgpuDeviceLog
+  WgpuDeviceUncapturedError
+  WgpuSwapchainCreateSurfaceFailed
+  WgpuSwapchainSurfaceGetCapabilitiesFailed
+  WgpuSwapchainCreateDepthStencilTextureFailed
+  WgpuSwapchainCreateDepthStencilViewFailed
+  WgpuSwapchainCreateMsaaTextureFailed
+  WgpuSwapchainCreateMsaaViewFailed
+  WgpuSwapchainGetcurrenttextureFailed
+  WgpuRequestDeviceStatusError
+  WgpuRequestDeviceStatusUnknown
+  WgpuRequestAdapterStatusUnavailable
+  WgpuRequestAdapterStatusError
+  WgpuRequestAdapterStatusUnknown
+  WgpuCreateInstanceFailed
+  VulkanDebugGeneral
+  VulkanDebugValidation
+  VulkanDebugPerformance
+  VulkanRequiredInstanceExtensionFunctionMissing
+  VulkanAllocDeviceMemoryNoSuitableMemoryType
+  VulkanAllocateMemoryFailed
+  VulkanCreateInstanceFailed
+  VulkanEnumeratePhysicalDevicesFailed
+  VulkanNoPhysicalDevicesFound
+  VulkanNoSuitablePhysicalDeviceFound
+  VulkanCreateDeviceFailedExtensionNotPresent
+  VulkanCreateDeviceFailedFeatureNotPresent
+  VulkanCreateDeviceFailedInitializationFailed
+  VulkanCreateDeviceFailedOther
+  VulkanCreateSurfaceFailed
+  VulkanCreateSwapchainFailed
+  VulkanSwapchainCreateImageViewFailed
+  VulkanSwapchainCreateImageFailed
+  VulkanSwapchainAllocImageDeviceMemoryFailed
+  VulkanSwapchainBindImageMemoryFailed
+  VulkanAcquireNextImageFailed
+  VulkanQueuePresentFailed
+  ImageDataSizeMismatch
+  DroppedFilePathTooLong
+  ClipboardStringTooBig
+}
+pub fn LogItem::equal(Self, Self) -> Bool
+pub fn LogItem::not_equal(Self, Self) -> Bool
+pub fn LogItem::to_int(Self) -> Int32
+pub fn LogItem::to_repr(Self) -> @debug.Repr
+
+pub type Logger
+pub fn Logger::default() -> Self
+pub fn Logger::func(Self) -> @native.Handle
+pub fn Logger::native_handle(Self) -> @native.Handle
+pub fn Logger::new() -> Self
+pub fn Logger::unsafe_from_native(@native.Handle) -> Self
+pub fn Logger::user_data(Self) -> @native.Handle
+pub fn Logger::with_func(Self, @native.Handle) -> Self
+pub fn Logger::with_user_data(Self, @native.Handle) -> Self
+
+pub type MetalDesc
+pub fn MetalDesc::disable_display_sync(Self) -> Bool
+pub fn MetalDesc::native_handle(Self) -> @native.Handle
+pub fn MetalDesc::new() -> Self
+pub fn MetalDesc::unsafe_from_native(@native.Handle) -> Self
+pub fn MetalDesc::with_disable_display_sync(Self, Bool) -> Self
+
+pub type MetalEnvironment
+pub fn MetalEnvironment::device(Self) -> @native.Handle
+pub fn MetalEnvironment::native_handle(Self) -> @native.Handle
+pub fn MetalEnvironment::new() -> Self
+pub fn MetalEnvironment::unsafe_from_native(@native.Handle) -> Self
+pub fn MetalEnvironment::with_device(Self, @native.Handle) -> Self
+
+pub type MetalSwapchain
+pub fn MetalSwapchain::current_drawable(Self) -> @native.Handle
+pub fn MetalSwapchain::depth_stencil_texture(Self) -> @native.Handle
+pub fn MetalSwapchain::msaa_color_texture(Self) -> @native.Handle
+pub fn MetalSwapchain::native_handle(Self) -> @native.Handle
+pub fn MetalSwapchain::new() -> Self
+pub fn MetalSwapchain::unsafe_from_native(@native.Handle) -> Self
+pub fn MetalSwapchain::with_current_drawable(Self, @native.Handle) -> Self
+pub fn MetalSwapchain::with_depth_stencil_texture(Self, @native.Handle) -> Self
+pub fn MetalSwapchain::with_msaa_color_texture(Self, @native.Handle) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum MouseCursor {
+  Default
+  Arrow
+  Ibeam
+  Crosshair
+  PointingHand
+  ResizeEw
+  ResizeNs
+  ResizeNwse
+  ResizeNesw
+  ResizeAll
+  NotAllowed
+  Custom0
+  Custom1
+  Custom2
+  Custom3
+  Custom4
+  Custom5
+  Custom6
+  Custom7
+  Custom8
+  Custom9
+  Custom10
+  Custom11
+  Custom12
+  Custom13
+  Custom14
+  Custom15
+}
+pub fn MouseCursor::equal(Self, Self) -> Bool
+pub fn MouseCursor::not_equal(Self, Self) -> Bool
+pub fn MouseCursor::to_int(Self) -> Int32
+pub fn MouseCursor::to_repr(Self) -> @debug.Repr
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Mousebutton {
+  Left
+  Right
+  Middle
+  Invalid
+}
+pub fn Mousebutton::equal(Self, Self) -> Bool
+pub fn Mousebutton::not_equal(Self, Self) -> Bool
+pub fn Mousebutton::to_int(Self) -> Int32
+pub fn Mousebutton::to_repr(Self) -> @debug.Repr
+
+#derive(Eq, @debug.Debug)
+pub(all) enum PixelFormat {
+  Default
+  None
+  Rgba8
+  Srgb8a8
+  Bgra8
+  Sbgr8a8
+  Rgba16f
+  Depth
+  DepthStencil
+}
+pub fn PixelFormat::equal(Self, Self) -> Bool
+pub fn PixelFormat::not_equal(Self, Self) -> Bool
+pub fn PixelFormat::to_int(Self) -> Int32
+pub fn PixelFormat::to_repr(Self) -> @debug.Repr
+
+pub type Range
+pub fn Range::bytes(Self) -> Bytes
+pub fn Range::from_bytes(Bytes) -> Self
+pub fn Range::native_handle(Self) -> @native.Handle
+pub fn Range::new() -> Self
+pub fn Range::size(Self) -> UInt64
+pub fn Range::unsafe_from_native(@native.Handle) -> Self
+
+pub type Swapchain
+pub fn Swapchain::color_format(Self) -> PixelFormat
+pub fn Swapchain::d3d11(Self) -> D3d11Swapchain
+pub fn Swapchain::depth_format(Self) -> PixelFormat
+pub fn Swapchain::gl(Self) -> GlSwapchain
+pub fn Swapchain::height(Self) -> Int32
+pub fn Swapchain::invalid(Self) -> Bool
+pub fn Swapchain::metal(Self) -> MetalSwapchain
+pub fn Swapchain::native_handle(Self) -> @native.Handle
+pub fn Swapchain::new() -> Self
+pub fn Swapchain::sample_count(Self) -> Int32
+pub fn Swapchain::unsafe_from_native(@native.Handle) -> Self
+pub fn Swapchain::vulkan(Self) -> VulkanSwapchain
+pub fn Swapchain::wgpu(Self) -> WgpuSwapchain
+pub fn Swapchain::width(Self) -> Int32
+pub fn Swapchain::with_color_format(Self, PixelFormat) -> Self
+pub fn Swapchain::with_d3d11(Self, D3d11Swapchain) -> Self
+pub fn Swapchain::with_depth_format(Self, PixelFormat) -> Self
+pub fn Swapchain::with_gl(Self, GlSwapchain) -> Self
+pub fn Swapchain::with_height(Self, Int32) -> Self
+pub fn Swapchain::with_invalid(Self, Bool) -> Self
+pub fn Swapchain::with_metal(Self, MetalSwapchain) -> Self
+pub fn Swapchain::with_sample_count(Self, Int32) -> Self
+pub fn Swapchain::with_vulkan(Self, VulkanSwapchain) -> Self
+pub fn Swapchain::with_wgpu(Self, WgpuSwapchain) -> Self
+pub fn Swapchain::with_width(Self, Int32) -> Self
+
+pub type Touchpoint
+pub fn Touchpoint::android_tooltype(Self) -> AndroidTooltype
+pub fn Touchpoint::changed(Self) -> Bool
+pub fn Touchpoint::identifier(Self) -> UInt64
+pub fn Touchpoint::native_handle(Self) -> @native.Handle
+pub fn Touchpoint::new() -> Self
+pub fn Touchpoint::pos_x(Self) -> Float
+pub fn Touchpoint::pos_y(Self) -> Float
+pub fn Touchpoint::unsafe_from_native(@native.Handle) -> Self
+pub fn Touchpoint::with_android_tooltype(Self, AndroidTooltype) -> Self
+pub fn Touchpoint::with_changed(Self, Bool) -> Self
+pub fn Touchpoint::with_identifier(Self, UInt64) -> Self
+pub fn Touchpoint::with_pos_x(Self, Float) -> Self
+pub fn Touchpoint::with_pos_y(Self, Float) -> Self
+
+pub type VulkanEnvironment
+pub fn VulkanEnvironment::device(Self) -> @native.Handle
+pub fn VulkanEnvironment::instance(Self) -> @native.Handle
+pub fn VulkanEnvironment::native_handle(Self) -> @native.Handle
+pub fn VulkanEnvironment::new() -> Self
+pub fn VulkanEnvironment::physical_device(Self) -> @native.Handle
+pub fn VulkanEnvironment::queue(Self) -> @native.Handle
+pub fn VulkanEnvironment::queue_family_index(Self) -> UInt32
+pub fn VulkanEnvironment::unsafe_from_native(@native.Handle) -> Self
+pub fn VulkanEnvironment::with_device(Self, @native.Handle) -> Self
+pub fn VulkanEnvironment::with_instance(Self, @native.Handle) -> Self
+pub fn VulkanEnvironment::with_physical_device(Self, @native.Handle) -> Self
+pub fn VulkanEnvironment::with_queue(Self, @native.Handle) -> Self
+pub fn VulkanEnvironment::with_queue_family_index(Self, UInt32) -> Self
+
+pub type VulkanSwapchain
+pub fn VulkanSwapchain::depth_stencil_image(Self) -> @native.Handle
+pub fn VulkanSwapchain::depth_stencil_view(Self) -> @native.Handle
+pub fn VulkanSwapchain::native_handle(Self) -> @native.Handle
+pub fn VulkanSwapchain::new() -> Self
+pub fn VulkanSwapchain::present_complete_semaphore(Self) -> @native.Handle
+pub fn VulkanSwapchain::render_finished_semaphore(Self) -> @native.Handle
+pub fn VulkanSwapchain::render_image(Self) -> @native.Handle
+pub fn VulkanSwapchain::render_view(Self) -> @native.Handle
+pub fn VulkanSwapchain::resolve_image(Self) -> @native.Handle
+pub fn VulkanSwapchain::resolve_view(Self) -> @native.Handle
+pub fn VulkanSwapchain::unsafe_from_native(@native.Handle) -> Self
+pub fn VulkanSwapchain::with_depth_stencil_image(Self, @native.Handle) -> Self
+pub fn VulkanSwapchain::with_depth_stencil_view(Self, @native.Handle) -> Self
+pub fn VulkanSwapchain::with_present_complete_semaphore(Self, @native.Handle) -> Self
+pub fn VulkanSwapchain::with_render_finished_semaphore(Self, @native.Handle) -> Self
+pub fn VulkanSwapchain::with_render_image(Self, @native.Handle) -> Self
+pub fn VulkanSwapchain::with_render_view(Self, @native.Handle) -> Self
+pub fn VulkanSwapchain::with_resolve_image(Self, @native.Handle) -> Self
+pub fn VulkanSwapchain::with_resolve_view(Self, @native.Handle) -> Self
+
+pub type WgpuEnvironment
+pub fn WgpuEnvironment::device(Self) -> @native.Handle
+pub fn WgpuEnvironment::native_handle(Self) -> @native.Handle
+pub fn WgpuEnvironment::new() -> Self
+pub fn WgpuEnvironment::unsafe_from_native(@native.Handle) -> Self
+pub fn WgpuEnvironment::with_device(Self, @native.Handle) -> Self
+
+pub type WgpuSwapchain
+pub fn WgpuSwapchain::depth_stencil_view(Self) -> @native.Handle
+pub fn WgpuSwapchain::native_handle(Self) -> @native.Handle
+pub fn WgpuSwapchain::new() -> Self
+pub fn WgpuSwapchain::render_view(Self) -> @native.Handle
+pub fn WgpuSwapchain::resolve_view(Self) -> @native.Handle
+pub fn WgpuSwapchain::unsafe_from_native(@native.Handle) -> Self
+pub fn WgpuSwapchain::with_depth_stencil_view(Self, @native.Handle) -> Self
+pub fn WgpuSwapchain::with_render_view(Self, @native.Handle) -> Self
+pub fn WgpuSwapchain::with_resolve_view(Self, @native.Handle) -> Self
+
+pub type Win32Desc
+pub fn Win32Desc::console_attach(Self) -> Bool
+pub fn Win32Desc::console_create(Self) -> Bool
+pub fn Win32Desc::console_utf8(Self) -> Bool
+pub fn Win32Desc::native_handle(Self) -> @native.Handle
+pub fn Win32Desc::new() -> Self
+pub fn Win32Desc::unsafe_from_native(@native.Handle) -> Self
+pub fn Win32Desc::with_console_attach(Self, Bool) -> Self
+pub fn Win32Desc::with_console_create(Self, Bool) -> Self
+pub fn Win32Desc::with_console_utf8(Self, Bool) -> Self
+
+// Type aliases
+
+// Traits

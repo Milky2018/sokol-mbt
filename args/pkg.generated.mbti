@@ -1,0 +1,64 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "Milky2018/sokol/args"
+
+import {
+  "Milky2018/sokol/native",
+}
+
+// Values
+pub fn boolean(String) -> Bool
+
+pub fn equals(String, String) -> Bool
+
+pub fn exists(String) -> Bool
+
+pub fn find(String) -> Int32
+
+pub fn isvalid() -> Bool
+
+pub fn key_at(Int32) -> String
+
+pub fn num_args() -> Int32
+
+pub fn setup(Array[String], desc? : Desc) -> Unit
+
+pub fn shutdown() -> Unit
+
+pub fn value(String) -> String
+
+pub fn value_at(Int32) -> String
+
+pub fn value_def(String, String) -> String
+
+// Errors
+
+// Types and methods
+pub type Allocator
+pub fn Allocator::alloc_fn(Self) -> @native.Handle
+pub fn Allocator::free_fn(Self) -> @native.Handle
+pub fn Allocator::native_handle(Self) -> @native.Handle
+pub fn Allocator::new() -> Self
+pub fn Allocator::unsafe_from_native(@native.Handle) -> Self
+pub fn Allocator::user_data(Self) -> @native.Handle
+pub fn Allocator::with_alloc_fn(Self, @native.Handle) -> Self
+pub fn Allocator::with_free_fn(Self, @native.Handle) -> Self
+pub fn Allocator::with_user_data(Self, @native.Handle) -> Self
+
+pub type Desc
+pub fn Desc::allocator(Self) -> Allocator
+pub fn Desc::argc(Self) -> Int32
+pub fn Desc::argv(Self) -> @native.Handle
+pub fn Desc::buf_size(Self) -> Int32
+pub fn Desc::max_args(Self) -> Int32
+pub fn Desc::native_handle(Self) -> @native.Handle
+pub fn Desc::new() -> Self
+pub fn Desc::unsafe_from_native(@native.Handle) -> Self
+pub fn Desc::with_allocator(Self, Allocator) -> Self
+pub fn Desc::with_argc(Self, Int32) -> Self
+pub fn Desc::with_argv(Self, @native.Handle) -> Self
+pub fn Desc::with_buf_size(Self, Int32) -> Self
+pub fn Desc::with_max_args(Self, Int32) -> Self
+
+// Type aliases
+
+// Traits

@@ -1,0 +1,14 @@
+import {
+  "Milky2018/sokol/gfx",
+  "Milky2018/sokol/native",
+  "Milky2018/sokol/examples/shaders",
+}
+
+pkgtype(kind: "executable")
+
+supported_targets = "native"
+
+options(
+  "native-stub": [ "metal.c" ],
+  link: { "native": { "stub-cc-flags": "${build.SOKOL_OBJC_FLAGS}" } },
+)
