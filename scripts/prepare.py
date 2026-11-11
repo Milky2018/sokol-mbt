@@ -28,25 +28,19 @@ def main():
         help="check vendored files without network access",
     )
     args = parser.parse_args()
-    cache = ROOT / ".prepare/vendor"
-    if not args.check:
-        cache.mkdir(parents=True, exist_ok=True)
     for name, expected in LOCK["files"].items():
         dest = ROOT / "native" / name
         if dest.exists() and sha256_file(dest) == expected:
             continue
         if args.check:
             raise SystemExit(f"vendored file missing or modified: {dest}")
-        cached = cache / name
-        if not cached.exists() or sha256_file(cached) != expected:
-            upstream_name = "LICENSE" if name == "SOKOL-LICENSE" else name
-            url = f"https://raw.githubusercontent.com/floooh/sokol/{LOCK['revision']}/{upstream_name}"
-            with urllib.request.urlopen(url, timeout=60) as response:
-                data = response.read()
-            if hashlib.sha256(data).hexdigest() != expected:
-                raise SystemExit(f"SHA-256 mismatch: {url}")
-            cached.write_bytes(data)
-        dest.write_bytes(cached.read_bytes())
+        upstream_name = "LICENSE" if name == "SOKOL-LICENSE" else name
+        url = f"https://raw.githubusercontent.com/floooh/sokol/{LOCK['revision']}/{upstream_name}"
+        with urllib.request.urlopen(url, timeout=60) as response:
+            data = response.read()
+        if hashlib.sha256(data).hexdigest() != expected:
+            raise SystemExit(f"SHA-256 mismatch: {url}")
+        dest.write_bytes(data)
     print(f"Verified {len(LOCK['files'])} upstream files at {LOCK['revision']}")
 
 

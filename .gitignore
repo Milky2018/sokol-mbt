@@ -4,5 +4,5 @@ target/
 target
 .mooncakes/
 .moonagent/
-.prepare/
+.ruff_cache/
 __pycache__/

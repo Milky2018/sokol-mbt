@@ -34,7 +34,7 @@ test "missing file reports a terminal error and shutdown releases pending closur
   ignore(
     @fetch.send(
       @fetch.Request::new()
-      .set_path(".prepare/no-such-file")
+      .set_path("native/no-such-file")
       .set_buffer(@fetch.Range::allocate(64)),
       response => results.push(response),
     ),

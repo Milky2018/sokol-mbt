@@ -239,9 +239,12 @@ for native integrations through explicit unowned handles.
 
 ## Maintainer validation
 
-See [MAINTAINING.md](MAINTAINING.md) for the source map and validation workflow.
 Edit the MoonBit and C sources directly. No binding generator, Clang AST parser
-or pinned C formatter is required.
+or pinned C formatter is required. Related APIs live in matching files, such as
+`gfx/buffer.mbt` and `gfx/buffer.h`. Update the public method, its adjacent private
+FFI declaration, and the C implementation together. Each package's `support.c`
+includes `internal.h` to assemble its native implementation. The helper scripts
+use only the Python standard library.
 
 ```sh
 python3 scripts/prepare.py --check
@@ -275,6 +278,7 @@ bridges directly, including ownership contracts and tests. Run the validation
 commands above and inspect the public interface changes from `moon info`.
 `build.mbtx` fingerprints shared native headers in the compiler arguments, so
 header edits trigger C recompilation without rewriting any binding source.
+Add new shared headers to its `header_fingerprint()` list.
 The bridges normalize C ABI boundaries; they do not rely on MoonBit's internal
 record layout matching C aggregates.
 
