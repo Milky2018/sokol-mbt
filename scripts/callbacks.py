@@ -209,7 +209,10 @@ pub fn {public_type}::on_{field_name}(self : {public_type}, callback : {callback
 
 
 def generate():
-    includes = ["/* Generated closure ABI adapters; registration is in support.c. */"]
+    includes = [
+        "/* Generated closure ABI adapters; registration is in support.c. */",
+        "",
+    ]
     for name, section in [
         ("sg_trace_hooks", "trace_callbacks"),
         ("sg_commit_listener", "listener_callback"),
