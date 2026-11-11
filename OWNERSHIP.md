@@ -1,6 +1,6 @@
 # Native ownership contracts
 
-These contracts apply to the bundled Sokol revision in `scripts/upstream.json`
+These contracts apply to the bundled Sokol revision in `native/upstream.json`
 and moonc v0.10.20. They distinguish the lifetime of a descriptor, an ID value,
 an underlying Sokol resource, and a registered callback. ABI adaptation does not
 imply resource ownership. Raw native pointers always remain caller-owned.

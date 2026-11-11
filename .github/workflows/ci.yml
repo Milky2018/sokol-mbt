@@ -40,8 +40,6 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: '"MOON_CC=clang" | Out-File -FilePath $env:GITHUB_ENV -Append'
-      - name: Verify vendored sources
-        run: python scripts/prepare.py --check
       - name: Verify Windows and non-Windows API visibility
         run: python scripts/check_platform_api.py
       - name: Check, test and verify public interfaces

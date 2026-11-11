@@ -1,164 +1,136 @@
 #!/usr/bin/env python3
-"""Check Windows/non-Windows API visibility with real compiler invocations.
+"""Check API visibility in both Windows and non-Windows compiler configurations.
 
-Both configurations are typechecked on the host. This checks conditional public
-interfaces, not cross-platform linking or runtime behavior.
+Moon resolves the compiler and dependencies. All source copies, probes and build
+outputs stay in a temporary directory; this does not link or run foreign binaries.
 """
 
-import os
+import json
+import shutil
 import subprocess
 import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MOON_HOME = Path(os.environ.get("MOON_HOME", Path.home() / ".moon"))
-CORE = MOON_HOME / "lib/core/_build/native/release/bundle"
 WINDOWS = [
     "app.win32_get_hwnd",
     "app.d3d11_get_swap_chain",
     "gfx.d3d11_device",
+    "gfx.d3d11_device_context",
     "gfx.d3d11_query_buffer_info",
+    "gfx.d3d11_query_image_info",
+    "gfx.d3d11_query_sampler_info",
+    "gfx.d3d11_query_shader_info",
+    "gfx.d3d11_query_pipeline_info",
+    "gfx.d3d11_query_view_info",
 ]
 NON_WINDOWS = [
     "app.macos_get_window",
-    "app.x11_get_display",
-    "app.egl_get_context",
-    "app.android_get_native_window",
     "app.ios_get_window",
+    "app.x11_get_window",
+    "app.x11_get_display",
+    "app.android_get_native_activity",
+    "app.android_get_native_window",
+    "app.egl_get_display",
+    "app.egl_get_context",
+    "app.html5_ask_leave_site",
+    "app.html5_get_dropped_file_size",
     "app.html5_fetch_dropped_file_native",
     "app.show_keyboard",
+    "app.keyboard_shown",
     "gfx.mtl_device",
+    "gfx.mtl_render_command_encoder",
+    "gfx.mtl_compute_command_encoder",
+    "gfx.mtl_command_queue",
+    "gfx.mtl_query_buffer_info",
     "gfx.mtl_query_image_info",
+    "gfx.mtl_query_sampler_info",
+    "gfx.mtl_query_shader_info",
+    "gfx.mtl_query_pipeline_info",
 ]
 COMMON = ["app.width", "gfx.make_buffer", "gfx.gl_query_image_info", "gfx.wgpu_device"]
 
 
-def core_imports():
-    arguments = []
-    for package, alias in [
-        ("builtin", "moonbitlang/core/builtin"),
-        ("prelude", "prelude"),
-        ("debug", "debug"),
-        ("encoding/utf8", "utf8"),
-    ]:
-        path = CORE / package / (package.rsplit("/", 1)[-1] + ".mi")
-        arguments += ["-i", f"{path}:{alias}"]
-    return arguments
-
-
-def check(command, directory, expected_success=True, symbol=None):
-    result = subprocess.run(command, cwd=directory, capture_output=True, text=True)
-    output = result.stdout + result.stderr
-    if expected_success:
-        if result.returncode:
-            raise SystemExit(output)
-    elif (
-        not result.returncode
-        or symbol not in output
-        or "not found in package" not in output
+def check(checkout, paths, unavailable=None):
+    result = subprocess.run(
+        ["moon", "check", "--target", "native", "--no-mbti", "--json", *paths],
+        cwd=checkout,
+        capture_output=True,
+        text=True,
+    )
+    try:
+        report = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        raise SystemExit(
+            f"moon check did not return JSON diagnostics:\n{result.stdout}{result.stderr}"
+        ) from None
+    if unavailable is None:
+        if result.returncode or report["status"] != "success":
+            raise SystemExit(
+                f"Expected a successful check:\n{result.stdout}{result.stderr}"
+            )
+        return
+    errors = [entry for entry in report["diagnostics"] if entry["level"] == "error"]
+    # E4021 is an unbound value. Check the probe location and identifier too,
+    # so a dependency/compiler failure cannot satisfy this negative test.
+    if (
+        result.returncode != 1
+        or report["status"] != "failure"
+        or len(errors) != 1
+        or errors[0]["error_code"] != 4021
+        or Path(errors[0]["path"]).resolve() != (checkout / "probe/probe.mbt").resolve()
+        or unavailable.split(".")[1] not in errors[0]["message"]
     ):
         raise SystemExit(
-            f"expected an unavailable API diagnostic for {symbol}:\n{output}"
+            f"Expected an unavailable API diagnostic for {unavailable}:\n"
+            f"{result.stdout}{result.stderr}"
         )
 
 
 def main():
-    with tempfile.TemporaryDirectory(prefix="sokol-platform-api-") as temporary:
-        directory = Path(temporary)
-        build = directory / "build"
-        subprocess.run(
-            [
-                "moon",
-                "check",
-                "--target",
-                "native",
-                "--no-mbti",
-                "--target-dir",
-                str(build),
-            ],
-            cwd=ROOT,
-            check=True,
+    # Spaces in this path also exercise argument handling on every host.
+    with tempfile.TemporaryDirectory(prefix="sokol platform api ") as temporary:
+        checkout = Path(temporary)
+        for directory in [
+            "app", "gfx", "native", "examples/shaders", "examples/offscreen"
+        ]:
+            shutil.copytree(ROOT / directory, checkout / directory)
+        shutil.copyfile(ROOT / "build.mbtx", checkout / "build.mbtx")
+        probe = checkout / "probe"
+        probe.mkdir()
+        (probe / "moon.pkg").write_text(
+            'import { "Milky2018/sokol/app", "Milky2018/sokol/gfx" }\n'
+            'supported_targets = "native"\n'
         )
-        native = build / "native/debug/check/native/native.mi"
-        imports = [*core_imports(), "-i", f"{native}:native"]
+        manifest = (ROOT / "moon.mod").read_text()
         for windows in [False, True]:
             label = "windows" if windows else "non-windows"
-            output = directory / label
-            output.mkdir()
-            # An explicit non-Windows value makes this independent of the host.
-            cfg = ["-cfg", "platform=windows" if windows else "platform=unix"]
-            for module in ["app", "gfx"]:
-                sources = [
-                    str(path)
-                    for path in sorted((ROOT / module).glob("*.mbt"))
-                    if not path.name.endswith(("_test.mbt", "_wbtest.mbt"))
-                ]
-                check(
-                    [
-                        "moonc",
-                        "check",
-                        *sources,
-                        "-target",
-                        "native",
-                        *cfg,
-                        "-pkg",
-                        f"Milky2018/sokol/{module}",
-                        *imports,
-                        "-o",
-                        str(output / f"{module}.mi"),
-                    ],
-                    output,
+            # These compiler flags simulate the two configurations. Source cfg
+            # attributes only test platform="windows" or its negation.
+            platform = "windows" if windows else "non-windows"
+            (checkout / "moon.mod").write_text(
+                manifest.replace(
+                    "options(",
+                    f'options(\n  "compile-flags": ["-cfg", "platform={platform}"],',
+                    1,
                 )
-            package_imports = [*imports]
-            for module in ["app", "gfx"]:
-                package_imports += ["-i", f"{output / (module + '.mi')}:{module}"]
-            shaders = build / "native/debug/check/examples/shaders/shaders.mi"
-            check(
-                [
-                    "moonc",
-                    "check",
-                    str(ROOT / "examples/offscreen/main.mbt"),
-                    "-target",
-                    "native",
-                    *cfg,
-                    "-pkg",
-                    "offscreen_probe",
-                    "-is-main",
-                    *package_imports,
-                    "-i",
-                    f"{shaders}:shaders",
-                    "-no-mi",
-                ],
-                output,
             )
-            consumer = output / "consumer.mbt"
-            command = [
-                "moonc",
-                "check",
-                str(consumer),
-                "-target",
-                "native",
-                *cfg,
-                "-pkg",
-                "platform_consumer",
-                *package_imports,
-                "-no-mi",
-            ]
             available = WINDOWS if windows else NON_WINDOWS
-            consumer.write_text(
+            (probe / "probe.mbt").write_text(
                 "pub fn probe() -> Unit {\n"
                 + "\n".join(f"  ignore(@{symbol})" for symbol in [*COMMON, *available])
                 + "\n}\n"
             )
-            check(command, output)
+            check(checkout, ["probe", "examples/offscreen"])
             unavailable = NON_WINDOWS if windows else WINDOWS
             for symbol in unavailable:
-                consumer.write_text(f"pub fn probe() -> Unit {{ ignore(@{symbol}) }}\n")
-                check(
-                    command, output, expected_success=False, symbol=symbol.split(".")[1]
+                (probe / "probe.mbt").write_text(
+                    f"pub fn probe() -> Unit {{ ignore(@{symbol}) }}\n"
                 )
+                check(checkout, ["probe"], unavailable=symbol)
             print(
-                f"{label}: common and supported APIs compile; {len(unavailable)} foreign APIs rejected."
+                f"{label}: {len(available)} platform APIs and common APIs compile; "
+                f"{len(unavailable)} foreign APIs rejected."
             )
 
 

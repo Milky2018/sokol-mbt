@@ -247,13 +247,18 @@ includes `internal.h` to assemble its native implementation. The helper scripts
 use only the Python standard library.
 
 ```sh
-python3 scripts/prepare.py --check
 python3 scripts/check_platform_api.py
 moon check --target all --warn-list +73
 SOKOL_HEADLESS=1 moon test --target native
 SOKOL_HEADLESS=1 moon test --target native --release
 moon info && moon fmt
 ```
+
+The platform check covers all 32 restricted entry points in both compiler
+configurations, plus common APIs and the offscreen example. It uses `moon check`
+and structured diagnostics in a temporary source copy; it does not depend on
+toolchain installation paths or change files in the working tree. These are
+typechecking tests, not Windows runtime validation on a non-Windows host.
 
 The included sanitizer runner uses `MOONBIT_ALLOCATOR=system` and a temporary
 compiler wrapper to instrument every C compile and link step. It builds in a
@@ -271,8 +276,8 @@ The compatibility baseline is moonc v0.10.20: callback function references borro
 their arguments, and the C bridges release their temporary references after the
 call. The lifecycle regressions exercise this convention in Debug and Release.
 
-To update Sokol: choose an upstream revision, update `scripts/upstream.json` and
-its per-file SHA-256 hashes, then run `python3 scripts/prepare.py`. Review the
+To update Sokol: fetch the chosen upstream revision and update
+`native/upstream.json` with its revision and file hashes. Review the
 upstream header changes and update the corresponding MoonBit declarations and C
 bridges directly, including ownership contracts and tests. Run the validation
 commands above and inspect the public interface changes from `moon info`.
