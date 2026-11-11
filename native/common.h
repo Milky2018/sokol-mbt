@@ -11,12 +11,16 @@
    destructors release owned fields; the runtime frees the payload itself. */
 static void *mb_malloc(size_t size) {
     void *p = calloc(1, size ? size : 1);
-    if (!p) abort();
+    if (!p) {
+        abort();
+    }
     return p;
 }
 
 static void *mb_copy(const void *source, size_t size) {
-    if (!source || !size) return NULL;
+    if (!source || !size) {
+        return NULL;
+    }
     void *p = mb_malloc(size);
     memcpy(p, source, size);
     return p;
@@ -27,9 +31,13 @@ static const char *mb_string(const char *source) {
 }
 
 static moonbit_bytes_t mb_bytes(const void *source, size_t size) {
-    if (size > INT32_MAX || (size && !source)) abort();
+    if (size > INT32_MAX || (size && !source)) {
+        abort();
+    }
     moonbit_bytes_t bytes = moonbit_make_bytes((int32_t)size, 0);
-    if (size) memcpy(bytes, source, size);
+    if (size) {
+        memcpy(bytes, source, size);
+    }
     return bytes;
 }
 
@@ -37,7 +45,7 @@ static moonbit_bytes_t mb_utf8(const char *source) {
     return mb_bytes(source, source ? strlen(source) : 0);
 }
 
-static void *mb_object_new(size_t size, void (*drop)(void*)) {
+static void *mb_object_new(size_t size, void (*drop)(void *)) {
     void *value = moonbit_make_external_object(drop, size);
     memset(value, 0, size);
     return value;

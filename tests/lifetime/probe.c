@@ -10,7 +10,7 @@ MOONBIT_FFI_EXPORT void *mb_test_probe_new(void) {
     return moonbit_make_external_object(probe_finalize, sizeof(int32_t));
 }
 MOONBIT_FFI_EXPORT void mb_test_probe_touch(void *probe) {
-    volatile int32_t marker = *(int32_t*)probe;
+    volatile int32_t marker = *(int32_t *)probe;
     (void)marker;
 }
 MOONBIT_FFI_EXPORT int32_t mb_test_probe_live(void) {

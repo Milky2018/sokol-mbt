@@ -219,10 +219,13 @@ for native integrations through explicit unowned handles.
 
 ## Maintainer validation
 
+See [MAINTAINING.md](MAINTAINING.md) for the source map, handwritten/generated
+boundaries, and the development-only formatter setup used by the generator.
+
 ```sh
 python3 scripts/prepare.py --check
 python3 scripts/check_bindings.py
-python3 scripts/generate.py --check
+python3 scripts/generate.py --check # requires the maintenance tools above
 moon check --target all --warn-list +73
 SOKOL_HEADLESS=1 moon test --target native
 SOKOL_HEADLESS=1 moon test --target native --release

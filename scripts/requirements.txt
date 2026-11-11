@@ -1,0 +1,2 @@
+# Development only: normal MoonBit builds do not need Python or this formatter.
+clang-format==21.1.8

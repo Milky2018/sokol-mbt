@@ -1,5 +1,5 @@
-/* Header inputs: 86aeab54e11d10f97d41c62819c0eb73ec36eb04c92eddfab2f00f0e5288ff71. Regenerate after editing shared headers. */
-/* C-layout adapters. Resource ownership is handled in support.c. */
+/* Header inputs: fc6b13e58388da4ee994b6155159d5f9b581276c475185e737d9a9e46a156e7f. Regenerate after
+ * editing shared headers. */
 #include "../native/common.h"
 #define SOKOL_API_IMPL MOONBIT_FFI_EXPORT
 #define SOKOL_IMPL
