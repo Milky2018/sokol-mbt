@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Vendor immutable Sokol sources, verifying every file against its SHA-256.
 
-Adapted from the make-moonbit-c-bindings prepare.py template. No downloads or
-code generation run during normal MoonBit builds. --check is fully offline.
+This only fetches or verifies the pinned upstream files. Binding sources are
+maintained directly. --check is fully offline; normal builds do not fetch files.
 """
 
 from __future__ import annotations

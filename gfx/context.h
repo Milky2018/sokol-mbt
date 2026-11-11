@@ -1,0 +1,671 @@
+static void mb_clone_sg_allocator(sg_allocator *dst, const sg_allocator *src) {
+    *dst = *src;
+}
+
+static void mb_drop_sg_allocator(void *object) {
+    (void)object;
+}
+
+_Static_assert(_Alignof(sg_allocator) <= _Alignof(void *), "external payload alignment");
+
+static sg_allocator *mb_new_sg_allocator(void) {
+    return mb_object_new(sizeof(sg_allocator), mb_drop_sg_allocator);
+}
+
+static sg_allocator *mb_copy_sg_allocator(const sg_allocator *source) {
+    sg_allocator *result = mb_new_sg_allocator();
+    mb_clone_sg_allocator(result, source);
+    return result;
+}
+
+static void mb_clone_sg_desc(sg_desc *dst, const sg_desc *src) {
+    *dst = *src;
+    mb_clone_sg_d3d11_desc(&dst->d3d11, &src->d3d11);
+    mb_clone_sg_metal_desc(&dst->metal, &src->metal);
+    mb_clone_sg_wgpu_desc(&dst->wgpu, &src->wgpu);
+    mb_clone_sg_vulkan_desc(&dst->vulkan, &src->vulkan);
+    mb_clone_sg_allocator(&dst->allocator, &src->allocator);
+    mb_clone_sg_logger(&dst->logger, &src->logger);
+    mb_clone_sg_environment(&dst->environment, &src->environment);
+}
+
+static void mb_drop_sg_desc(void *object) {
+    sg_desc *value = object;
+    mb_drop_sg_d3d11_desc(&value->d3d11);
+    mb_drop_sg_metal_desc(&value->metal);
+    mb_drop_sg_wgpu_desc(&value->wgpu);
+    mb_drop_sg_vulkan_desc(&value->vulkan);
+    mb_drop_sg_allocator(&value->allocator);
+    mb_drop_sg_logger(&value->logger);
+    mb_drop_sg_environment(&value->environment);
+}
+
+_Static_assert(_Alignof(sg_desc) <= _Alignof(void *), "external payload alignment");
+
+static sg_desc *mb_new_sg_desc(void) {
+    return mb_object_new(sizeof(sg_desc), mb_drop_sg_desc);
+}
+
+static sg_desc *mb_copy_sg_desc(const sg_desc *source) {
+    sg_desc *result = mb_new_sg_desc();
+    mb_clone_sg_desc(result, source);
+    return result;
+}
+
+static void mb_clone_sg_environment(sg_environment *dst, const sg_environment *src) {
+    *dst = *src;
+    mb_clone_sg_environment_defaults(&dst->defaults, &src->defaults);
+    mb_clone_sg_metal_environment(&dst->metal, &src->metal);
+    mb_clone_sg_d3d11_environment(&dst->d3d11, &src->d3d11);
+    mb_clone_sg_wgpu_environment(&dst->wgpu, &src->wgpu);
+    mb_clone_sg_vulkan_environment(&dst->vulkan, &src->vulkan);
+}
+
+static void mb_drop_sg_environment(void *object) {
+    sg_environment *value = object;
+    mb_drop_sg_environment_defaults(&value->defaults);
+    mb_drop_sg_metal_environment(&value->metal);
+    mb_drop_sg_d3d11_environment(&value->d3d11);
+    mb_drop_sg_wgpu_environment(&value->wgpu);
+    mb_drop_sg_vulkan_environment(&value->vulkan);
+}
+
+_Static_assert(_Alignof(sg_environment) <= _Alignof(void *), "external payload alignment");
+
+static sg_environment *mb_new_sg_environment(void) {
+    return mb_object_new(sizeof(sg_environment), mb_drop_sg_environment);
+}
+
+static sg_environment *mb_copy_sg_environment(const sg_environment *source) {
+    sg_environment *result = mb_new_sg_environment();
+    mb_clone_sg_environment(result, source);
+    return result;
+}
+
+static void mb_clone_sg_environment_defaults(sg_environment_defaults *dst,
+                                             const sg_environment_defaults *src) {
+    *dst = *src;
+}
+
+static void mb_drop_sg_environment_defaults(void *object) {
+    (void)object;
+}
+
+_Static_assert(_Alignof(sg_environment_defaults) <= _Alignof(void *), "external payload alignment");
+
+static sg_environment_defaults *mb_new_sg_environment_defaults(void) {
+    return mb_object_new(sizeof(sg_environment_defaults), mb_drop_sg_environment_defaults);
+}
+
+static sg_environment_defaults *
+mb_copy_sg_environment_defaults(const sg_environment_defaults *source) {
+    sg_environment_defaults *result = mb_new_sg_environment_defaults();
+    mb_clone_sg_environment_defaults(result, source);
+    return result;
+}
+
+static void mb_clone_sg_logger(sg_logger *dst, const sg_logger *src) {
+    *dst = *src;
+}
+
+static void mb_drop_sg_logger(void *object) {
+    (void)object;
+}
+
+_Static_assert(_Alignof(sg_logger) <= _Alignof(void *), "external payload alignment");
+
+static sg_logger *mb_new_sg_logger(void) {
+    return mb_object_new(sizeof(sg_logger), mb_drop_sg_logger);
+}
+
+static sg_logger *mb_copy_sg_logger(const sg_logger *source) {
+    sg_logger *result = mb_new_sg_logger();
+    mb_clone_sg_logger(result, source);
+    return result;
+}
+
+static void mb_clone_sg_slot_info(sg_slot_info *dst, const sg_slot_info *src) {
+    *dst = *src;
+}
+
+static void mb_drop_sg_slot_info(void *object) {
+    (void)object;
+}
+
+_Static_assert(_Alignof(sg_slot_info) <= _Alignof(void *), "external payload alignment");
+
+static sg_slot_info *mb_new_sg_slot_info(void) {
+    return mb_object_new(sizeof(sg_slot_info), mb_drop_sg_slot_info);
+}
+
+static sg_slot_info *mb_copy_sg_slot_info(const sg_slot_info *source) {
+    sg_slot_info *result = mb_new_sg_slot_info();
+    mb_clone_sg_slot_info(result, source);
+    return result;
+}
+
+MOONBIT_FFI_EXPORT sg_slot_info *mb_gfx_sg_slot_info_new(void) {
+    return mb_new_sg_slot_info();
+}
+
+MOONBIT_FFI_EXPORT sg_slot_info *mb_gfx_sg_slot_info_copy(sg_slot_info *self) {
+    return mb_copy_sg_slot_info(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_slot_info_native(sg_slot_info *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_slot_info *mb_gfx_sg_slot_info_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_slot_info(ptr);
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_slot_info_get_state(sg_slot_info *self) {
+    sg_slot_info *value = self;
+    return value->state;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_slot_info_set_state(sg_slot_info *self, int32_t replacement) {
+    sg_slot_info *value = self;
+    value->state = (sg_resource_state)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_slot_info_get_res_id(sg_slot_info *self) {
+    sg_slot_info *value = self;
+    return value->res_id;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_slot_info_set_res_id(sg_slot_info *self, uint32_t replacement) {
+    sg_slot_info *value = self;
+    value->res_id = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_slot_info_get_uninit_count(sg_slot_info *self) {
+    sg_slot_info *value = self;
+    return value->uninit_count;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_slot_info_set_uninit_count(sg_slot_info *self,
+                                                             uint32_t replacement) {
+    sg_slot_info *value = self;
+    value->uninit_count = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT sg_environment_defaults *mb_gfx_sg_environment_defaults_new(void) {
+    return mb_new_sg_environment_defaults();
+}
+
+MOONBIT_FFI_EXPORT sg_environment_defaults *
+mb_gfx_sg_environment_defaults_copy(sg_environment_defaults *self) {
+    return mb_copy_sg_environment_defaults(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_environment_defaults_native(sg_environment_defaults *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_environment_defaults *mb_gfx_sg_environment_defaults_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_environment_defaults(ptr);
+}
+
+MOONBIT_FFI_EXPORT int32_t
+mb_gfx_sg_environment_defaults_get_color_format(sg_environment_defaults *self) {
+    sg_environment_defaults *value = self;
+    return value->color_format;
+}
+
+MOONBIT_FFI_EXPORT void
+mb_gfx_sg_environment_defaults_set_color_format(sg_environment_defaults *self,
+                                                int32_t replacement) {
+    sg_environment_defaults *value = self;
+    value->color_format = (sg_pixel_format)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t
+mb_gfx_sg_environment_defaults_get_depth_format(sg_environment_defaults *self) {
+    sg_environment_defaults *value = self;
+    return value->depth_format;
+}
+
+MOONBIT_FFI_EXPORT void
+mb_gfx_sg_environment_defaults_set_depth_format(sg_environment_defaults *self,
+                                                int32_t replacement) {
+    sg_environment_defaults *value = self;
+    value->depth_format = (sg_pixel_format)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t
+mb_gfx_sg_environment_defaults_get_sample_count(sg_environment_defaults *self) {
+    sg_environment_defaults *value = self;
+    return value->sample_count;
+}
+
+MOONBIT_FFI_EXPORT void
+mb_gfx_sg_environment_defaults_set_sample_count(sg_environment_defaults *self,
+                                                int32_t replacement) {
+    sg_environment_defaults *value = self;
+    value->sample_count = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT sg_environment *mb_gfx_sg_environment_new(void) {
+    return mb_new_sg_environment();
+}
+
+MOONBIT_FFI_EXPORT sg_environment *mb_gfx_sg_environment_copy(sg_environment *self) {
+    return mb_copy_sg_environment(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_environment_native(sg_environment *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_environment *mb_gfx_sg_environment_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_environment(ptr);
+}
+
+MOONBIT_FFI_EXPORT sg_environment_defaults *
+mb_gfx_sg_environment_get_defaults(sg_environment *self) {
+    sg_environment *value = self;
+    return mb_copy_sg_environment_defaults(&value->defaults);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_environment_set_defaults(sg_environment *self,
+                                                           sg_environment_defaults *replacement) {
+    sg_environment *value = self;
+    sg_environment_defaults copy;
+    mb_clone_sg_environment_defaults(&copy, replacement);
+    mb_drop_sg_environment_defaults(&value->defaults);
+    value->defaults = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_metal_environment *mb_gfx_sg_environment_get_metal(sg_environment *self) {
+    sg_environment *value = self;
+    return mb_copy_sg_metal_environment(&value->metal);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_environment_set_metal(sg_environment *self,
+                                                        sg_metal_environment *replacement) {
+    sg_environment *value = self;
+    sg_metal_environment copy;
+    mb_clone_sg_metal_environment(&copy, replacement);
+    mb_drop_sg_metal_environment(&value->metal);
+    value->metal = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_d3d11_environment *mb_gfx_sg_environment_get_d3d11(sg_environment *self) {
+    sg_environment *value = self;
+    return mb_copy_sg_d3d11_environment(&value->d3d11);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_environment_set_d3d11(sg_environment *self,
+                                                        sg_d3d11_environment *replacement) {
+    sg_environment *value = self;
+    sg_d3d11_environment copy;
+    mb_clone_sg_d3d11_environment(&copy, replacement);
+    mb_drop_sg_d3d11_environment(&value->d3d11);
+    value->d3d11 = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_wgpu_environment *mb_gfx_sg_environment_get_wgpu(sg_environment *self) {
+    sg_environment *value = self;
+    return mb_copy_sg_wgpu_environment(&value->wgpu);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_environment_set_wgpu(sg_environment *self,
+                                                       sg_wgpu_environment *replacement) {
+    sg_environment *value = self;
+    sg_wgpu_environment copy;
+    mb_clone_sg_wgpu_environment(&copy, replacement);
+    mb_drop_sg_wgpu_environment(&value->wgpu);
+    value->wgpu = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_vulkan_environment *mb_gfx_sg_environment_get_vulkan(sg_environment *self) {
+    sg_environment *value = self;
+    return mb_copy_sg_vulkan_environment(&value->vulkan);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_environment_set_vulkan(sg_environment *self,
+                                                         sg_vulkan_environment *replacement) {
+    sg_environment *value = self;
+    sg_vulkan_environment copy;
+    mb_clone_sg_vulkan_environment(&copy, replacement);
+    mb_drop_sg_vulkan_environment(&value->vulkan);
+    value->vulkan = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_allocator *mb_gfx_sg_allocator_new(void) {
+    return mb_new_sg_allocator();
+}
+
+MOONBIT_FFI_EXPORT sg_allocator *mb_gfx_sg_allocator_copy(sg_allocator *self) {
+    return mb_copy_sg_allocator(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_allocator_native(sg_allocator *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_allocator *mb_gfx_sg_allocator_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_allocator(ptr);
+}
+
+typedef void *(*mb_sg_allocator_alloc_fn_fn)(size_t, void *);
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_allocator_get_alloc_fn(sg_allocator *self) {
+    sg_allocator *value = self;
+    return (void *)value->alloc_fn;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_allocator_set_alloc_fn(sg_allocator *self, void *replacement) {
+    sg_allocator *value = self;
+    value->alloc_fn = (mb_sg_allocator_alloc_fn_fn)replacement;
+}
+
+typedef void (*mb_sg_allocator_free_fn_fn)(void *, void *);
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_allocator_get_free_fn(sg_allocator *self) {
+    sg_allocator *value = self;
+    return (void *)value->free_fn;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_allocator_set_free_fn(sg_allocator *self, void *replacement) {
+    sg_allocator *value = self;
+    value->free_fn = (mb_sg_allocator_free_fn_fn)replacement;
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_allocator_get_user_data(sg_allocator *self) {
+    sg_allocator *value = self;
+    return (void *)value->user_data;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_allocator_set_user_data(sg_allocator *self, void *replacement) {
+    sg_allocator *value = self;
+    value->user_data = replacement;
+}
+
+MOONBIT_FFI_EXPORT sg_logger *mb_gfx_sg_logger_new(void) {
+    return mb_new_sg_logger();
+}
+
+MOONBIT_FFI_EXPORT sg_logger *mb_gfx_sg_logger_copy(sg_logger *self) {
+    return mb_copy_sg_logger(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_logger_native(sg_logger *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_logger *mb_gfx_sg_logger_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_logger(ptr);
+}
+
+typedef void (*mb_sg_logger_func_fn)(const char *, uint32_t, uint32_t, const char *, uint32_t,
+                                     const char *, void *);
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_logger_get_func(sg_logger *self) {
+    sg_logger *value = self;
+    return (void *)value->func;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_logger_set_func(sg_logger *self, void *replacement) {
+    sg_logger *value = self;
+    value->func = (mb_sg_logger_func_fn)replacement;
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_logger_get_user_data(sg_logger *self) {
+    sg_logger *value = self;
+    return (void *)value->user_data;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_logger_set_user_data(sg_logger *self, void *replacement) {
+    sg_logger *value = self;
+    value->user_data = replacement;
+}
+
+MOONBIT_FFI_EXPORT sg_logger *mb_gfx_sg_logger_default(void) {
+
+    sg_logger *result = mb_new_sg_logger();
+    result->func = slog_func;
+    return result;
+}
+
+MOONBIT_FFI_EXPORT sg_desc *mb_gfx_sg_desc_new(void) {
+    return mb_new_sg_desc();
+}
+
+MOONBIT_FFI_EXPORT sg_desc *mb_gfx_sg_desc_copy(sg_desc *self) {
+    return mb_copy_sg_desc(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_desc_native(sg_desc *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_desc *mb_gfx_sg_desc_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_desc(ptr);
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_desc_get_buffer_pool_size(sg_desc *self) {
+    sg_desc *value = self;
+    return value->buffer_pool_size;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_buffer_pool_size(sg_desc *self, int32_t replacement) {
+    sg_desc *value = self;
+    value->buffer_pool_size = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_desc_get_image_pool_size(sg_desc *self) {
+    sg_desc *value = self;
+    return value->image_pool_size;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_image_pool_size(sg_desc *self, int32_t replacement) {
+    sg_desc *value = self;
+    value->image_pool_size = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_desc_get_sampler_pool_size(sg_desc *self) {
+    sg_desc *value = self;
+    return value->sampler_pool_size;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_sampler_pool_size(sg_desc *self, int32_t replacement) {
+    sg_desc *value = self;
+    value->sampler_pool_size = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_desc_get_shader_pool_size(sg_desc *self) {
+    sg_desc *value = self;
+    return value->shader_pool_size;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_shader_pool_size(sg_desc *self, int32_t replacement) {
+    sg_desc *value = self;
+    value->shader_pool_size = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_desc_get_pipeline_pool_size(sg_desc *self) {
+    sg_desc *value = self;
+    return value->pipeline_pool_size;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_pipeline_pool_size(sg_desc *self, int32_t replacement) {
+    sg_desc *value = self;
+    value->pipeline_pool_size = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_desc_get_view_pool_size(sg_desc *self) {
+    sg_desc *value = self;
+    return value->view_pool_size;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_view_pool_size(sg_desc *self, int32_t replacement) {
+    sg_desc *value = self;
+    value->view_pool_size = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_desc_get_uniform_buffer_size(sg_desc *self) {
+    sg_desc *value = self;
+    return value->uniform_buffer_size;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_uniform_buffer_size(sg_desc *self, int32_t replacement) {
+    sg_desc *value = self;
+    value->uniform_buffer_size = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_desc_get_max_commit_listeners(sg_desc *self) {
+    sg_desc *value = self;
+    return value->max_commit_listeners;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_max_commit_listeners(sg_desc *self,
+                                                                int32_t replacement) {
+    sg_desc *value = self;
+    value->max_commit_listeners = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_desc_get_disable_validation(sg_desc *self) {
+    sg_desc *value = self;
+    return value->disable_validation;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_disable_validation(sg_desc *self, int32_t replacement) {
+    sg_desc *value = self;
+    value->disable_validation = (bool)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_desc_get_enforce_portable_limits(sg_desc *self) {
+    sg_desc *value = self;
+    return value->enforce_portable_limits;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_enforce_portable_limits(sg_desc *self,
+                                                                   int32_t replacement) {
+    sg_desc *value = self;
+    value->enforce_portable_limits = (bool)replacement;
+}
+
+MOONBIT_FFI_EXPORT sg_d3d11_desc *mb_gfx_sg_desc_get_d3d11(sg_desc *self) {
+    sg_desc *value = self;
+    return mb_copy_sg_d3d11_desc(&value->d3d11);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_d3d11(sg_desc *self, sg_d3d11_desc *replacement) {
+    sg_desc *value = self;
+    sg_d3d11_desc copy;
+    mb_clone_sg_d3d11_desc(&copy, replacement);
+    mb_drop_sg_d3d11_desc(&value->d3d11);
+    value->d3d11 = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_metal_desc *mb_gfx_sg_desc_get_metal(sg_desc *self) {
+    sg_desc *value = self;
+    return mb_copy_sg_metal_desc(&value->metal);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_metal(sg_desc *self, sg_metal_desc *replacement) {
+    sg_desc *value = self;
+    sg_metal_desc copy;
+    mb_clone_sg_metal_desc(&copy, replacement);
+    mb_drop_sg_metal_desc(&value->metal);
+    value->metal = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_wgpu_desc *mb_gfx_sg_desc_get_wgpu(sg_desc *self) {
+    sg_desc *value = self;
+    return mb_copy_sg_wgpu_desc(&value->wgpu);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_wgpu(sg_desc *self, sg_wgpu_desc *replacement) {
+    sg_desc *value = self;
+    sg_wgpu_desc copy;
+    mb_clone_sg_wgpu_desc(&copy, replacement);
+    mb_drop_sg_wgpu_desc(&value->wgpu);
+    value->wgpu = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_vulkan_desc *mb_gfx_sg_desc_get_vulkan(sg_desc *self) {
+    sg_desc *value = self;
+    return mb_copy_sg_vulkan_desc(&value->vulkan);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_vulkan(sg_desc *self, sg_vulkan_desc *replacement) {
+    sg_desc *value = self;
+    sg_vulkan_desc copy;
+    mb_clone_sg_vulkan_desc(&copy, replacement);
+    mb_drop_sg_vulkan_desc(&value->vulkan);
+    value->vulkan = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_allocator *mb_gfx_sg_desc_get_allocator(sg_desc *self) {
+    sg_desc *value = self;
+    return mb_copy_sg_allocator(&value->allocator);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_allocator(sg_desc *self, sg_allocator *replacement) {
+    sg_desc *value = self;
+    sg_allocator copy;
+    mb_clone_sg_allocator(&copy, replacement);
+    mb_drop_sg_allocator(&value->allocator);
+    value->allocator = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_logger *mb_gfx_sg_desc_get_logger(sg_desc *self) {
+    sg_desc *value = self;
+    return mb_copy_sg_logger(&value->logger);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_logger(sg_desc *self, sg_logger *replacement) {
+    sg_desc *value = self;
+    sg_logger copy;
+    mb_clone_sg_logger(&copy, replacement);
+    mb_drop_sg_logger(&value->logger);
+    value->logger = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_environment *mb_gfx_sg_desc_get_environment(sg_desc *self) {
+    sg_desc *value = self;
+    return mb_copy_sg_environment(&value->environment);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_desc_set_environment(sg_desc *self, sg_environment *replacement) {
+    sg_desc *value = self;
+    sg_environment copy;
+    mb_clone_sg_environment(&copy, replacement);
+    mb_drop_sg_environment(&value->environment);
+    value->environment = copy;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_setup(sg_desc *desc) {
+    sg_setup(desc);
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_isvalid(void) {
+    return sg_isvalid();
+}
+
+MOONBIT_FFI_EXPORT sg_desc *mb_gfx_sg_query_desc(void) {
+    sg_desc value = sg_query_desc();
+    return mb_copy_sg_desc(&value);
+}

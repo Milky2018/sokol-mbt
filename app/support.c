@@ -1,4 +1,4 @@
-#include "bindings.inc.h"
+#include "internal.h"
 
 /* Sokol has one application context. The bridge has the same static lifetime;
    captured objects and the descriptor have explicit ownership until cleanup. */

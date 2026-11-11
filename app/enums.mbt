@@ -1,0 +1,347 @@
+///|
+#derive(Debug, Eq)
+pub(all) enum EventType {
+  Invalid = 0
+  KeyDown = 1
+  KeyUp = 2
+  Char = 3
+  MouseDown = 4
+  MouseUp = 5
+  MouseScroll = 6
+  MouseMove = 7
+  MouseEnter = 8
+  MouseLeave = 9
+  TouchesBegan = 10
+  TouchesMoved = 11
+  TouchesEnded = 12
+  TouchesCancelled = 13
+  Resized = 14
+  Iconified = 15
+  Restored = 16
+  Focused = 17
+  Unfocused = 18
+  Suspended = 19
+  Resumed = 20
+  QuitRequested = 21
+  ClipboardPasted = 22
+  FilesDropped = 23
+  AndroidBack = 24
+}
+
+///|
+pub extend EventType with Eq::{equal, not_equal}
+
+///|
+pub extend EventType with @debug.Debug::{to_repr}
+
+///|
+extern "c" fn sapp_event_type_int(value : EventType) -> Int32 = "mb_sokol_enum_identity"
+
+///|
+pub fn EventType::to_int(self : EventType) -> Int32 {
+  sapp_event_type_int(self)
+}
+
+///|
+#derive(Debug, Eq)
+pub(all) enum Keycode {
+  Invalid = 0
+  Space = 32
+  Apostrophe = 39
+  Comma = 44
+  Minus = 45
+  Period = 46
+  Slash = 47
+  V0 = 48
+  V1 = 49
+  V2 = 50
+  V3 = 51
+  V4 = 52
+  V5 = 53
+  V6 = 54
+  V7 = 55
+  V8 = 56
+  V9 = 57
+  Semicolon = 59
+  Equal = 61
+  A = 65
+  B = 66
+  C = 67
+  D = 68
+  E = 69
+  F = 70
+  G = 71
+  H = 72
+  I = 73
+  J = 74
+  K = 75
+  L = 76
+  M = 77
+  N = 78
+  O = 79
+  P = 80
+  Q = 81
+  R = 82
+  S = 83
+  T = 84
+  U = 85
+  V = 86
+  W = 87
+  X = 88
+  Y = 89
+  Z = 90
+  LeftBracket = 91
+  Backslash = 92
+  RightBracket = 93
+  GraveAccent = 96
+  World1 = 161
+  World2 = 162
+  Escape = 256
+  Enter = 257
+  Tab = 258
+  Backspace = 259
+  Insert = 260
+  Delete = 261
+  Right = 262
+  Left = 263
+  Down = 264
+  Up = 265
+  PageUp = 266
+  PageDown = 267
+  Home = 268
+  End = 269
+  CapsLock = 280
+  ScrollLock = 281
+  NumLock = 282
+  PrintScreen = 283
+  Pause = 284
+  F1 = 290
+  F2 = 291
+  F3 = 292
+  F4 = 293
+  F5 = 294
+  F6 = 295
+  F7 = 296
+  F8 = 297
+  F9 = 298
+  F10 = 299
+  F11 = 300
+  F12 = 301
+  F13 = 302
+  F14 = 303
+  F15 = 304
+  F16 = 305
+  F17 = 306
+  F18 = 307
+  F19 = 308
+  F20 = 309
+  F21 = 310
+  F22 = 311
+  F23 = 312
+  F24 = 313
+  F25 = 314
+  Kp0 = 320
+  Kp1 = 321
+  Kp2 = 322
+  Kp3 = 323
+  Kp4 = 324
+  Kp5 = 325
+  Kp6 = 326
+  Kp7 = 327
+  Kp8 = 328
+  Kp9 = 329
+  KpDecimal = 330
+  KpDivide = 331
+  KpMultiply = 332
+  KpSubtract = 333
+  KpAdd = 334
+  KpEnter = 335
+  KpEqual = 336
+  LeftShift = 340
+  LeftControl = 341
+  LeftAlt = 342
+  LeftSuper = 343
+  RightShift = 344
+  RightControl = 345
+  RightAlt = 346
+  RightSuper = 347
+  Menu = 348
+}
+
+///|
+pub extend Keycode with Eq::{equal, not_equal}
+
+///|
+pub extend Keycode with @debug.Debug::{to_repr}
+
+///|
+extern "c" fn sapp_keycode_int(value : Keycode) -> Int32 = "mb_sokol_enum_identity"
+
+///|
+pub fn Keycode::to_int(self : Keycode) -> Int32 {
+  sapp_keycode_int(self)
+}
+
+///|
+#derive(Debug, Eq)
+pub(all) enum AndroidTooltype {
+  Unknown = 0
+  Finger = 1
+  Stylus = 2
+  Mouse = 3
+}
+
+///|
+pub extend AndroidTooltype with Eq::{equal, not_equal}
+
+///|
+pub extend AndroidTooltype with @debug.Debug::{to_repr}
+
+///|
+extern "c" fn sapp_android_tooltype_int(value : AndroidTooltype) -> Int32 = "mb_sokol_enum_identity"
+
+///|
+pub fn AndroidTooltype::to_int(self : AndroidTooltype) -> Int32 {
+  sapp_android_tooltype_int(self)
+}
+
+///|
+#derive(Debug, Eq)
+pub(all) enum Mousebutton {
+  Left = 0
+  Right = 1
+  Middle = 2
+  Invalid = 256
+}
+
+///|
+pub extend Mousebutton with Eq::{equal, not_equal}
+
+///|
+pub extend Mousebutton with @debug.Debug::{to_repr}
+
+///|
+extern "c" fn sapp_mousebutton_int(value : Mousebutton) -> Int32 = "mb_sokol_enum_identity"
+
+///|
+pub fn Mousebutton::to_int(self : Mousebutton) -> Int32 {
+  sapp_mousebutton_int(self)
+}
+
+///|
+#derive(Debug, Eq)
+pub(all) enum PixelFormat {
+  Default = 0
+  None = 1
+  Rgba8 = 2
+  Srgb8a8 = 3
+  Bgra8 = 4
+  Sbgr8a8 = 5
+  Rgba16f = 6
+  Depth = 7
+  DepthStencil = 8
+}
+
+///|
+pub extend PixelFormat with Eq::{equal, not_equal}
+
+///|
+pub extend PixelFormat with @debug.Debug::{to_repr}
+
+///|
+extern "c" fn sapp_pixel_format_int(value : PixelFormat) -> Int32 = "mb_sokol_enum_identity"
+
+///|
+pub fn PixelFormat::to_int(self : PixelFormat) -> Int32 {
+  sapp_pixel_format_int(self)
+}
+
+///|
+#derive(Debug, Eq)
+pub(all) enum CompositeMode {
+  Default = 0
+  Opaque = 1
+  Premultiplied = 2
+}
+
+///|
+pub extend CompositeMode with Eq::{equal, not_equal}
+
+///|
+pub extend CompositeMode with @debug.Debug::{to_repr}
+
+///|
+extern "c" fn sapp_composite_mode_int(value : CompositeMode) -> Int32 = "mb_sokol_enum_identity"
+
+///|
+pub fn CompositeMode::to_int(self : CompositeMode) -> Int32 {
+  sapp_composite_mode_int(self)
+}
+
+///|
+#derive(Debug, Eq)
+pub(all) enum Html5FetchError {
+  NoError = 0
+  BufferTooSmall = 1
+  Other = 2
+}
+
+///|
+pub extend Html5FetchError with Eq::{equal, not_equal}
+
+///|
+pub extend Html5FetchError with @debug.Debug::{to_repr}
+
+///|
+extern "c" fn sapp_html5_fetch_error_int(value : Html5FetchError) -> Int32 = "mb_sokol_enum_identity"
+
+///|
+pub fn Html5FetchError::to_int(self : Html5FetchError) -> Int32 {
+  sapp_html5_fetch_error_int(self)
+}
+
+///|
+#derive(Debug, Eq)
+pub(all) enum MouseCursor {
+  Default = 0
+  Arrow = 1
+  Ibeam = 2
+  Crosshair = 3
+  PointingHand = 4
+  ResizeEw = 5
+  ResizeNs = 6
+  ResizeNwse = 7
+  ResizeNesw = 8
+  ResizeAll = 9
+  NotAllowed = 10
+  Custom0 = 11
+  Custom1 = 12
+  Custom2 = 13
+  Custom3 = 14
+  Custom4 = 15
+  Custom5 = 16
+  Custom6 = 17
+  Custom7 = 18
+  Custom8 = 19
+  Custom9 = 20
+  Custom10 = 21
+  Custom11 = 22
+  Custom12 = 23
+  Custom13 = 24
+  Custom14 = 25
+  Custom15 = 26
+}
+
+///|
+pub extend MouseCursor with Eq::{equal, not_equal}
+
+///|
+pub extend MouseCursor with @debug.Debug::{to_repr}
+
+///|
+extern "c" fn sapp_mouse_cursor_int(value : MouseCursor) -> Int32 = "mb_sokol_enum_identity"
+
+///|
+pub fn MouseCursor::to_int(self : MouseCursor) -> Int32 {
+  sapp_mouse_cursor_int(self)
+}

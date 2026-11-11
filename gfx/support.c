@@ -1,5 +1,6 @@
-#include "bindings.inc.h"
-#include "callbacks.inc.h"
+#include "internal.h"
+#include "trace_callbacks.h"
+#include "listener_callback.h"
 
 /* Sokol copies the hook struct but borrows its userdata until replacement. */
 static sg_trace_hooks *mb_installed_hooks;

@@ -1,0 +1,1119 @@
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type D3d11Swapchain
+
+///|
+extern "c" fn sg_d3d11_swapchain_new() -> D3d11Swapchain = "mb_gfx_sg_d3d11_swapchain_new"
+
+///|
+pub fn D3d11Swapchain::new() -> D3d11Swapchain {
+  sg_d3d11_swapchain_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_swapchain_copy(
+  object_ : D3d11Swapchain,
+) -> D3d11Swapchain = "mb_gfx_sg_d3d11_swapchain_copy"
+
+///|
+pub fn D3d11Swapchain::copy(self : D3d11Swapchain) -> D3d11Swapchain {
+  sg_d3d11_swapchain_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_swapchain_native(
+  object_ : D3d11Swapchain,
+) -> @native.Handle = "mb_gfx_sg_d3d11_swapchain_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn D3d11Swapchain::unsafe_native_handle(
+  self : D3d11Swapchain,
+) -> @native.Handle {
+  sg_d3d11_swapchain_native(self)
+}
+
+///|
+extern "c" fn sg_d3d11_swapchain_from_native(
+  ptr : @native.Handle,
+) -> D3d11Swapchain = "mb_gfx_sg_d3d11_swapchain_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn D3d11Swapchain::unsafe_from_native(
+  ptr : @native.Handle,
+) -> D3d11Swapchain {
+  sg_d3d11_swapchain_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_swapchain_get_render_view(
+  object_ : D3d11Swapchain,
+) -> @native.Handle = "mb_gfx_sg_d3d11_swapchain_get_render_view"
+
+///|
+pub fn D3d11Swapchain::render_view(self : D3d11Swapchain) -> @native.Handle {
+  sg_d3d11_swapchain_get_render_view(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_swapchain_set_render_view(
+  object_ : D3d11Swapchain,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_swapchain_set_render_view"
+
+///|
+pub fn D3d11Swapchain::set_render_view(
+  self : D3d11Swapchain,
+  value : @native.Handle,
+) -> D3d11Swapchain {
+  sg_d3d11_swapchain_set_render_view(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_swapchain_get_resolve_view(
+  object_ : D3d11Swapchain,
+) -> @native.Handle = "mb_gfx_sg_d3d11_swapchain_get_resolve_view"
+
+///|
+pub fn D3d11Swapchain::resolve_view(self : D3d11Swapchain) -> @native.Handle {
+  sg_d3d11_swapchain_get_resolve_view(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_swapchain_set_resolve_view(
+  object_ : D3d11Swapchain,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_swapchain_set_resolve_view"
+
+///|
+pub fn D3d11Swapchain::set_resolve_view(
+  self : D3d11Swapchain,
+  value : @native.Handle,
+) -> D3d11Swapchain {
+  sg_d3d11_swapchain_set_resolve_view(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_swapchain_get_depth_stencil_view(
+  object_ : D3d11Swapchain,
+) -> @native.Handle = "mb_gfx_sg_d3d11_swapchain_get_depth_stencil_view"
+
+///|
+pub fn D3d11Swapchain::depth_stencil_view(
+  self : D3d11Swapchain,
+) -> @native.Handle {
+  sg_d3d11_swapchain_get_depth_stencil_view(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_swapchain_set_depth_stencil_view(
+  object_ : D3d11Swapchain,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_swapchain_set_depth_stencil_view"
+
+///|
+pub fn D3d11Swapchain::set_depth_stencil_view(
+  self : D3d11Swapchain,
+  value : @native.Handle,
+) -> D3d11Swapchain {
+  sg_d3d11_swapchain_set_depth_stencil_view(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type D3d11Environment
+
+///|
+extern "c" fn sg_d3d11_environment_new() -> D3d11Environment = "mb_gfx_sg_d3d11_environment_new"
+
+///|
+pub fn D3d11Environment::new() -> D3d11Environment {
+  sg_d3d11_environment_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_environment_copy(
+  object_ : D3d11Environment,
+) -> D3d11Environment = "mb_gfx_sg_d3d11_environment_copy"
+
+///|
+pub fn D3d11Environment::copy(self : D3d11Environment) -> D3d11Environment {
+  sg_d3d11_environment_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_environment_native(
+  object_ : D3d11Environment,
+) -> @native.Handle = "mb_gfx_sg_d3d11_environment_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn D3d11Environment::unsafe_native_handle(
+  self : D3d11Environment,
+) -> @native.Handle {
+  sg_d3d11_environment_native(self)
+}
+
+///|
+extern "c" fn sg_d3d11_environment_from_native(
+  ptr : @native.Handle,
+) -> D3d11Environment = "mb_gfx_sg_d3d11_environment_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn D3d11Environment::unsafe_from_native(
+  ptr : @native.Handle,
+) -> D3d11Environment {
+  sg_d3d11_environment_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_environment_get_device(
+  object_ : D3d11Environment,
+) -> @native.Handle = "mb_gfx_sg_d3d11_environment_get_device"
+
+///|
+pub fn D3d11Environment::device(self : D3d11Environment) -> @native.Handle {
+  sg_d3d11_environment_get_device(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_environment_set_device(
+  object_ : D3d11Environment,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_environment_set_device"
+
+///|
+pub fn D3d11Environment::set_device(
+  self : D3d11Environment,
+  value : @native.Handle,
+) -> D3d11Environment {
+  sg_d3d11_environment_set_device(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_environment_get_device_context(
+  object_ : D3d11Environment,
+) -> @native.Handle = "mb_gfx_sg_d3d11_environment_get_device_context"
+
+///|
+pub fn D3d11Environment::device_context(
+  self : D3d11Environment,
+) -> @native.Handle {
+  sg_d3d11_environment_get_device_context(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_environment_set_device_context(
+  object_ : D3d11Environment,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_environment_set_device_context"
+
+///|
+pub fn D3d11Environment::set_device_context(
+  self : D3d11Environment,
+  value : @native.Handle,
+) -> D3d11Environment {
+  sg_d3d11_environment_set_device_context(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type D3d11Desc
+
+///|
+extern "c" fn sg_d3d11_desc_new() -> D3d11Desc = "mb_gfx_sg_d3d11_desc_new"
+
+///|
+pub fn D3d11Desc::new() -> D3d11Desc {
+  sg_d3d11_desc_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_desc_copy(object_ : D3d11Desc) -> D3d11Desc = "mb_gfx_sg_d3d11_desc_copy"
+
+///|
+pub fn D3d11Desc::copy(self : D3d11Desc) -> D3d11Desc {
+  sg_d3d11_desc_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_desc_native(object_ : D3d11Desc) -> @native.Handle = "mb_gfx_sg_d3d11_desc_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn D3d11Desc::unsafe_native_handle(self : D3d11Desc) -> @native.Handle {
+  sg_d3d11_desc_native(self)
+}
+
+///|
+extern "c" fn sg_d3d11_desc_from_native(ptr : @native.Handle) -> D3d11Desc = "mb_gfx_sg_d3d11_desc_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn D3d11Desc::unsafe_from_native(ptr : @native.Handle) -> D3d11Desc {
+  sg_d3d11_desc_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_desc_get_shader_debugging(object_ : D3d11Desc) -> Bool = "mb_gfx_sg_d3d11_desc_get_shader_debugging"
+
+///|
+pub fn D3d11Desc::shader_debugging(self : D3d11Desc) -> Bool {
+  sg_d3d11_desc_get_shader_debugging(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_desc_set_shader_debugging(
+  object_ : D3d11Desc,
+  replacement : Bool,
+) -> Unit = "mb_gfx_sg_d3d11_desc_set_shader_debugging"
+
+///|
+pub fn D3d11Desc::set_shader_debugging(
+  self : D3d11Desc,
+  value : Bool,
+) -> D3d11Desc {
+  sg_d3d11_desc_set_shader_debugging(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type D3d11BufferInfo
+
+///|
+extern "c" fn sg_d3d11_buffer_info_new() -> D3d11BufferInfo = "mb_gfx_sg_d3d11_buffer_info_new"
+
+///|
+pub fn D3d11BufferInfo::new() -> D3d11BufferInfo {
+  sg_d3d11_buffer_info_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_buffer_info_copy(
+  object_ : D3d11BufferInfo,
+) -> D3d11BufferInfo = "mb_gfx_sg_d3d11_buffer_info_copy"
+
+///|
+pub fn D3d11BufferInfo::copy(self : D3d11BufferInfo) -> D3d11BufferInfo {
+  sg_d3d11_buffer_info_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_buffer_info_native(
+  object_ : D3d11BufferInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_buffer_info_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn D3d11BufferInfo::unsafe_native_handle(
+  self : D3d11BufferInfo,
+) -> @native.Handle {
+  sg_d3d11_buffer_info_native(self)
+}
+
+///|
+extern "c" fn sg_d3d11_buffer_info_from_native(
+  ptr : @native.Handle,
+) -> D3d11BufferInfo = "mb_gfx_sg_d3d11_buffer_info_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn D3d11BufferInfo::unsafe_from_native(
+  ptr : @native.Handle,
+) -> D3d11BufferInfo {
+  sg_d3d11_buffer_info_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_buffer_info_get_buf(
+  object_ : D3d11BufferInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_buffer_info_get_buf"
+
+///|
+pub fn D3d11BufferInfo::buf(self : D3d11BufferInfo) -> @native.Handle {
+  sg_d3d11_buffer_info_get_buf(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_buffer_info_set_buf(
+  object_ : D3d11BufferInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_buffer_info_set_buf"
+
+///|
+pub fn D3d11BufferInfo::set_buf(
+  self : D3d11BufferInfo,
+  value : @native.Handle,
+) -> D3d11BufferInfo {
+  sg_d3d11_buffer_info_set_buf(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type D3d11ImageInfo
+
+///|
+extern "c" fn sg_d3d11_image_info_new() -> D3d11ImageInfo = "mb_gfx_sg_d3d11_image_info_new"
+
+///|
+pub fn D3d11ImageInfo::new() -> D3d11ImageInfo {
+  sg_d3d11_image_info_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_image_info_copy(
+  object_ : D3d11ImageInfo,
+) -> D3d11ImageInfo = "mb_gfx_sg_d3d11_image_info_copy"
+
+///|
+pub fn D3d11ImageInfo::copy(self : D3d11ImageInfo) -> D3d11ImageInfo {
+  sg_d3d11_image_info_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_image_info_native(
+  object_ : D3d11ImageInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_image_info_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn D3d11ImageInfo::unsafe_native_handle(
+  self : D3d11ImageInfo,
+) -> @native.Handle {
+  sg_d3d11_image_info_native(self)
+}
+
+///|
+extern "c" fn sg_d3d11_image_info_from_native(
+  ptr : @native.Handle,
+) -> D3d11ImageInfo = "mb_gfx_sg_d3d11_image_info_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn D3d11ImageInfo::unsafe_from_native(
+  ptr : @native.Handle,
+) -> D3d11ImageInfo {
+  sg_d3d11_image_info_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_image_info_get_tex2d(
+  object_ : D3d11ImageInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_image_info_get_tex2d"
+
+///|
+pub fn D3d11ImageInfo::tex2d(self : D3d11ImageInfo) -> @native.Handle {
+  sg_d3d11_image_info_get_tex2d(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_image_info_set_tex2d(
+  object_ : D3d11ImageInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_image_info_set_tex2d"
+
+///|
+pub fn D3d11ImageInfo::set_tex2d(
+  self : D3d11ImageInfo,
+  value : @native.Handle,
+) -> D3d11ImageInfo {
+  sg_d3d11_image_info_set_tex2d(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_image_info_get_tex3d(
+  object_ : D3d11ImageInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_image_info_get_tex3d"
+
+///|
+pub fn D3d11ImageInfo::tex3d(self : D3d11ImageInfo) -> @native.Handle {
+  sg_d3d11_image_info_get_tex3d(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_image_info_set_tex3d(
+  object_ : D3d11ImageInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_image_info_set_tex3d"
+
+///|
+pub fn D3d11ImageInfo::set_tex3d(
+  self : D3d11ImageInfo,
+  value : @native.Handle,
+) -> D3d11ImageInfo {
+  sg_d3d11_image_info_set_tex3d(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_image_info_get_res(
+  object_ : D3d11ImageInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_image_info_get_res"
+
+///|
+pub fn D3d11ImageInfo::res(self : D3d11ImageInfo) -> @native.Handle {
+  sg_d3d11_image_info_get_res(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_image_info_set_res(
+  object_ : D3d11ImageInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_image_info_set_res"
+
+///|
+pub fn D3d11ImageInfo::set_res(
+  self : D3d11ImageInfo,
+  value : @native.Handle,
+) -> D3d11ImageInfo {
+  sg_d3d11_image_info_set_res(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type D3d11SamplerInfo
+
+///|
+extern "c" fn sg_d3d11_sampler_info_new() -> D3d11SamplerInfo = "mb_gfx_sg_d3d11_sampler_info_new"
+
+///|
+pub fn D3d11SamplerInfo::new() -> D3d11SamplerInfo {
+  sg_d3d11_sampler_info_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_sampler_info_copy(
+  object_ : D3d11SamplerInfo,
+) -> D3d11SamplerInfo = "mb_gfx_sg_d3d11_sampler_info_copy"
+
+///|
+pub fn D3d11SamplerInfo::copy(self : D3d11SamplerInfo) -> D3d11SamplerInfo {
+  sg_d3d11_sampler_info_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_sampler_info_native(
+  object_ : D3d11SamplerInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_sampler_info_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn D3d11SamplerInfo::unsafe_native_handle(
+  self : D3d11SamplerInfo,
+) -> @native.Handle {
+  sg_d3d11_sampler_info_native(self)
+}
+
+///|
+extern "c" fn sg_d3d11_sampler_info_from_native(
+  ptr : @native.Handle,
+) -> D3d11SamplerInfo = "mb_gfx_sg_d3d11_sampler_info_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn D3d11SamplerInfo::unsafe_from_native(
+  ptr : @native.Handle,
+) -> D3d11SamplerInfo {
+  sg_d3d11_sampler_info_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_sampler_info_get_smp(
+  object_ : D3d11SamplerInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_sampler_info_get_smp"
+
+///|
+pub fn D3d11SamplerInfo::smp(self : D3d11SamplerInfo) -> @native.Handle {
+  sg_d3d11_sampler_info_get_smp(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_sampler_info_set_smp(
+  object_ : D3d11SamplerInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_sampler_info_set_smp"
+
+///|
+pub fn D3d11SamplerInfo::set_smp(
+  self : D3d11SamplerInfo,
+  value : @native.Handle,
+) -> D3d11SamplerInfo {
+  sg_d3d11_sampler_info_set_smp(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type D3d11ShaderInfo
+
+///|
+extern "c" fn sg_d3d11_shader_info_new() -> D3d11ShaderInfo = "mb_gfx_sg_d3d11_shader_info_new"
+
+///|
+pub fn D3d11ShaderInfo::new() -> D3d11ShaderInfo {
+  sg_d3d11_shader_info_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_shader_info_copy(
+  object_ : D3d11ShaderInfo,
+) -> D3d11ShaderInfo = "mb_gfx_sg_d3d11_shader_info_copy"
+
+///|
+pub fn D3d11ShaderInfo::copy(self : D3d11ShaderInfo) -> D3d11ShaderInfo {
+  sg_d3d11_shader_info_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_shader_info_native(
+  object_ : D3d11ShaderInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_shader_info_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn D3d11ShaderInfo::unsafe_native_handle(
+  self : D3d11ShaderInfo,
+) -> @native.Handle {
+  sg_d3d11_shader_info_native(self)
+}
+
+///|
+extern "c" fn sg_d3d11_shader_info_from_native(
+  ptr : @native.Handle,
+) -> D3d11ShaderInfo = "mb_gfx_sg_d3d11_shader_info_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn D3d11ShaderInfo::unsafe_from_native(
+  ptr : @native.Handle,
+) -> D3d11ShaderInfo {
+  sg_d3d11_shader_info_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_shader_info_get_cbufs(
+  object_ : D3d11ShaderInfo,
+  i0 : Int32,
+) -> @native.Handle = "mb_gfx_sg_d3d11_shader_info_get_cbufs"
+
+///|
+pub fn D3d11ShaderInfo::cbufs(
+  self : D3d11ShaderInfo,
+  i0 : Int32,
+) -> @native.Handle {
+  guard i0 >= 0 && i0 < 8 else { abort("descriptor array index out of bounds") }
+  sg_d3d11_shader_info_get_cbufs(self, i0)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_shader_info_set_cbufs(
+  object_ : D3d11ShaderInfo,
+  i0 : Int32,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_shader_info_set_cbufs"
+
+///|
+pub fn D3d11ShaderInfo::set_cbufs(
+  self : D3d11ShaderInfo,
+  i0 : Int32,
+  value : @native.Handle,
+) -> D3d11ShaderInfo {
+  guard i0 >= 0 && i0 < 8 else { abort("descriptor array index out of bounds") }
+  sg_d3d11_shader_info_set_cbufs(self, i0, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_shader_info_get_vs(
+  object_ : D3d11ShaderInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_shader_info_get_vs"
+
+///|
+pub fn D3d11ShaderInfo::vs(self : D3d11ShaderInfo) -> @native.Handle {
+  sg_d3d11_shader_info_get_vs(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_shader_info_set_vs(
+  object_ : D3d11ShaderInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_shader_info_set_vs"
+
+///|
+pub fn D3d11ShaderInfo::set_vs(
+  self : D3d11ShaderInfo,
+  value : @native.Handle,
+) -> D3d11ShaderInfo {
+  sg_d3d11_shader_info_set_vs(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_shader_info_get_fs(
+  object_ : D3d11ShaderInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_shader_info_get_fs"
+
+///|
+pub fn D3d11ShaderInfo::fs(self : D3d11ShaderInfo) -> @native.Handle {
+  sg_d3d11_shader_info_get_fs(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_shader_info_set_fs(
+  object_ : D3d11ShaderInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_shader_info_set_fs"
+
+///|
+pub fn D3d11ShaderInfo::set_fs(
+  self : D3d11ShaderInfo,
+  value : @native.Handle,
+) -> D3d11ShaderInfo {
+  sg_d3d11_shader_info_set_fs(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type D3d11PipelineInfo
+
+///|
+extern "c" fn sg_d3d11_pipeline_info_new() -> D3d11PipelineInfo = "mb_gfx_sg_d3d11_pipeline_info_new"
+
+///|
+pub fn D3d11PipelineInfo::new() -> D3d11PipelineInfo {
+  sg_d3d11_pipeline_info_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_pipeline_info_copy(
+  object_ : D3d11PipelineInfo,
+) -> D3d11PipelineInfo = "mb_gfx_sg_d3d11_pipeline_info_copy"
+
+///|
+pub fn D3d11PipelineInfo::copy(self : D3d11PipelineInfo) -> D3d11PipelineInfo {
+  sg_d3d11_pipeline_info_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_pipeline_info_native(
+  object_ : D3d11PipelineInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_pipeline_info_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn D3d11PipelineInfo::unsafe_native_handle(
+  self : D3d11PipelineInfo,
+) -> @native.Handle {
+  sg_d3d11_pipeline_info_native(self)
+}
+
+///|
+extern "c" fn sg_d3d11_pipeline_info_from_native(
+  ptr : @native.Handle,
+) -> D3d11PipelineInfo = "mb_gfx_sg_d3d11_pipeline_info_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn D3d11PipelineInfo::unsafe_from_native(
+  ptr : @native.Handle,
+) -> D3d11PipelineInfo {
+  sg_d3d11_pipeline_info_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_pipeline_info_get_il(
+  object_ : D3d11PipelineInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_pipeline_info_get_il"
+
+///|
+pub fn D3d11PipelineInfo::il(self : D3d11PipelineInfo) -> @native.Handle {
+  sg_d3d11_pipeline_info_get_il(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_pipeline_info_set_il(
+  object_ : D3d11PipelineInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_pipeline_info_set_il"
+
+///|
+pub fn D3d11PipelineInfo::set_il(
+  self : D3d11PipelineInfo,
+  value : @native.Handle,
+) -> D3d11PipelineInfo {
+  sg_d3d11_pipeline_info_set_il(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_pipeline_info_get_rs(
+  object_ : D3d11PipelineInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_pipeline_info_get_rs"
+
+///|
+pub fn D3d11PipelineInfo::rs(self : D3d11PipelineInfo) -> @native.Handle {
+  sg_d3d11_pipeline_info_get_rs(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_pipeline_info_set_rs(
+  object_ : D3d11PipelineInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_pipeline_info_set_rs"
+
+///|
+pub fn D3d11PipelineInfo::set_rs(
+  self : D3d11PipelineInfo,
+  value : @native.Handle,
+) -> D3d11PipelineInfo {
+  sg_d3d11_pipeline_info_set_rs(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_pipeline_info_get_dss(
+  object_ : D3d11PipelineInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_pipeline_info_get_dss"
+
+///|
+pub fn D3d11PipelineInfo::dss(self : D3d11PipelineInfo) -> @native.Handle {
+  sg_d3d11_pipeline_info_get_dss(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_pipeline_info_set_dss(
+  object_ : D3d11PipelineInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_pipeline_info_set_dss"
+
+///|
+pub fn D3d11PipelineInfo::set_dss(
+  self : D3d11PipelineInfo,
+  value : @native.Handle,
+) -> D3d11PipelineInfo {
+  sg_d3d11_pipeline_info_set_dss(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_pipeline_info_get_bs(
+  object_ : D3d11PipelineInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_pipeline_info_get_bs"
+
+///|
+pub fn D3d11PipelineInfo::bs(self : D3d11PipelineInfo) -> @native.Handle {
+  sg_d3d11_pipeline_info_get_bs(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_pipeline_info_set_bs(
+  object_ : D3d11PipelineInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_pipeline_info_set_bs"
+
+///|
+pub fn D3d11PipelineInfo::set_bs(
+  self : D3d11PipelineInfo,
+  value : @native.Handle,
+) -> D3d11PipelineInfo {
+  sg_d3d11_pipeline_info_set_bs(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type D3d11ViewInfo
+
+///|
+extern "c" fn sg_d3d11_view_info_new() -> D3d11ViewInfo = "mb_gfx_sg_d3d11_view_info_new"
+
+///|
+pub fn D3d11ViewInfo::new() -> D3d11ViewInfo {
+  sg_d3d11_view_info_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_view_info_copy(object_ : D3d11ViewInfo) -> D3d11ViewInfo = "mb_gfx_sg_d3d11_view_info_copy"
+
+///|
+pub fn D3d11ViewInfo::copy(self : D3d11ViewInfo) -> D3d11ViewInfo {
+  sg_d3d11_view_info_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_view_info_native(
+  object_ : D3d11ViewInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_view_info_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn D3d11ViewInfo::unsafe_native_handle(
+  self : D3d11ViewInfo,
+) -> @native.Handle {
+  sg_d3d11_view_info_native(self)
+}
+
+///|
+extern "c" fn sg_d3d11_view_info_from_native(
+  ptr : @native.Handle,
+) -> D3d11ViewInfo = "mb_gfx_sg_d3d11_view_info_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn D3d11ViewInfo::unsafe_from_native(ptr : @native.Handle) -> D3d11ViewInfo {
+  sg_d3d11_view_info_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_view_info_get_srv(
+  object_ : D3d11ViewInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_view_info_get_srv"
+
+///|
+pub fn D3d11ViewInfo::srv(self : D3d11ViewInfo) -> @native.Handle {
+  sg_d3d11_view_info_get_srv(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_view_info_set_srv(
+  object_ : D3d11ViewInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_view_info_set_srv"
+
+///|
+pub fn D3d11ViewInfo::set_srv(
+  self : D3d11ViewInfo,
+  value : @native.Handle,
+) -> D3d11ViewInfo {
+  sg_d3d11_view_info_set_srv(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_view_info_get_uav(
+  object_ : D3d11ViewInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_view_info_get_uav"
+
+///|
+pub fn D3d11ViewInfo::uav(self : D3d11ViewInfo) -> @native.Handle {
+  sg_d3d11_view_info_get_uav(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_view_info_set_uav(
+  object_ : D3d11ViewInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_view_info_set_uav"
+
+///|
+pub fn D3d11ViewInfo::set_uav(
+  self : D3d11ViewInfo,
+  value : @native.Handle,
+) -> D3d11ViewInfo {
+  sg_d3d11_view_info_set_uav(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_view_info_get_rtv(
+  object_ : D3d11ViewInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_view_info_get_rtv"
+
+///|
+pub fn D3d11ViewInfo::rtv(self : D3d11ViewInfo) -> @native.Handle {
+  sg_d3d11_view_info_get_rtv(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_view_info_set_rtv(
+  object_ : D3d11ViewInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_view_info_set_rtv"
+
+///|
+pub fn D3d11ViewInfo::set_rtv(
+  self : D3d11ViewInfo,
+  value : @native.Handle,
+) -> D3d11ViewInfo {
+  sg_d3d11_view_info_set_rtv(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_view_info_get_dsv(
+  object_ : D3d11ViewInfo,
+) -> @native.Handle = "mb_gfx_sg_d3d11_view_info_get_dsv"
+
+///|
+pub fn D3d11ViewInfo::dsv(self : D3d11ViewInfo) -> @native.Handle {
+  sg_d3d11_view_info_get_dsv(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_d3d11_view_info_set_dsv(
+  object_ : D3d11ViewInfo,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_d3d11_view_info_set_dsv"
+
+///|
+pub fn D3d11ViewInfo::set_dsv(
+  self : D3d11ViewInfo,
+  value : @native.Handle,
+) -> D3d11ViewInfo {
+  sg_d3d11_view_info_set_dsv(self, value)
+  self
+}
+
+///|
+#cfg(platform="windows")
+extern "c" fn sg_d3d11_device() -> @native.Handle = "sg_d3d11_device"
+
+///|
+#cfg(platform="windows")
+pub fn d3d11_device() -> @native.Handle {
+  sg_d3d11_device()
+}
+
+///|
+#cfg(platform="windows")
+extern "c" fn sg_d3d11_device_context() -> @native.Handle = "sg_d3d11_device_context"
+
+///|
+#cfg(platform="windows")
+pub fn d3d11_device_context() -> @native.Handle {
+  sg_d3d11_device_context()
+}
+
+///|
+#cfg(platform="windows")
+extern "c" fn sg_d3d11_query_buffer_info(buf : UInt32) -> D3d11BufferInfo = "mb_gfx_sg_d3d11_query_buffer_info"
+
+///|
+#cfg(platform="windows")
+pub fn d3d11_query_buffer_info(buf : Buffer) -> D3d11BufferInfo {
+  sg_d3d11_query_buffer_info(buf.0)
+}
+
+///|
+#cfg(platform="windows")
+extern "c" fn sg_d3d11_query_image_info(img : UInt32) -> D3d11ImageInfo = "mb_gfx_sg_d3d11_query_image_info"
+
+///|
+#cfg(platform="windows")
+pub fn d3d11_query_image_info(img : Image) -> D3d11ImageInfo {
+  sg_d3d11_query_image_info(img.0)
+}
+
+///|
+#cfg(platform="windows")
+extern "c" fn sg_d3d11_query_sampler_info(smp : UInt32) -> D3d11SamplerInfo = "mb_gfx_sg_d3d11_query_sampler_info"
+
+///|
+#cfg(platform="windows")
+pub fn d3d11_query_sampler_info(smp : Sampler) -> D3d11SamplerInfo {
+  sg_d3d11_query_sampler_info(smp.0)
+}
+
+///|
+#cfg(platform="windows")
+extern "c" fn sg_d3d11_query_shader_info(shd : UInt32) -> D3d11ShaderInfo = "mb_gfx_sg_d3d11_query_shader_info"
+
+///|
+#cfg(platform="windows")
+pub fn d3d11_query_shader_info(shd : Shader) -> D3d11ShaderInfo {
+  sg_d3d11_query_shader_info(shd.0)
+}
+
+///|
+#cfg(platform="windows")
+extern "c" fn sg_d3d11_query_pipeline_info(pip : UInt32) -> D3d11PipelineInfo = "mb_gfx_sg_d3d11_query_pipeline_info"
+
+///|
+#cfg(platform="windows")
+pub fn d3d11_query_pipeline_info(pip : Pipeline) -> D3d11PipelineInfo {
+  sg_d3d11_query_pipeline_info(pip.0)
+}
+
+///|
+#cfg(platform="windows")
+extern "c" fn sg_d3d11_query_view_info(view : UInt32) -> D3d11ViewInfo = "mb_gfx_sg_d3d11_query_view_info"
+
+///|
+#cfg(platform="windows")
+pub fn d3d11_query_view_info(view : View) -> D3d11ViewInfo {
+  sg_d3d11_query_view_info(view.0)
+}

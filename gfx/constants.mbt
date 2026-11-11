@@ -1,0 +1,41 @@
+///|
+pub const INVALID_ID : Int32 = 0
+
+///|
+pub const NUM_INFLIGHT_FRAMES : Int32 = 2
+
+///|
+pub const MAX_COLOR_ATTACHMENTS : Int32 = 8
+
+///|
+pub const MAX_UNIFORMBLOCK_MEMBERS : Int32 = 16
+
+///|
+pub const MAX_VERTEX_ATTRIBUTES : Int32 = 16
+
+///|
+pub const MAX_VERTEXBUFFER_BINDSLOTS : Int32 = 8
+
+///|
+pub const MAX_UNIFORMBLOCK_BINDSLOTS : Int32 = 8
+
+///|
+pub const MAX_VIEW_BINDSLOTS : Int32 = 32
+
+///|
+pub const MAX_SAMPLER_BINDSLOTS : Int32 = 14
+
+///|
+pub const MAX_TEXTURE_SAMPLER_PAIRS : Int32 = 32
+
+///|
+pub const MAX_PORTABLE_COLOR_ATTACHMENTS : Int32 = 4
+
+///|
+pub const MAX_PORTABLE_TEXTURE_BINDINGS_PER_STAGE : Int32 = 16
+
+///|
+pub const MAX_PORTABLE_STORAGEBUFFER_BINDINGS_PER_STAGE : Int32 = 8
+
+///|
+pub const MAX_PORTABLE_STORAGEIMAGE_BINDINGS_PER_STAGE : Int32 = 4

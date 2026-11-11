@@ -1,12 +1,34 @@
 ---
 import {
+  "moonbitlang/core/async",
+  "moonbitlang/core/async/fs",
   "moonbitlang/core/env",
 }
+
 ---
 
 ///|
+// Moon tracks package-local headers. Include shared header contents in the
+// compiler arguments too, so editing native/ headers invalidates the C objects.
+async fn header_fingerprint() -> UInt64 {
+  let headers = [
+    "common.h", "sokol_app.h", "sokol_gfx.h", "sokol_audio.h", "sokol_fetch.h", "sokol_time.h",
+    "sokol_args.h", "sokol_log.h", "sokol_glue.h",
+  ]
+  // FNV-1a gives a stable content fingerprint across build invocations.
+  let mut fingerprint = 14695981039346656037UL
+  for name in headers {
+    let contents = @fs.read_binary("native/\{name}")
+    for byte in contents {
+      fingerprint = (fingerprint ^ byte.to_uint64()) * 1099511628211UL
+    }
+  }
+  fingerprint
+}
+
+///|
 // Moon's prebuild hook supplies platform flags to dependent packages as well.
-fn main {
+async fn main {
   let headless = @env.get_env_var("SOKOL_HEADLESS") == Some("1")
   guard @env.get_env_var("MOON_HOST_OS") is Some(host_os) else {
     abort(
@@ -15,6 +37,7 @@ fn main {
   }
   let mac = host_os == "macos"
   let win = host_os == "windows"
+  let header_flags = "-DMB_SOKOL_HEADERS_HASH=\{header_fingerprint()}ULL"
   let backend = if headless {
     "-DSOKOL_DUMMY_BACKEND"
   } else if mac {
@@ -87,17 +110,18 @@ fn main {
   })
   let output : Json = {
     "vars": {
+      "SOKOL_HEADER_FLAGS": header_flags,
       "SOKOL_OBJC_FLAGS": if mac {
         "-ObjC -fobjc-arc"
       } else {
         ""
       },
-      "SOKOL_GFX_FLAGS": graphics,
-      "SOKOL_APP_FLAGS": app,
+      "SOKOL_GFX_FLAGS": "\{graphics} \{header_flags}",
+      "SOKOL_APP_FLAGS": "\{app} \{header_flags}",
       "SOKOL_AUDIO_FLAGS": if headless {
-        "-DSOKOL_DUMMY_BACKEND"
+        "-DSOKOL_DUMMY_BACKEND \{header_flags}"
       } else {
-        ""
+        header_flags
       },
     },
     "link_configs": link_configs,

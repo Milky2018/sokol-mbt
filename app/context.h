@@ -1,0 +1,605 @@
+static void mb_clone_sapp_allocator(sapp_allocator *dst, const sapp_allocator *src) {
+    *dst = *src;
+}
+
+static void mb_drop_sapp_allocator(void *object) {
+    (void)object;
+}
+
+_Static_assert(_Alignof(sapp_allocator) <= _Alignof(void *), "external payload alignment");
+
+static sapp_allocator *mb_new_sapp_allocator(void) {
+    return mb_object_new(sizeof(sapp_allocator), mb_drop_sapp_allocator);
+}
+
+static sapp_allocator *mb_copy_sapp_allocator(const sapp_allocator *source) {
+    sapp_allocator *result = mb_new_sapp_allocator();
+    mb_clone_sapp_allocator(result, source);
+    return result;
+}
+
+static void mb_clone_sapp_desc(sapp_desc *dst, const sapp_desc *src) {
+    *dst = *src;
+    dst->window_title = mb_string(src->window_title);
+    mb_clone_sapp_icon_desc(&dst->icon, &src->icon);
+    mb_clone_sapp_allocator(&dst->allocator, &src->allocator);
+    mb_clone_sapp_logger(&dst->logger, &src->logger);
+    mb_clone_sapp_gl_desc(&dst->gl, &src->gl);
+    mb_clone_sapp_metal_desc(&dst->metal, &src->metal);
+    mb_clone_sapp_win32_desc(&dst->win32, &src->win32);
+    mb_clone_sapp_html5_desc(&dst->html5, &src->html5);
+    mb_clone_sapp_ios_desc(&dst->ios, &src->ios);
+    mb_clone_sapp_android_desc(&dst->android, &src->android);
+}
+
+static void mb_drop_sapp_desc(void *object) {
+    sapp_desc *value = object;
+    free((void *)value->window_title);
+    mb_drop_sapp_icon_desc(&value->icon);
+    mb_drop_sapp_allocator(&value->allocator);
+    mb_drop_sapp_logger(&value->logger);
+    mb_drop_sapp_gl_desc(&value->gl);
+    mb_drop_sapp_metal_desc(&value->metal);
+    mb_drop_sapp_win32_desc(&value->win32);
+    mb_drop_sapp_html5_desc(&value->html5);
+    mb_drop_sapp_ios_desc(&value->ios);
+    mb_drop_sapp_android_desc(&value->android);
+}
+
+_Static_assert(_Alignof(sapp_desc) <= _Alignof(void *), "external payload alignment");
+
+static sapp_desc *mb_new_sapp_desc(void) {
+    return mb_object_new(sizeof(sapp_desc), mb_drop_sapp_desc);
+}
+
+static sapp_desc *mb_copy_sapp_desc(const sapp_desc *source) {
+    sapp_desc *result = mb_new_sapp_desc();
+    mb_clone_sapp_desc(result, source);
+    return result;
+}
+
+static void mb_clone_sapp_logger(sapp_logger *dst, const sapp_logger *src) {
+    *dst = *src;
+}
+
+static void mb_drop_sapp_logger(void *object) {
+    (void)object;
+}
+
+_Static_assert(_Alignof(sapp_logger) <= _Alignof(void *), "external payload alignment");
+
+static sapp_logger *mb_new_sapp_logger(void) {
+    return mb_object_new(sizeof(sapp_logger), mb_drop_sapp_logger);
+}
+
+static sapp_logger *mb_copy_sapp_logger(const sapp_logger *source) {
+    sapp_logger *result = mb_new_sapp_logger();
+    mb_clone_sapp_logger(result, source);
+    return result;
+}
+
+MOONBIT_FFI_EXPORT sapp_allocator *mb_app_sapp_allocator_new(void) {
+    return mb_new_sapp_allocator();
+}
+
+MOONBIT_FFI_EXPORT sapp_allocator *mb_app_sapp_allocator_copy(sapp_allocator *self) {
+    return mb_copy_sapp_allocator(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_allocator_native(sapp_allocator *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sapp_allocator *mb_app_sapp_allocator_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sapp_allocator(ptr);
+}
+
+typedef void *(*mb_sapp_allocator_alloc_fn_fn)(size_t, void *);
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_allocator_get_alloc_fn(sapp_allocator *self) {
+    sapp_allocator *value = self;
+    return (void *)value->alloc_fn;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_allocator_set_alloc_fn(sapp_allocator *self,
+                                                           void *replacement) {
+    sapp_allocator *value = self;
+    value->alloc_fn = (mb_sapp_allocator_alloc_fn_fn)replacement;
+}
+
+typedef void (*mb_sapp_allocator_free_fn_fn)(void *, void *);
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_allocator_get_free_fn(sapp_allocator *self) {
+    sapp_allocator *value = self;
+    return (void *)value->free_fn;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_allocator_set_free_fn(sapp_allocator *self, void *replacement) {
+    sapp_allocator *value = self;
+    value->free_fn = (mb_sapp_allocator_free_fn_fn)replacement;
+}
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_allocator_get_user_data(sapp_allocator *self) {
+    sapp_allocator *value = self;
+    return (void *)value->user_data;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_allocator_set_user_data(sapp_allocator *self,
+                                                            void *replacement) {
+    sapp_allocator *value = self;
+    value->user_data = replacement;
+}
+
+MOONBIT_FFI_EXPORT sapp_logger *mb_app_sapp_logger_new(void) {
+    return mb_new_sapp_logger();
+}
+
+MOONBIT_FFI_EXPORT sapp_logger *mb_app_sapp_logger_copy(sapp_logger *self) {
+    return mb_copy_sapp_logger(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_logger_native(sapp_logger *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sapp_logger *mb_app_sapp_logger_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sapp_logger(ptr);
+}
+
+typedef void (*mb_sapp_logger_func_fn)(const char *, uint32_t, uint32_t, const char *, uint32_t,
+                                       const char *, void *);
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_logger_get_func(sapp_logger *self) {
+    sapp_logger *value = self;
+    return (void *)value->func;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_logger_set_func(sapp_logger *self, void *replacement) {
+    sapp_logger *value = self;
+    value->func = (mb_sapp_logger_func_fn)replacement;
+}
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_logger_get_user_data(sapp_logger *self) {
+    sapp_logger *value = self;
+    return (void *)value->user_data;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_logger_set_user_data(sapp_logger *self, void *replacement) {
+    sapp_logger *value = self;
+    value->user_data = replacement;
+}
+
+MOONBIT_FFI_EXPORT sapp_logger *mb_app_sapp_logger_default(void) {
+
+    sapp_logger *result = mb_new_sapp_logger();
+    result->func = slog_func;
+    return result;
+}
+
+MOONBIT_FFI_EXPORT sapp_desc *mb_app_sapp_desc_new(void) {
+    return mb_new_sapp_desc();
+}
+
+MOONBIT_FFI_EXPORT sapp_desc *mb_app_sapp_desc_copy(sapp_desc *self) {
+    return mb_copy_sapp_desc(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_desc_native(sapp_desc *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sapp_desc *mb_app_sapp_desc_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sapp_desc(ptr);
+}
+
+typedef void (*mb_sapp_desc_init_cb_fn)(void);
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_desc_get_init_cb(sapp_desc *self) {
+    sapp_desc *value = self;
+    return (void *)value->init_cb;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_init_cb(sapp_desc *self, void *replacement) {
+    sapp_desc *value = self;
+    value->init_cb = (mb_sapp_desc_init_cb_fn)replacement;
+}
+
+typedef void (*mb_sapp_desc_frame_cb_fn)(void);
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_desc_get_frame_cb(sapp_desc *self) {
+    sapp_desc *value = self;
+    return (void *)value->frame_cb;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_frame_cb(sapp_desc *self, void *replacement) {
+    sapp_desc *value = self;
+    value->frame_cb = (mb_sapp_desc_frame_cb_fn)replacement;
+}
+
+typedef void (*mb_sapp_desc_cleanup_cb_fn)(void);
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_desc_get_cleanup_cb(sapp_desc *self) {
+    sapp_desc *value = self;
+    return (void *)value->cleanup_cb;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_cleanup_cb(sapp_desc *self, void *replacement) {
+    sapp_desc *value = self;
+    value->cleanup_cb = (mb_sapp_desc_cleanup_cb_fn)replacement;
+}
+
+typedef void (*mb_sapp_desc_event_cb_fn)(const sapp_event *);
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_desc_get_event_cb(sapp_desc *self) {
+    sapp_desc *value = self;
+    return (void *)value->event_cb;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_event_cb(sapp_desc *self, void *replacement) {
+    sapp_desc *value = self;
+    value->event_cb = (mb_sapp_desc_event_cb_fn)replacement;
+}
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_desc_get_user_data(sapp_desc *self) {
+    sapp_desc *value = self;
+    return (void *)value->user_data;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_user_data(sapp_desc *self, void *replacement) {
+    sapp_desc *value = self;
+    value->user_data = replacement;
+}
+
+typedef void (*mb_sapp_desc_init_userdata_cb_fn)(void *);
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_desc_get_init_userdata_cb(sapp_desc *self) {
+    sapp_desc *value = self;
+    return (void *)value->init_userdata_cb;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_init_userdata_cb(sapp_desc *self, void *replacement) {
+    sapp_desc *value = self;
+    value->init_userdata_cb = (mb_sapp_desc_init_userdata_cb_fn)replacement;
+}
+
+typedef void (*mb_sapp_desc_frame_userdata_cb_fn)(void *);
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_desc_get_frame_userdata_cb(sapp_desc *self) {
+    sapp_desc *value = self;
+    return (void *)value->frame_userdata_cb;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_frame_userdata_cb(sapp_desc *self, void *replacement) {
+    sapp_desc *value = self;
+    value->frame_userdata_cb = (mb_sapp_desc_frame_userdata_cb_fn)replacement;
+}
+
+typedef void (*mb_sapp_desc_cleanup_userdata_cb_fn)(void *);
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_desc_get_cleanup_userdata_cb(sapp_desc *self) {
+    sapp_desc *value = self;
+    return (void *)value->cleanup_userdata_cb;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_cleanup_userdata_cb(sapp_desc *self,
+                                                                 void *replacement) {
+    sapp_desc *value = self;
+    value->cleanup_userdata_cb = (mb_sapp_desc_cleanup_userdata_cb_fn)replacement;
+}
+
+typedef void (*mb_sapp_desc_event_userdata_cb_fn)(const sapp_event *, void *);
+
+MOONBIT_FFI_EXPORT void *mb_app_sapp_desc_get_event_userdata_cb(sapp_desc *self) {
+    sapp_desc *value = self;
+    return (void *)value->event_userdata_cb;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_event_userdata_cb(sapp_desc *self, void *replacement) {
+    sapp_desc *value = self;
+    value->event_userdata_cb = (mb_sapp_desc_event_userdata_cb_fn)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_width(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->width;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_width(sapp_desc *self, int32_t replacement) {
+    sapp_desc *value = self;
+    value->width = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_height(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->height;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_height(sapp_desc *self, int32_t replacement) {
+    sapp_desc *value = self;
+    value->height = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_depth_format(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->depth_format;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_depth_format(sapp_desc *self, int32_t replacement) {
+    sapp_desc *value = self;
+    value->depth_format = (sapp_pixel_format)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_composite_mode(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->composite_mode;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_composite_mode(sapp_desc *self, int32_t replacement) {
+    sapp_desc *value = self;
+    value->composite_mode = (sapp_composite_mode)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_sample_count(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->sample_count;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_sample_count(sapp_desc *self, int32_t replacement) {
+    sapp_desc *value = self;
+    value->sample_count = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_swap_interval(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->swap_interval;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_swap_interval(sapp_desc *self, int32_t replacement) {
+    sapp_desc *value = self;
+    value->swap_interval = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_srgb(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->srgb;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_srgb(sapp_desc *self, int32_t replacement) {
+    sapp_desc *value = self;
+    value->srgb = (bool)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_hdr(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->hdr;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_hdr(sapp_desc *self, int32_t replacement) {
+    sapp_desc *value = self;
+    value->hdr = (bool)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_disable_vsync(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->disable_vsync;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_disable_vsync(sapp_desc *self, int32_t replacement) {
+    sapp_desc *value = self;
+    value->disable_vsync = (bool)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_high_dpi(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->high_dpi;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_high_dpi(sapp_desc *self, int32_t replacement) {
+    sapp_desc *value = self;
+    value->high_dpi = (bool)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_fullscreen(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->fullscreen;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_fullscreen(sapp_desc *self, int32_t replacement) {
+    sapp_desc *value = self;
+    value->fullscreen = (bool)replacement;
+}
+
+MOONBIT_FFI_EXPORT moonbit_bytes_t mb_app_sapp_desc_get_window_title(sapp_desc *self) {
+    sapp_desc *value = self;
+    return mb_utf8(value->window_title);
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_window_title(sapp_desc *self,
+                                                          moonbit_bytes_t replacement) {
+    sapp_desc *value = self;
+    const char *copy = mb_string((const char *)replacement);
+    free((void *)value->window_title);
+    value->window_title = copy;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_enable_clipboard(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->enable_clipboard;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_enable_clipboard(sapp_desc *self,
+                                                              int32_t replacement) {
+    sapp_desc *value = self;
+    value->enable_clipboard = (bool)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_clipboard_size(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->clipboard_size;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_clipboard_size(sapp_desc *self, int32_t replacement) {
+    sapp_desc *value = self;
+    value->clipboard_size = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_enable_dragndrop(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->enable_dragndrop;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_enable_dragndrop(sapp_desc *self,
+                                                              int32_t replacement) {
+    sapp_desc *value = self;
+    value->enable_dragndrop = (bool)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_max_dropped_files(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->max_dropped_files;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_max_dropped_files(sapp_desc *self,
+                                                               int32_t replacement) {
+    sapp_desc *value = self;
+    value->max_dropped_files = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_desc_get_max_dropped_file_path_length(sapp_desc *self) {
+    sapp_desc *value = self;
+    return value->max_dropped_file_path_length;
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_max_dropped_file_path_length(sapp_desc *self,
+                                                                          int32_t replacement) {
+    sapp_desc *value = self;
+    value->max_dropped_file_path_length = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT sapp_icon_desc *mb_app_sapp_desc_get_icon(sapp_desc *self) {
+    sapp_desc *value = self;
+    return mb_copy_sapp_icon_desc(&value->icon);
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_icon(sapp_desc *self, sapp_icon_desc *replacement) {
+    sapp_desc *value = self;
+    sapp_icon_desc copy;
+    mb_clone_sapp_icon_desc(&copy, replacement);
+    mb_drop_sapp_icon_desc(&value->icon);
+    value->icon = copy;
+}
+
+MOONBIT_FFI_EXPORT sapp_allocator *mb_app_sapp_desc_get_allocator(sapp_desc *self) {
+    sapp_desc *value = self;
+    return mb_copy_sapp_allocator(&value->allocator);
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_allocator(sapp_desc *self,
+                                                       sapp_allocator *replacement) {
+    sapp_desc *value = self;
+    sapp_allocator copy;
+    mb_clone_sapp_allocator(&copy, replacement);
+    mb_drop_sapp_allocator(&value->allocator);
+    value->allocator = copy;
+}
+
+MOONBIT_FFI_EXPORT sapp_logger *mb_app_sapp_desc_get_logger(sapp_desc *self) {
+    sapp_desc *value = self;
+    return mb_copy_sapp_logger(&value->logger);
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_logger(sapp_desc *self, sapp_logger *replacement) {
+    sapp_desc *value = self;
+    sapp_logger copy;
+    mb_clone_sapp_logger(&copy, replacement);
+    mb_drop_sapp_logger(&value->logger);
+    value->logger = copy;
+}
+
+MOONBIT_FFI_EXPORT sapp_gl_desc *mb_app_sapp_desc_get_gl(sapp_desc *self) {
+    sapp_desc *value = self;
+    return mb_copy_sapp_gl_desc(&value->gl);
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_gl(sapp_desc *self, sapp_gl_desc *replacement) {
+    sapp_desc *value = self;
+    sapp_gl_desc copy;
+    mb_clone_sapp_gl_desc(&copy, replacement);
+    mb_drop_sapp_gl_desc(&value->gl);
+    value->gl = copy;
+}
+
+MOONBIT_FFI_EXPORT sapp_metal_desc *mb_app_sapp_desc_get_metal(sapp_desc *self) {
+    sapp_desc *value = self;
+    return mb_copy_sapp_metal_desc(&value->metal);
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_metal(sapp_desc *self, sapp_metal_desc *replacement) {
+    sapp_desc *value = self;
+    sapp_metal_desc copy;
+    mb_clone_sapp_metal_desc(&copy, replacement);
+    mb_drop_sapp_metal_desc(&value->metal);
+    value->metal = copy;
+}
+
+MOONBIT_FFI_EXPORT sapp_win32_desc *mb_app_sapp_desc_get_win32(sapp_desc *self) {
+    sapp_desc *value = self;
+    return mb_copy_sapp_win32_desc(&value->win32);
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_win32(sapp_desc *self, sapp_win32_desc *replacement) {
+    sapp_desc *value = self;
+    sapp_win32_desc copy;
+    mb_clone_sapp_win32_desc(&copy, replacement);
+    mb_drop_sapp_win32_desc(&value->win32);
+    value->win32 = copy;
+}
+
+MOONBIT_FFI_EXPORT sapp_html5_desc *mb_app_sapp_desc_get_html5(sapp_desc *self) {
+    sapp_desc *value = self;
+    return mb_copy_sapp_html5_desc(&value->html5);
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_html5(sapp_desc *self, sapp_html5_desc *replacement) {
+    sapp_desc *value = self;
+    sapp_html5_desc copy;
+    mb_clone_sapp_html5_desc(&copy, replacement);
+    mb_drop_sapp_html5_desc(&value->html5);
+    value->html5 = copy;
+}
+
+MOONBIT_FFI_EXPORT sapp_ios_desc *mb_app_sapp_desc_get_ios(sapp_desc *self) {
+    sapp_desc *value = self;
+    return mb_copy_sapp_ios_desc(&value->ios);
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_ios(sapp_desc *self, sapp_ios_desc *replacement) {
+    sapp_desc *value = self;
+    sapp_ios_desc copy;
+    mb_clone_sapp_ios_desc(&copy, replacement);
+    mb_drop_sapp_ios_desc(&value->ios);
+    value->ios = copy;
+}
+
+MOONBIT_FFI_EXPORT sapp_android_desc *mb_app_sapp_desc_get_android(sapp_desc *self) {
+    sapp_desc *value = self;
+    return mb_copy_sapp_android_desc(&value->android);
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_desc_set_android(sapp_desc *self,
+                                                     sapp_android_desc *replacement) {
+    sapp_desc *value = self;
+    sapp_android_desc copy;
+    mb_clone_sapp_android_desc(&copy, replacement);
+    mb_drop_sapp_android_desc(&value->android);
+    value->android = copy;
+}

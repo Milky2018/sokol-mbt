@@ -1,0 +1,919 @@
+static void mb_clone_sg_frame_resource_stats(sg_frame_resource_stats *dst,
+                                             const sg_frame_resource_stats *src) {
+    *dst = *src;
+}
+
+static void mb_drop_sg_frame_resource_stats(void *object) {
+    (void)object;
+}
+
+_Static_assert(_Alignof(sg_frame_resource_stats) <= _Alignof(void *), "external payload alignment");
+
+static sg_frame_resource_stats *mb_new_sg_frame_resource_stats(void) {
+    return mb_object_new(sizeof(sg_frame_resource_stats), mb_drop_sg_frame_resource_stats);
+}
+
+static sg_frame_resource_stats *
+mb_copy_sg_frame_resource_stats(const sg_frame_resource_stats *source) {
+    sg_frame_resource_stats *result = mb_new_sg_frame_resource_stats();
+    mb_clone_sg_frame_resource_stats(result, source);
+    return result;
+}
+
+static void mb_clone_sg_frame_stats(sg_frame_stats *dst, const sg_frame_stats *src) {
+    *dst = *src;
+    mb_clone_sg_frame_resource_stats(&dst->buffers, &src->buffers);
+    mb_clone_sg_frame_resource_stats(&dst->images, &src->images);
+    mb_clone_sg_frame_resource_stats(&dst->samplers, &src->samplers);
+    mb_clone_sg_frame_resource_stats(&dst->views, &src->views);
+    mb_clone_sg_frame_resource_stats(&dst->shaders, &src->shaders);
+    mb_clone_sg_frame_resource_stats(&dst->pipelines, &src->pipelines);
+    mb_clone_sg_frame_stats_gl(&dst->gl, &src->gl);
+    mb_clone_sg_frame_stats_d3d11(&dst->d3d11, &src->d3d11);
+    mb_clone_sg_frame_stats_metal(&dst->metal, &src->metal);
+    mb_clone_sg_frame_stats_wgpu(&dst->wgpu, &src->wgpu);
+    mb_clone_sg_frame_stats_vk(&dst->vk, &src->vk);
+}
+
+static void mb_drop_sg_frame_stats(void *object) {
+    sg_frame_stats *value = object;
+    mb_drop_sg_frame_resource_stats(&value->buffers);
+    mb_drop_sg_frame_resource_stats(&value->images);
+    mb_drop_sg_frame_resource_stats(&value->samplers);
+    mb_drop_sg_frame_resource_stats(&value->views);
+    mb_drop_sg_frame_resource_stats(&value->shaders);
+    mb_drop_sg_frame_resource_stats(&value->pipelines);
+    mb_drop_sg_frame_stats_gl(&value->gl);
+    mb_drop_sg_frame_stats_d3d11(&value->d3d11);
+    mb_drop_sg_frame_stats_metal(&value->metal);
+    mb_drop_sg_frame_stats_wgpu(&value->wgpu);
+    mb_drop_sg_frame_stats_vk(&value->vk);
+}
+
+_Static_assert(_Alignof(sg_frame_stats) <= _Alignof(void *), "external payload alignment");
+
+static sg_frame_stats *mb_new_sg_frame_stats(void) {
+    return mb_object_new(sizeof(sg_frame_stats), mb_drop_sg_frame_stats);
+}
+
+static sg_frame_stats *mb_copy_sg_frame_stats(const sg_frame_stats *source) {
+    sg_frame_stats *result = mb_new_sg_frame_stats();
+    mb_clone_sg_frame_stats(result, source);
+    return result;
+}
+
+static void mb_clone_sg_stats(sg_stats *dst, const sg_stats *src) {
+    *dst = *src;
+    mb_clone_sg_frame_stats(&dst->prev_frame, &src->prev_frame);
+    mb_clone_sg_frame_stats(&dst->cur_frame, &src->cur_frame);
+    mb_clone_sg_total_stats(&dst->total, &src->total);
+}
+
+static void mb_drop_sg_stats(void *object) {
+    sg_stats *value = object;
+    mb_drop_sg_frame_stats(&value->prev_frame);
+    mb_drop_sg_frame_stats(&value->cur_frame);
+    mb_drop_sg_total_stats(&value->total);
+}
+
+_Static_assert(_Alignof(sg_stats) <= _Alignof(void *), "external payload alignment");
+
+static sg_stats *mb_new_sg_stats(void) {
+    return mb_object_new(sizeof(sg_stats), mb_drop_sg_stats);
+}
+
+static sg_stats *mb_copy_sg_stats(const sg_stats *source) {
+    sg_stats *result = mb_new_sg_stats();
+    mb_clone_sg_stats(result, source);
+    return result;
+}
+
+static void mb_clone_sg_total_resource_stats(sg_total_resource_stats *dst,
+                                             const sg_total_resource_stats *src) {
+    *dst = *src;
+}
+
+static void mb_drop_sg_total_resource_stats(void *object) {
+    (void)object;
+}
+
+_Static_assert(_Alignof(sg_total_resource_stats) <= _Alignof(void *), "external payload alignment");
+
+static sg_total_resource_stats *mb_new_sg_total_resource_stats(void) {
+    return mb_object_new(sizeof(sg_total_resource_stats), mb_drop_sg_total_resource_stats);
+}
+
+static sg_total_resource_stats *
+mb_copy_sg_total_resource_stats(const sg_total_resource_stats *source) {
+    sg_total_resource_stats *result = mb_new_sg_total_resource_stats();
+    mb_clone_sg_total_resource_stats(result, source);
+    return result;
+}
+
+static void mb_clone_sg_total_stats(sg_total_stats *dst, const sg_total_stats *src) {
+    *dst = *src;
+    mb_clone_sg_total_resource_stats(&dst->buffers, &src->buffers);
+    mb_clone_sg_total_resource_stats(&dst->images, &src->images);
+    mb_clone_sg_total_resource_stats(&dst->samplers, &src->samplers);
+    mb_clone_sg_total_resource_stats(&dst->views, &src->views);
+    mb_clone_sg_total_resource_stats(&dst->shaders, &src->shaders);
+    mb_clone_sg_total_resource_stats(&dst->pipelines, &src->pipelines);
+}
+
+static void mb_drop_sg_total_stats(void *object) {
+    sg_total_stats *value = object;
+    mb_drop_sg_total_resource_stats(&value->buffers);
+    mb_drop_sg_total_resource_stats(&value->images);
+    mb_drop_sg_total_resource_stats(&value->samplers);
+    mb_drop_sg_total_resource_stats(&value->views);
+    mb_drop_sg_total_resource_stats(&value->shaders);
+    mb_drop_sg_total_resource_stats(&value->pipelines);
+}
+
+_Static_assert(_Alignof(sg_total_stats) <= _Alignof(void *), "external payload alignment");
+
+static sg_total_stats *mb_new_sg_total_stats(void) {
+    return mb_object_new(sizeof(sg_total_stats), mb_drop_sg_total_stats);
+}
+
+static sg_total_stats *mb_copy_sg_total_stats(const sg_total_stats *source) {
+    sg_total_stats *result = mb_new_sg_total_stats();
+    mb_clone_sg_total_stats(result, source);
+    return result;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_resource_stats *mb_gfx_sg_frame_resource_stats_new(void) {
+    return mb_new_sg_frame_resource_stats();
+}
+
+MOONBIT_FFI_EXPORT sg_frame_resource_stats *
+mb_gfx_sg_frame_resource_stats_copy(sg_frame_resource_stats *self) {
+    return mb_copy_sg_frame_resource_stats(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_frame_resource_stats_native(sg_frame_resource_stats *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_resource_stats *mb_gfx_sg_frame_resource_stats_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_frame_resource_stats(ptr);
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_frame_resource_stats_get_allocated(sg_frame_resource_stats *self) {
+    sg_frame_resource_stats *value = self;
+    return value->allocated;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_resource_stats_set_allocated(sg_frame_resource_stats *self,
+                                                                     uint32_t replacement) {
+    sg_frame_resource_stats *value = self;
+    value->allocated = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_frame_resource_stats_get_deallocated(sg_frame_resource_stats *self) {
+    sg_frame_resource_stats *value = self;
+    return value->deallocated;
+}
+
+MOONBIT_FFI_EXPORT void
+mb_gfx_sg_frame_resource_stats_set_deallocated(sg_frame_resource_stats *self,
+                                               uint32_t replacement) {
+    sg_frame_resource_stats *value = self;
+    value->deallocated = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_frame_resource_stats_get_inited(sg_frame_resource_stats *self) {
+    sg_frame_resource_stats *value = self;
+    return value->inited;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_resource_stats_set_inited(sg_frame_resource_stats *self,
+                                                                  uint32_t replacement) {
+    sg_frame_resource_stats *value = self;
+    value->inited = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_frame_resource_stats_get_uninited(sg_frame_resource_stats *self) {
+    sg_frame_resource_stats *value = self;
+    return value->uninited;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_resource_stats_set_uninited(sg_frame_resource_stats *self,
+                                                                    uint32_t replacement) {
+    sg_frame_resource_stats *value = self;
+    value->uninited = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT sg_total_resource_stats *mb_gfx_sg_total_resource_stats_new(void) {
+    return mb_new_sg_total_resource_stats();
+}
+
+MOONBIT_FFI_EXPORT sg_total_resource_stats *
+mb_gfx_sg_total_resource_stats_copy(sg_total_resource_stats *self) {
+    return mb_copy_sg_total_resource_stats(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_total_resource_stats_native(sg_total_resource_stats *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_total_resource_stats *mb_gfx_sg_total_resource_stats_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_total_resource_stats(ptr);
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_total_resource_stats_get_alive(sg_total_resource_stats *self) {
+    sg_total_resource_stats *value = self;
+    return value->alive;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_total_resource_stats_set_alive(sg_total_resource_stats *self,
+                                                                 uint32_t replacement) {
+    sg_total_resource_stats *value = self;
+    value->alive = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_total_resource_stats_get_free(sg_total_resource_stats *self) {
+    sg_total_resource_stats *value = self;
+    return value->free;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_total_resource_stats_set_free(sg_total_resource_stats *self,
+                                                                uint32_t replacement) {
+    sg_total_resource_stats *value = self;
+    value->free = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_total_resource_stats_get_allocated(sg_total_resource_stats *self) {
+    sg_total_resource_stats *value = self;
+    return value->allocated;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_total_resource_stats_set_allocated(sg_total_resource_stats *self,
+                                                                     uint32_t replacement) {
+    sg_total_resource_stats *value = self;
+    value->allocated = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_total_resource_stats_get_deallocated(sg_total_resource_stats *self) {
+    sg_total_resource_stats *value = self;
+    return value->deallocated;
+}
+
+MOONBIT_FFI_EXPORT void
+mb_gfx_sg_total_resource_stats_set_deallocated(sg_total_resource_stats *self,
+                                               uint32_t replacement) {
+    sg_total_resource_stats *value = self;
+    value->deallocated = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_total_resource_stats_get_inited(sg_total_resource_stats *self) {
+    sg_total_resource_stats *value = self;
+    return value->inited;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_total_resource_stats_set_inited(sg_total_resource_stats *self,
+                                                                  uint32_t replacement) {
+    sg_total_resource_stats *value = self;
+    value->inited = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_total_resource_stats_get_uninited(sg_total_resource_stats *self) {
+    sg_total_resource_stats *value = self;
+    return value->uninited;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_total_resource_stats_set_uninited(sg_total_resource_stats *self,
+                                                                    uint32_t replacement) {
+    sg_total_resource_stats *value = self;
+    value->uninited = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT sg_total_stats *mb_gfx_sg_total_stats_new(void) {
+    return mb_new_sg_total_stats();
+}
+
+MOONBIT_FFI_EXPORT sg_total_stats *mb_gfx_sg_total_stats_copy(sg_total_stats *self) {
+    return mb_copy_sg_total_stats(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_total_stats_native(sg_total_stats *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_total_stats *mb_gfx_sg_total_stats_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_total_stats(ptr);
+}
+
+MOONBIT_FFI_EXPORT sg_total_resource_stats *
+mb_gfx_sg_total_stats_get_buffers(sg_total_stats *self) {
+    sg_total_stats *value = self;
+    return mb_copy_sg_total_resource_stats(&value->buffers);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_total_stats_set_buffers(sg_total_stats *self,
+                                                          sg_total_resource_stats *replacement) {
+    sg_total_stats *value = self;
+    sg_total_resource_stats copy;
+    mb_clone_sg_total_resource_stats(&copy, replacement);
+    mb_drop_sg_total_resource_stats(&value->buffers);
+    value->buffers = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_total_resource_stats *mb_gfx_sg_total_stats_get_images(sg_total_stats *self) {
+    sg_total_stats *value = self;
+    return mb_copy_sg_total_resource_stats(&value->images);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_total_stats_set_images(sg_total_stats *self,
+                                                         sg_total_resource_stats *replacement) {
+    sg_total_stats *value = self;
+    sg_total_resource_stats copy;
+    mb_clone_sg_total_resource_stats(&copy, replacement);
+    mb_drop_sg_total_resource_stats(&value->images);
+    value->images = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_total_resource_stats *
+mb_gfx_sg_total_stats_get_samplers(sg_total_stats *self) {
+    sg_total_stats *value = self;
+    return mb_copy_sg_total_resource_stats(&value->samplers);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_total_stats_set_samplers(sg_total_stats *self,
+                                                           sg_total_resource_stats *replacement) {
+    sg_total_stats *value = self;
+    sg_total_resource_stats copy;
+    mb_clone_sg_total_resource_stats(&copy, replacement);
+    mb_drop_sg_total_resource_stats(&value->samplers);
+    value->samplers = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_total_resource_stats *mb_gfx_sg_total_stats_get_views(sg_total_stats *self) {
+    sg_total_stats *value = self;
+    return mb_copy_sg_total_resource_stats(&value->views);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_total_stats_set_views(sg_total_stats *self,
+                                                        sg_total_resource_stats *replacement) {
+    sg_total_stats *value = self;
+    sg_total_resource_stats copy;
+    mb_clone_sg_total_resource_stats(&copy, replacement);
+    mb_drop_sg_total_resource_stats(&value->views);
+    value->views = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_total_resource_stats *
+mb_gfx_sg_total_stats_get_shaders(sg_total_stats *self) {
+    sg_total_stats *value = self;
+    return mb_copy_sg_total_resource_stats(&value->shaders);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_total_stats_set_shaders(sg_total_stats *self,
+                                                          sg_total_resource_stats *replacement) {
+    sg_total_stats *value = self;
+    sg_total_resource_stats copy;
+    mb_clone_sg_total_resource_stats(&copy, replacement);
+    mb_drop_sg_total_resource_stats(&value->shaders);
+    value->shaders = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_total_resource_stats *
+mb_gfx_sg_total_stats_get_pipelines(sg_total_stats *self) {
+    sg_total_stats *value = self;
+    return mb_copy_sg_total_resource_stats(&value->pipelines);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_total_stats_set_pipelines(sg_total_stats *self,
+                                                            sg_total_resource_stats *replacement) {
+    sg_total_stats *value = self;
+    sg_total_resource_stats copy;
+    mb_clone_sg_total_resource_stats(&copy, replacement);
+    mb_drop_sg_total_resource_stats(&value->pipelines);
+    value->pipelines = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_stats *mb_gfx_sg_frame_stats_new(void) {
+    return mb_new_sg_frame_stats();
+}
+
+MOONBIT_FFI_EXPORT sg_frame_stats *mb_gfx_sg_frame_stats_copy(sg_frame_stats *self) {
+    return mb_copy_sg_frame_stats(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_frame_stats_native(sg_frame_stats *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_stats *mb_gfx_sg_frame_stats_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_frame_stats(ptr);
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_frame_stats_get_frame_index(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->frame_index;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_frame_index(sg_frame_stats *self,
+                                                              uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->frame_index = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_frame_stats_get_num_passes(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_passes;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_passes(sg_frame_stats *self,
+                                                             uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_passes = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_frame_stats_get_num_apply_viewport(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_apply_viewport;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_apply_viewport(sg_frame_stats *self,
+                                                                     uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_apply_viewport = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_frame_stats_get_num_apply_scissor_rect(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_apply_scissor_rect;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_apply_scissor_rect(sg_frame_stats *self,
+                                                                         uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_apply_scissor_rect = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_frame_stats_get_num_apply_pipeline(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_apply_pipeline;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_apply_pipeline(sg_frame_stats *self,
+                                                                     uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_apply_pipeline = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_frame_stats_get_num_apply_bindings(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_apply_bindings;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_apply_bindings(sg_frame_stats *self,
+                                                                     uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_apply_bindings = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_frame_stats_get_num_apply_uniforms(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_apply_uniforms;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_apply_uniforms(sg_frame_stats *self,
+                                                                     uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_apply_uniforms = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_frame_stats_get_num_draw(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_draw;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_draw(sg_frame_stats *self,
+                                                           uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_draw = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_frame_stats_get_num_draw_ex(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_draw_ex;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_draw_ex(sg_frame_stats *self,
+                                                              uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_draw_ex = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_frame_stats_get_num_dispatch(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_dispatch;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_dispatch(sg_frame_stats *self,
+                                                               uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_dispatch = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_frame_stats_get_num_write_buffer_transient(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_write_buffer_transient;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_write_buffer_transient(sg_frame_stats *self,
+                                                                             uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_write_buffer_transient = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_frame_stats_get_num_write_image_transient(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_write_image_transient;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_write_image_transient(sg_frame_stats *self,
+                                                                            uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_write_image_transient = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_frame_stats_get_num_write_buffer_unsealed(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_write_buffer_unsealed;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_write_buffer_unsealed(sg_frame_stats *self,
+                                                                            uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_write_buffer_unsealed = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_frame_stats_get_num_write_image_unsealed(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_write_image_unsealed;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_write_image_unsealed(sg_frame_stats *self,
+                                                                           uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_write_image_unsealed = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_frame_stats_get_num_seal_buffer(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_seal_buffer;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_seal_buffer(sg_frame_stats *self,
+                                                                  uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_seal_buffer = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_frame_stats_get_num_seal_image(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_seal_image;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_seal_image(sg_frame_stats *self,
+                                                                 uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_seal_image = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_frame_stats_get_num_copy_buffer_to_buffer(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_copy_buffer_to_buffer;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_copy_buffer_to_buffer(sg_frame_stats *self,
+                                                                            uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_copy_buffer_to_buffer = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_frame_stats_get_num_copy_buffer_to_image(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_copy_buffer_to_image;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_copy_buffer_to_image(sg_frame_stats *self,
+                                                                           uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_copy_buffer_to_image = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_frame_stats_get_num_copy_image_to_image(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->num_copy_image_to_image;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_num_copy_image_to_image(sg_frame_stats *self,
+                                                                          uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->num_copy_image_to_image = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_frame_stats_get_size_apply_uniforms(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->size_apply_uniforms;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_size_apply_uniforms(sg_frame_stats *self,
+                                                                      uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->size_apply_uniforms = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_frame_stats_get_size_copy_buffer_to_buffer(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->size_copy_buffer_to_buffer;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_size_copy_buffer_to_buffer(sg_frame_stats *self,
+                                                                             uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->size_copy_buffer_to_buffer = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_frame_stats_get_size_copy_buffer_to_image(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->size_copy_buffer_to_image;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_size_copy_buffer_to_image(sg_frame_stats *self,
+                                                                            uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->size_copy_buffer_to_image = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT uint32_t
+mb_gfx_sg_frame_stats_get_size_copy_image_to_image(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return value->size_copy_image_to_image;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_size_copy_image_to_image(sg_frame_stats *self,
+                                                                           uint32_t replacement) {
+    sg_frame_stats *value = self;
+    value->size_copy_image_to_image = (uint32_t)replacement;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_resource_stats *
+mb_gfx_sg_frame_stats_get_buffers(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return mb_copy_sg_frame_resource_stats(&value->buffers);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_buffers(sg_frame_stats *self,
+                                                          sg_frame_resource_stats *replacement) {
+    sg_frame_stats *value = self;
+    sg_frame_resource_stats copy;
+    mb_clone_sg_frame_resource_stats(&copy, replacement);
+    mb_drop_sg_frame_resource_stats(&value->buffers);
+    value->buffers = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_resource_stats *mb_gfx_sg_frame_stats_get_images(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return mb_copy_sg_frame_resource_stats(&value->images);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_images(sg_frame_stats *self,
+                                                         sg_frame_resource_stats *replacement) {
+    sg_frame_stats *value = self;
+    sg_frame_resource_stats copy;
+    mb_clone_sg_frame_resource_stats(&copy, replacement);
+    mb_drop_sg_frame_resource_stats(&value->images);
+    value->images = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_resource_stats *
+mb_gfx_sg_frame_stats_get_samplers(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return mb_copy_sg_frame_resource_stats(&value->samplers);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_samplers(sg_frame_stats *self,
+                                                           sg_frame_resource_stats *replacement) {
+    sg_frame_stats *value = self;
+    sg_frame_resource_stats copy;
+    mb_clone_sg_frame_resource_stats(&copy, replacement);
+    mb_drop_sg_frame_resource_stats(&value->samplers);
+    value->samplers = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_resource_stats *mb_gfx_sg_frame_stats_get_views(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return mb_copy_sg_frame_resource_stats(&value->views);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_views(sg_frame_stats *self,
+                                                        sg_frame_resource_stats *replacement) {
+    sg_frame_stats *value = self;
+    sg_frame_resource_stats copy;
+    mb_clone_sg_frame_resource_stats(&copy, replacement);
+    mb_drop_sg_frame_resource_stats(&value->views);
+    value->views = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_resource_stats *
+mb_gfx_sg_frame_stats_get_shaders(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return mb_copy_sg_frame_resource_stats(&value->shaders);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_shaders(sg_frame_stats *self,
+                                                          sg_frame_resource_stats *replacement) {
+    sg_frame_stats *value = self;
+    sg_frame_resource_stats copy;
+    mb_clone_sg_frame_resource_stats(&copy, replacement);
+    mb_drop_sg_frame_resource_stats(&value->shaders);
+    value->shaders = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_resource_stats *
+mb_gfx_sg_frame_stats_get_pipelines(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return mb_copy_sg_frame_resource_stats(&value->pipelines);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_pipelines(sg_frame_stats *self,
+                                                            sg_frame_resource_stats *replacement) {
+    sg_frame_stats *value = self;
+    sg_frame_resource_stats copy;
+    mb_clone_sg_frame_resource_stats(&copy, replacement);
+    mb_drop_sg_frame_resource_stats(&value->pipelines);
+    value->pipelines = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_stats_gl *mb_gfx_sg_frame_stats_get_gl(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return mb_copy_sg_frame_stats_gl(&value->gl);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_gl(sg_frame_stats *self,
+                                                     sg_frame_stats_gl *replacement) {
+    sg_frame_stats *value = self;
+    sg_frame_stats_gl copy;
+    mb_clone_sg_frame_stats_gl(&copy, replacement);
+    mb_drop_sg_frame_stats_gl(&value->gl);
+    value->gl = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_stats_d3d11 *mb_gfx_sg_frame_stats_get_d3d11(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return mb_copy_sg_frame_stats_d3d11(&value->d3d11);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_d3d11(sg_frame_stats *self,
+                                                        sg_frame_stats_d3d11 *replacement) {
+    sg_frame_stats *value = self;
+    sg_frame_stats_d3d11 copy;
+    mb_clone_sg_frame_stats_d3d11(&copy, replacement);
+    mb_drop_sg_frame_stats_d3d11(&value->d3d11);
+    value->d3d11 = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_stats_metal *mb_gfx_sg_frame_stats_get_metal(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return mb_copy_sg_frame_stats_metal(&value->metal);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_metal(sg_frame_stats *self,
+                                                        sg_frame_stats_metal *replacement) {
+    sg_frame_stats *value = self;
+    sg_frame_stats_metal copy;
+    mb_clone_sg_frame_stats_metal(&copy, replacement);
+    mb_drop_sg_frame_stats_metal(&value->metal);
+    value->metal = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_stats_wgpu *mb_gfx_sg_frame_stats_get_wgpu(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return mb_copy_sg_frame_stats_wgpu(&value->wgpu);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_wgpu(sg_frame_stats *self,
+                                                       sg_frame_stats_wgpu *replacement) {
+    sg_frame_stats *value = self;
+    sg_frame_stats_wgpu copy;
+    mb_clone_sg_frame_stats_wgpu(&copy, replacement);
+    mb_drop_sg_frame_stats_wgpu(&value->wgpu);
+    value->wgpu = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_stats_vk *mb_gfx_sg_frame_stats_get_vk(sg_frame_stats *self) {
+    sg_frame_stats *value = self;
+    return mb_copy_sg_frame_stats_vk(&value->vk);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_frame_stats_set_vk(sg_frame_stats *self,
+                                                     sg_frame_stats_vk *replacement) {
+    sg_frame_stats *value = self;
+    sg_frame_stats_vk copy;
+    mb_clone_sg_frame_stats_vk(&copy, replacement);
+    mb_drop_sg_frame_stats_vk(&value->vk);
+    value->vk = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_stats *mb_gfx_sg_stats_new(void) {
+    return mb_new_sg_stats();
+}
+
+MOONBIT_FFI_EXPORT sg_stats *mb_gfx_sg_stats_copy(sg_stats *self) {
+    return mb_copy_sg_stats(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_stats_native(sg_stats *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_stats *mb_gfx_sg_stats_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_stats(ptr);
+}
+
+MOONBIT_FFI_EXPORT sg_frame_stats *mb_gfx_sg_stats_get_prev_frame(sg_stats *self) {
+    sg_stats *value = self;
+    return mb_copy_sg_frame_stats(&value->prev_frame);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_stats_set_prev_frame(sg_stats *self,
+                                                       sg_frame_stats *replacement) {
+    sg_stats *value = self;
+    sg_frame_stats copy;
+    mb_clone_sg_frame_stats(&copy, replacement);
+    mb_drop_sg_frame_stats(&value->prev_frame);
+    value->prev_frame = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_frame_stats *mb_gfx_sg_stats_get_cur_frame(sg_stats *self) {
+    sg_stats *value = self;
+    return mb_copy_sg_frame_stats(&value->cur_frame);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_stats_set_cur_frame(sg_stats *self, sg_frame_stats *replacement) {
+    sg_stats *value = self;
+    sg_frame_stats copy;
+    mb_clone_sg_frame_stats(&copy, replacement);
+    mb_drop_sg_frame_stats(&value->cur_frame);
+    value->cur_frame = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_total_stats *mb_gfx_sg_stats_get_total(sg_stats *self) {
+    sg_stats *value = self;
+    return mb_copy_sg_total_stats(&value->total);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_stats_set_total(sg_stats *self, sg_total_stats *replacement) {
+    sg_stats *value = self;
+    sg_total_stats copy;
+    mb_clone_sg_total_stats(&copy, replacement);
+    mb_drop_sg_total_stats(&value->total);
+    value->total = copy;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_stats_enabled(void) {
+    return sg_stats_enabled();
+}
+
+MOONBIT_FFI_EXPORT sg_stats *mb_gfx_sg_query_stats(void) {
+    sg_stats value = sg_query_stats();
+    return mb_copy_sg_stats(&value);
+}

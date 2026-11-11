@@ -1,0 +1,553 @@
+static void mb_clone_sg_buffer_view_desc(sg_buffer_view_desc *dst, const sg_buffer_view_desc *src) {
+    *dst = *src;
+}
+
+static void mb_drop_sg_buffer_view_desc(void *object) {
+    (void)object;
+}
+
+_Static_assert(_Alignof(sg_buffer_view_desc) <= _Alignof(void *), "external payload alignment");
+
+static sg_buffer_view_desc *mb_new_sg_buffer_view_desc(void) {
+    return mb_object_new(sizeof(sg_buffer_view_desc), mb_drop_sg_buffer_view_desc);
+}
+
+static sg_buffer_view_desc *mb_copy_sg_buffer_view_desc(const sg_buffer_view_desc *source) {
+    sg_buffer_view_desc *result = mb_new_sg_buffer_view_desc();
+    mb_clone_sg_buffer_view_desc(result, source);
+    return result;
+}
+
+static void mb_clone_sg_image_view_desc(sg_image_view_desc *dst, const sg_image_view_desc *src) {
+    *dst = *src;
+}
+
+static void mb_drop_sg_image_view_desc(void *object) {
+    (void)object;
+}
+
+_Static_assert(_Alignof(sg_image_view_desc) <= _Alignof(void *), "external payload alignment");
+
+static sg_image_view_desc *mb_new_sg_image_view_desc(void) {
+    return mb_object_new(sizeof(sg_image_view_desc), mb_drop_sg_image_view_desc);
+}
+
+static sg_image_view_desc *mb_copy_sg_image_view_desc(const sg_image_view_desc *source) {
+    sg_image_view_desc *result = mb_new_sg_image_view_desc();
+    mb_clone_sg_image_view_desc(result, source);
+    return result;
+}
+
+static void mb_clone_sg_texture_view_desc(sg_texture_view_desc *dst,
+                                          const sg_texture_view_desc *src) {
+    *dst = *src;
+    mb_clone_sg_texture_view_range(&dst->mip_levels, &src->mip_levels);
+    mb_clone_sg_texture_view_range(&dst->slices, &src->slices);
+}
+
+static void mb_drop_sg_texture_view_desc(void *object) {
+    sg_texture_view_desc *value = object;
+    mb_drop_sg_texture_view_range(&value->mip_levels);
+    mb_drop_sg_texture_view_range(&value->slices);
+}
+
+_Static_assert(_Alignof(sg_texture_view_desc) <= _Alignof(void *), "external payload alignment");
+
+static sg_texture_view_desc *mb_new_sg_texture_view_desc(void) {
+    return mb_object_new(sizeof(sg_texture_view_desc), mb_drop_sg_texture_view_desc);
+}
+
+static sg_texture_view_desc *mb_copy_sg_texture_view_desc(const sg_texture_view_desc *source) {
+    sg_texture_view_desc *result = mb_new_sg_texture_view_desc();
+    mb_clone_sg_texture_view_desc(result, source);
+    return result;
+}
+
+static void mb_clone_sg_texture_view_range(sg_texture_view_range *dst,
+                                           const sg_texture_view_range *src) {
+    *dst = *src;
+}
+
+static void mb_drop_sg_texture_view_range(void *object) {
+    (void)object;
+}
+
+_Static_assert(_Alignof(sg_texture_view_range) <= _Alignof(void *), "external payload alignment");
+
+static sg_texture_view_range *mb_new_sg_texture_view_range(void) {
+    return mb_object_new(sizeof(sg_texture_view_range), mb_drop_sg_texture_view_range);
+}
+
+static sg_texture_view_range *mb_copy_sg_texture_view_range(const sg_texture_view_range *source) {
+    sg_texture_view_range *result = mb_new_sg_texture_view_range();
+    mb_clone_sg_texture_view_range(result, source);
+    return result;
+}
+
+static void mb_clone_sg_view_desc(sg_view_desc *dst, const sg_view_desc *src) {
+    *dst = *src;
+    mb_clone_sg_texture_view_desc(&dst->texture, &src->texture);
+    mb_clone_sg_buffer_view_desc(&dst->storage_buffer, &src->storage_buffer);
+    mb_clone_sg_image_view_desc(&dst->storage_image, &src->storage_image);
+    mb_clone_sg_image_view_desc(&dst->color_attachment, &src->color_attachment);
+    mb_clone_sg_image_view_desc(&dst->resolve_attachment, &src->resolve_attachment);
+    mb_clone_sg_image_view_desc(&dst->depth_stencil_attachment, &src->depth_stencil_attachment);
+    dst->label = mb_string(src->label);
+}
+
+static void mb_drop_sg_view_desc(void *object) {
+    sg_view_desc *value = object;
+    mb_drop_sg_texture_view_desc(&value->texture);
+    mb_drop_sg_buffer_view_desc(&value->storage_buffer);
+    mb_drop_sg_image_view_desc(&value->storage_image);
+    mb_drop_sg_image_view_desc(&value->color_attachment);
+    mb_drop_sg_image_view_desc(&value->resolve_attachment);
+    mb_drop_sg_image_view_desc(&value->depth_stencil_attachment);
+    free((void *)value->label);
+}
+
+_Static_assert(_Alignof(sg_view_desc) <= _Alignof(void *), "external payload alignment");
+
+static sg_view_desc *mb_new_sg_view_desc(void) {
+    return mb_object_new(sizeof(sg_view_desc), mb_drop_sg_view_desc);
+}
+
+static sg_view_desc *mb_copy_sg_view_desc(const sg_view_desc *source) {
+    sg_view_desc *result = mb_new_sg_view_desc();
+    mb_clone_sg_view_desc(result, source);
+    return result;
+}
+
+static void mb_clone_sg_view_info(sg_view_info *dst, const sg_view_info *src) {
+    *dst = *src;
+    mb_clone_sg_slot_info(&dst->slot, &src->slot);
+}
+
+static void mb_drop_sg_view_info(void *object) {
+    sg_view_info *value = object;
+    mb_drop_sg_slot_info(&value->slot);
+}
+
+_Static_assert(_Alignof(sg_view_info) <= _Alignof(void *), "external payload alignment");
+
+static sg_view_info *mb_new_sg_view_info(void) {
+    return mb_object_new(sizeof(sg_view_info), mb_drop_sg_view_info);
+}
+
+static sg_view_info *mb_copy_sg_view_info(const sg_view_info *source) {
+    sg_view_info *result = mb_new_sg_view_info();
+    mb_clone_sg_view_info(result, source);
+    return result;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_view_read_id(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    uint32_t id;
+    memcpy(&id, ptr, sizeof(id));
+    return id;
+}
+
+MOONBIT_FFI_EXPORT sg_buffer_view_desc *mb_gfx_sg_buffer_view_desc_new(void) {
+    return mb_new_sg_buffer_view_desc();
+}
+
+MOONBIT_FFI_EXPORT sg_buffer_view_desc *mb_gfx_sg_buffer_view_desc_copy(sg_buffer_view_desc *self) {
+    return mb_copy_sg_buffer_view_desc(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_buffer_view_desc_native(sg_buffer_view_desc *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_buffer_view_desc *mb_gfx_sg_buffer_view_desc_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_buffer_view_desc(ptr);
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_buffer_view_desc_get_buffer(sg_buffer_view_desc *self) {
+    sg_buffer_view_desc *value = self;
+    return value->buffer.id;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_buffer_view_desc_set_buffer(sg_buffer_view_desc *self,
+                                                              uint32_t replacement) {
+    sg_buffer_view_desc *value = self;
+    value->buffer = (sg_buffer){.id = replacement};
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_buffer_view_desc_get_offset(sg_buffer_view_desc *self) {
+    sg_buffer_view_desc *value = self;
+    return value->offset;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_buffer_view_desc_set_offset(sg_buffer_view_desc *self,
+                                                              int32_t replacement) {
+    sg_buffer_view_desc *value = self;
+    value->offset = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT sg_image_view_desc *mb_gfx_sg_image_view_desc_new(void) {
+    return mb_new_sg_image_view_desc();
+}
+
+MOONBIT_FFI_EXPORT sg_image_view_desc *mb_gfx_sg_image_view_desc_copy(sg_image_view_desc *self) {
+    return mb_copy_sg_image_view_desc(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_image_view_desc_native(sg_image_view_desc *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_image_view_desc *mb_gfx_sg_image_view_desc_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_image_view_desc(ptr);
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_image_view_desc_get_image(sg_image_view_desc *self) {
+    sg_image_view_desc *value = self;
+    return value->image.id;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_image_view_desc_set_image(sg_image_view_desc *self,
+                                                            uint32_t replacement) {
+    sg_image_view_desc *value = self;
+    value->image = (sg_image){.id = replacement};
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_image_view_desc_get_mip_level(sg_image_view_desc *self) {
+    sg_image_view_desc *value = self;
+    return value->mip_level;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_image_view_desc_set_mip_level(sg_image_view_desc *self,
+                                                                int32_t replacement) {
+    sg_image_view_desc *value = self;
+    value->mip_level = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_image_view_desc_get_slice(sg_image_view_desc *self) {
+    sg_image_view_desc *value = self;
+    return value->slice;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_image_view_desc_set_slice(sg_image_view_desc *self,
+                                                            int32_t replacement) {
+    sg_image_view_desc *value = self;
+    value->slice = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT sg_texture_view_range *mb_gfx_sg_texture_view_range_new(void) {
+    return mb_new_sg_texture_view_range();
+}
+
+MOONBIT_FFI_EXPORT sg_texture_view_range *
+mb_gfx_sg_texture_view_range_copy(sg_texture_view_range *self) {
+    return mb_copy_sg_texture_view_range(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_texture_view_range_native(sg_texture_view_range *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_texture_view_range *mb_gfx_sg_texture_view_range_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_texture_view_range(ptr);
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_texture_view_range_get_base(sg_texture_view_range *self) {
+    sg_texture_view_range *value = self;
+    return value->base;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_texture_view_range_set_base(sg_texture_view_range *self,
+                                                              int32_t replacement) {
+    sg_texture_view_range *value = self;
+    value->base = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_texture_view_range_get_count(sg_texture_view_range *self) {
+    sg_texture_view_range *value = self;
+    return value->count;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_texture_view_range_set_count(sg_texture_view_range *self,
+                                                               int32_t replacement) {
+    sg_texture_view_range *value = self;
+    value->count = (int)replacement;
+}
+
+MOONBIT_FFI_EXPORT sg_texture_view_desc *mb_gfx_sg_texture_view_desc_new(void) {
+    return mb_new_sg_texture_view_desc();
+}
+
+MOONBIT_FFI_EXPORT sg_texture_view_desc *
+mb_gfx_sg_texture_view_desc_copy(sg_texture_view_desc *self) {
+    return mb_copy_sg_texture_view_desc(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_texture_view_desc_native(sg_texture_view_desc *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_texture_view_desc *mb_gfx_sg_texture_view_desc_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_texture_view_desc(ptr);
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_texture_view_desc_get_image(sg_texture_view_desc *self) {
+    sg_texture_view_desc *value = self;
+    return value->image.id;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_texture_view_desc_set_image(sg_texture_view_desc *self,
+                                                              uint32_t replacement) {
+    sg_texture_view_desc *value = self;
+    value->image = (sg_image){.id = replacement};
+}
+
+MOONBIT_FFI_EXPORT sg_texture_view_range *
+mb_gfx_sg_texture_view_desc_get_mip_levels(sg_texture_view_desc *self) {
+    sg_texture_view_desc *value = self;
+    return mb_copy_sg_texture_view_range(&value->mip_levels);
+}
+
+MOONBIT_FFI_EXPORT void
+mb_gfx_sg_texture_view_desc_set_mip_levels(sg_texture_view_desc *self,
+                                           sg_texture_view_range *replacement) {
+    sg_texture_view_desc *value = self;
+    sg_texture_view_range copy;
+    mb_clone_sg_texture_view_range(&copy, replacement);
+    mb_drop_sg_texture_view_range(&value->mip_levels);
+    value->mip_levels = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_texture_view_range *
+mb_gfx_sg_texture_view_desc_get_slices(sg_texture_view_desc *self) {
+    sg_texture_view_desc *value = self;
+    return mb_copy_sg_texture_view_range(&value->slices);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_texture_view_desc_set_slices(sg_texture_view_desc *self,
+                                                               sg_texture_view_range *replacement) {
+    sg_texture_view_desc *value = self;
+    sg_texture_view_range copy;
+    mb_clone_sg_texture_view_range(&copy, replacement);
+    mb_drop_sg_texture_view_range(&value->slices);
+    value->slices = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_view_desc *mb_gfx_sg_view_desc_new(void) {
+    return mb_new_sg_view_desc();
+}
+
+MOONBIT_FFI_EXPORT sg_view_desc *mb_gfx_sg_view_desc_copy(sg_view_desc *self) {
+    return mb_copy_sg_view_desc(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_view_desc_native(sg_view_desc *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_view_desc *mb_gfx_sg_view_desc_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_view_desc(ptr);
+}
+
+MOONBIT_FFI_EXPORT sg_texture_view_desc *mb_gfx_sg_view_desc_get_texture(sg_view_desc *self) {
+    sg_view_desc *value = self;
+    return mb_copy_sg_texture_view_desc(&value->texture);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_view_desc_set_texture(sg_view_desc *self,
+                                                        sg_texture_view_desc *replacement) {
+    sg_view_desc *value = self;
+    sg_texture_view_desc copy;
+    mb_clone_sg_texture_view_desc(&copy, replacement);
+    mb_drop_sg_texture_view_desc(&value->texture);
+    value->texture = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_buffer_view_desc *mb_gfx_sg_view_desc_get_storage_buffer(sg_view_desc *self) {
+    sg_view_desc *value = self;
+    return mb_copy_sg_buffer_view_desc(&value->storage_buffer);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_view_desc_set_storage_buffer(sg_view_desc *self,
+                                                               sg_buffer_view_desc *replacement) {
+    sg_view_desc *value = self;
+    sg_buffer_view_desc copy;
+    mb_clone_sg_buffer_view_desc(&copy, replacement);
+    mb_drop_sg_buffer_view_desc(&value->storage_buffer);
+    value->storage_buffer = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_image_view_desc *mb_gfx_sg_view_desc_get_storage_image(sg_view_desc *self) {
+    sg_view_desc *value = self;
+    return mb_copy_sg_image_view_desc(&value->storage_image);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_view_desc_set_storage_image(sg_view_desc *self,
+                                                              sg_image_view_desc *replacement) {
+    sg_view_desc *value = self;
+    sg_image_view_desc copy;
+    mb_clone_sg_image_view_desc(&copy, replacement);
+    mb_drop_sg_image_view_desc(&value->storage_image);
+    value->storage_image = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_image_view_desc *
+mb_gfx_sg_view_desc_get_color_attachment(sg_view_desc *self) {
+    sg_view_desc *value = self;
+    return mb_copy_sg_image_view_desc(&value->color_attachment);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_view_desc_set_color_attachment(sg_view_desc *self,
+                                                                 sg_image_view_desc *replacement) {
+    sg_view_desc *value = self;
+    sg_image_view_desc copy;
+    mb_clone_sg_image_view_desc(&copy, replacement);
+    mb_drop_sg_image_view_desc(&value->color_attachment);
+    value->color_attachment = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_image_view_desc *
+mb_gfx_sg_view_desc_get_resolve_attachment(sg_view_desc *self) {
+    sg_view_desc *value = self;
+    return mb_copy_sg_image_view_desc(&value->resolve_attachment);
+}
+
+MOONBIT_FFI_EXPORT void
+mb_gfx_sg_view_desc_set_resolve_attachment(sg_view_desc *self, sg_image_view_desc *replacement) {
+    sg_view_desc *value = self;
+    sg_image_view_desc copy;
+    mb_clone_sg_image_view_desc(&copy, replacement);
+    mb_drop_sg_image_view_desc(&value->resolve_attachment);
+    value->resolve_attachment = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_image_view_desc *
+mb_gfx_sg_view_desc_get_depth_stencil_attachment(sg_view_desc *self) {
+    sg_view_desc *value = self;
+    return mb_copy_sg_image_view_desc(&value->depth_stencil_attachment);
+}
+
+MOONBIT_FFI_EXPORT void
+mb_gfx_sg_view_desc_set_depth_stencil_attachment(sg_view_desc *self,
+                                                 sg_image_view_desc *replacement) {
+    sg_view_desc *value = self;
+    sg_image_view_desc copy;
+    mb_clone_sg_image_view_desc(&copy, replacement);
+    mb_drop_sg_image_view_desc(&value->depth_stencil_attachment);
+    value->depth_stencil_attachment = copy;
+}
+
+MOONBIT_FFI_EXPORT moonbit_bytes_t mb_gfx_sg_view_desc_get_label(sg_view_desc *self) {
+    sg_view_desc *value = self;
+    return mb_utf8(value->label);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_view_desc_set_label(sg_view_desc *self,
+                                                      moonbit_bytes_t replacement) {
+    sg_view_desc *value = self;
+    const char *copy = mb_string((const char *)replacement);
+    free((void *)value->label);
+    value->label = copy;
+}
+
+MOONBIT_FFI_EXPORT sg_view_info *mb_gfx_sg_view_info_new(void) {
+    return mb_new_sg_view_info();
+}
+
+MOONBIT_FFI_EXPORT sg_view_info *mb_gfx_sg_view_info_copy(sg_view_info *self) {
+    return mb_copy_sg_view_info(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_view_info_native(sg_view_info *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_view_info *mb_gfx_sg_view_info_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_view_info(ptr);
+}
+
+MOONBIT_FFI_EXPORT sg_slot_info *mb_gfx_sg_view_info_get_slot(sg_view_info *self) {
+    sg_view_info *value = self;
+    return mb_copy_sg_slot_info(&value->slot);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_view_info_set_slot(sg_view_info *self,
+                                                     sg_slot_info *replacement) {
+    sg_view_info *value = self;
+    sg_slot_info copy;
+    mb_clone_sg_slot_info(&copy, replacement);
+    mb_drop_sg_slot_info(&value->slot);
+    value->slot = copy;
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_make_view(sg_view_desc *desc) {
+    sg_view value = sg_make_view(desc);
+    return value.id;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_destroy_view(uint32_t view) {
+    sg_destroy_view((sg_view){.id = view});
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_query_view_state(uint32_t view) {
+    return sg_query_view_state((sg_view){.id = view});
+}
+
+MOONBIT_FFI_EXPORT sg_view_info *mb_gfx_sg_query_view_info(uint32_t view) {
+    sg_view_info value = sg_query_view_info((sg_view){.id = view});
+    return mb_copy_sg_view_info(&value);
+}
+
+MOONBIT_FFI_EXPORT sg_view_desc *mb_gfx_sg_query_view_desc(uint32_t view) {
+    sg_view_desc value = sg_query_view_desc((sg_view){.id = view});
+    return mb_copy_sg_view_desc(&value);
+}
+
+MOONBIT_FFI_EXPORT sg_view_desc *mb_gfx_sg_query_view_defaults(sg_view_desc *desc) {
+    sg_view_desc value = sg_query_view_defaults(desc);
+    return mb_copy_sg_view_desc(&value);
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_gfx_sg_query_view_type(uint32_t view) {
+    return sg_query_view_type((sg_view){.id = view});
+}
+
+MOONBIT_FFI_EXPORT uint32_t mb_gfx_sg_alloc_view(void) {
+    sg_view value = sg_alloc_view();
+    return value.id;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_dealloc_view(uint32_t view) {
+    sg_dealloc_view((sg_view){.id = view});
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_init_view(uint32_t view, sg_view_desc *desc) {
+    sg_init_view((sg_view){.id = view}, desc);
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_uninit_view(uint32_t view) {
+    sg_uninit_view((sg_view){.id = view});
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_fail_view(uint32_t view) {
+    sg_fail_view((sg_view){.id = view});
+}

@@ -1,146 +1,105 @@
 # Maintaining the bindings
 
-Start with the feature you are changing. MoonBit files in a package share the
-same namespace; the file split does not change import paths or public APIs.
+The checked-in MoonBit and C sources are the maintained implementation. Edit
+them directly. There is no binding generator, declaration-inventory pipeline,
+or required Clang parser/formatter. `pkg.generated.mbti` is the standard MoonBit
+public interface snapshot produced by `moon info`.
 
-## Where to read and edit
+## Source map
 
-| Change | Read | Edit |
-| --- | --- | --- |
-| Buffer types, fields and resource operations | `gfx/buffer.generated.mbt` and `gfx/buffer.generated.h` | The relevant emitter in `scripts/generate.py` for mechanical conversion; handwritten bridge for special behavior |
-| Image, sampler, shader, pipeline or view | The corresponding `gfx/<feature>.generated.mbt` and `.h` | Same rule as buffer; shader reflection has its own file |
-| Passes, uploads, statistics, backend interop | `gfx/pass`, `gfx/upload`, `gfx/statistics`, `gfx/metal`, etc., with `.generated.mbt` / `.generated.h` suffixes | The relevant emitter or an explicit handwritten bridge |
-| Graphics hook/listener registration and shutdown | `gfx/callbacks.mbt`, `gfx/support.c` | Those handwritten files |
-| Graphics closure argument marshalling | `gfx/trace_callbacks.generated.*`, `gfx/listener_callback.generated.*` | The named emitters in `scripts/callbacks.py` |
-| Fetch request state, buffers and callback lifetime | `fetch/api.mbt`, `fetch/support.c` | Those handwritten files |
-| Fetch response snapshot copying and destruction | `fetch/response.h` | That handwritten file |
-| App callbacks and cleanup | `app/api.mbt`, `app/support.c` | Those handwritten files |
-| Package imports, native compiler options | Each package's `moon.pkg` | That manifest; the generator does not overwrite it |
-| Build/platform selection | `build.mbtx` | That MoonBit script |
-| Generated file organization | `scripts/layout.py` | The explicit type groups or function routing there; routing never determines ownership |
-| Windows/non-Windows API availability | `scripts/platforms.py` | The explicit app entry points and D3D11/Metal function groups; keep both public and private declarations guarded |
+| Change | Files to edit |
+| --- | --- |
+| Buffer types, fields and resource operations | `gfx/buffer.mbt`, `gfx/buffer.h` |
+| Image, sampler, shader, pipeline or view | The corresponding `gfx/<feature>.mbt` and `.h`; shader reflection has its own file |
+| Passes, uploads, statistics, backend interop | `gfx/pass.*`, `gfx/upload.*`, `gfx/statistics.*`, `gfx/metal.*`, etc. |
+| Graphics hook/listener registration and shutdown | `gfx/callbacks.mbt`, `gfx/support.c` |
+| Graphics closure arguments and references | `gfx/trace_callbacks.mbt` / `.h`, `gfx/listener_callback.mbt` / `.h` |
+| Fetch requests, buffers and callbacks | `fetch/api.mbt`, `fetch/support.c` |
+| Fetch response snapshot copying and destruction | `fetch/response.h` |
+| App callbacks and cleanup | `app/api.mbt`, `app/support.c` |
+| Smaller packages | Their `api.mbt`, `bindings.mbt`, `bindings.h` and `support.c`, where present |
+| Shared native memory helpers | `native/common.h` |
+| Package imports and native compiler options | Each package's `moon.pkg` |
+| Platform/compiler/linker selection | `build.mbtx` |
 
-Generated MoonBit files put a private `extern "c"` declaration immediately
-before the public method that uses it. The matching C feature file contains its
-native implementation, including that feature's copy/drop helpers. For example,
-`BufferDesc::set_label` calls `sg_buffer_desc_set_label`, which names the C
-symbol `mb_gfx_sg_buffer_desc_set_label` in `gfx/buffer.generated.h`.
+Private `extern "c"` declarations sit next to the public methods that use them.
+The matching C feature file contains field adapters and copy/drop helpers. For
+example, `BufferDesc::set_label` calls `sg_buffer_desc_set_label`, which names
+`mb_gfx_sg_buffer_desc_set_label` in `gfx/buffer.h`.
 
 ```sh
-rg -n 'BufferDesc::set_label|sg_buffer_desc_set_label' gfx/buffer.generated.*
+rg -n 'BufferDesc::set_label|sg_buffer_desc_set_label' gfx/buffer.*
 ```
 
-A function that directly calls upstream has its Sokol symbol in the extern
-declaration and no extra C wrapper. `bindings.inc.h` includes Sokol, declares
-cross-feature copy helpers, and includes the feature headers. It contains no
-resource-lifetime policy. Include fragments are headers because Moon tracks
-package-local `.h` inputs for native rebuilds.
+A direct binding names the upstream Sokol symbol and needs no C adapter. Each
+package's `support.c` includes `internal.h`, which configures the bundled Sokol
+implementation, declares cross-file helpers, and includes the feature headers.
+These headers contain definitions and are included once in that C compilation
+unit. Graphics callback implementations are included directly by `gfx/support.c`.
 
-## Generated versus handwritten sources
+## Change a binding
 
-`*.generated.mbt`, `*.generated.h`, `bindings.inc.h`, and `gfx/callbacks.inc.h` are generated.
-Do not make lasting fixes there: regeneration would replace them. All other
-MoonBit/C source files and all `moon.pkg` manifests are handwritten. In particular,
-`gfx/callbacks.mbt` is handwritten even though its matching callback trampolines
-are generated. The `pkg.generated.mbti` interfaces are generated by `moon info`.
+Update the public method, its adjacent FFI declaration, and the C implementation
+together. Keep argument conversions, `#borrow`/`#owned`, and copy/drop behavior
+consistent. For native pointers, callbacks or retained buffers, check the pinned
+upstream implementation and [OWNERSHIP.md](OWNERSHIP.md); write the lifetime
+transitions explicitly and test them through the actual API.
 
-The generator consumes `scripts/api.json`, a checked-in declaration inventory
-extracted from the pinned headers by Clang. It records C syntax only. Neither
-the inventory nor file grouping establishes a lifetime contract; consult
-[OWNERSHIP.md](OWNERSHIP.md) and the pinned upstream implementation.
+Windows-only entry points and their private FFI declarations use
+`#cfg(platform="windows")`. Non-Windows entry points use its negation. Apply the
+condition to both declarations. These conditions do not distinguish macOS from
+Linux or select a graphics backend. Configuration structs can hold fields for
+multiple backends; the active backend's restrictions still apply.
 
-`scripts/generate.py` has these entry points:
+`build.mbtx` reads the shared native headers and includes their content fingerprint
+in compiler arguments. This invalidates C objects when a shared header changes;
+it does not generate or rewrite source files. Package-local headers are tracked
+by Moon. New shared headers must also be listed in `header_fingerprint()`.
 
-- `generate_module`: select declarations and emit one package.
-- `emit_descriptor`, `emit_field`: public descriptor methods, their adjacent FFI
-  declarations, and C field adapters.
-- `emit_copy_helpers`: mechanical owned-string/range/nested-value copies and drops.
-  The response aliasing exception delegates to handwritten `fetch/response.h`.
-- `emit_function`: scalar/ID/aggregate argument and return conversion.
-- `HANDLES`, `RANGES`, `CALLBACKS`, `DIRECT_SCALARS`, `BORROWED_STRINGS`, `CUSTOM`:
-  explicit audited categories. Do not add a pointer-bearing API to a category
-  merely because its name or struct shape looks similar.
+## Validate
 
-`scripts/callbacks.py` separately emits typed slots, native trampolines,
-context copy/drop operations and MoonBit `on_*` methods. A trampoline saves and
-pins the closure, calls its typed bridge, then releases temporary argument
-copies and the pin. Registration retains are in `gfx/support.c`, not inferred
-by this generator. Finalizer regressions live in `tests/lifetime`.
-
-When an operation needs a new retention rule, implement a named handwritten
-bridge and its MoonBit API. Add the upstream function to `CUSTOM` in the
-generator and its bridge/public mapping in `scripts/check_bindings.py`. Document
-the acquire/release transitions and test them through the real API. Do not add
-function-name heuristics to the generator.
-
-## Regenerate and validate
-
-Ordinary builds need MoonBit and the native compiler. Python and clang-format
-are development tools used only when changing generated bindings. The formatter
-version is pinned so generation is reproducible across platforms.
+Builds need MoonBit and the platform's native compiler/SDK. The remaining Python
+scripts are test/sanitizer and upstream-source helpers; none generates bindings.
+There are no pip dependencies.
 
 ```sh
-python3 -m venv .prepare/tools
-.prepare/tools/bin/python -m pip install -r scripts/requirements.txt
-export PATH="$PWD/.prepare/tools/bin:$PATH"
-python scripts/generate.py
-```
-
-On Windows, use `.prepare\tools\Scripts\python` and add
-`.prepare\tools\Scripts` to `PATH` instead. The same requirements file supplies
-the formatter executable on each platform. C formatting is configured in
-`.clang-format`; apply it to handwritten C when editing those files.
-
-```sh
-python scripts/prepare.py --check
-python scripts/check_bindings.py
-python scripts/generate.py --check
-python scripts/check_platform_api.py
+python3 scripts/prepare.py --check
+python3 scripts/check_platform_api.py
 moon check --target all --warn-list +73
 SOKOL_HEADLESS=1 moon test --target native
 SOKOL_HEADLESS=1 moon test --target native --release
 moon info && moon fmt
 ```
 
-`generate.py --check` generates in a temporary tree and compares the output. It
-does not rewrite the working tree, handwritten files or manifests. Regeneration
-formats only generated files. For a structural refactor, interface files and
-`scripts/coverage.json` should be unchanged. Platform availability changes update
-the relevant interface snapshots: tracked `app`/`gfx` interfaces describe
-non-Windows exports, while Windows CI checks its conditional interfaces using
-the compiler probes instead of comparing them to that snapshot.
-
-`check_platform_api.py` compiles both Windows and non-Windows package interfaces,
-then checks consumers that must compile or must fail for unavailable functions.
-It uses compiler configuration flags for these visibility checks; it does not
-claim to cross-compile or run a Windows binary on the host. Restrict only with
-`platform="windows"` or its negation. Backend and native-object lifetime
-requirements still apply on a platform where a function is exported.
+On PowerShell, set `$env:SOKOL_HEADLESS = "1"` before the test commands.
+`check_platform_api.py` typechecks Windows and non-Windows interfaces and checks
+consumers that must compile or must fail. It does not run a Windows binary on
+the host. The tracked `app`/`gfx` interfaces describe non-Windows exports; Windows
+CI validates its interface through these probes rather than comparing it to the
+non-Windows snapshot. A behavior-preserving refactor should not change interfaces.
 
 For native lifetime changes, also run:
 
 ```sh
-SOKOL_HEADLESS=1 python scripts/run-asan.py
+SOKOL_HEADLESS=1 python3 scripts/run-asan.py
 # On a macOS host with a Metal device:
-python scripts/run-asan.py --run cmd/main --run examples/offscreen
+python3 scripts/run-asan.py --run cmd/main --run examples/offscreen
 ```
 
-macOS ASan checks invalid accesses; it does not provide leak detection. The
-finalizer tests check prompt callback release. Linux CI additionally enables
-LSan. Headless tests do not exercise a production GPU backend.
+The sanitizer runner instruments C compilation and linking without modifying
+manifests or the installed toolchain. macOS ASan checks invalid accesses, while
+Linux additionally enables LSan. Finalizer probes in `tests/lifetime` check prompt
+callback release. Headless tests do not exercise a production GPU backend.
 
-## Update the pinned upstream
+## Update Sokol
 
-1. Update the revision and file hashes in `scripts/upstream.json`, then run
-   `python scripts/prepare.py`.
-2. Run `python scripts/inspect_api.py` (requires Clang) and review `scripts/api.json`.
-3. Assign new gfx/app aggregate types to a feature in `scripts/layout.py`. An
-   unassigned aggregate fails generation instead of silently entering a misc file.
-4. Review pointer and callback lifetime changes against upstream source, update
-   handwritten bridges/contracts, then run `python scripts/generate.py`.
-5. Inspect `scripts/coverage.json` and regenerated interfaces, then run the
-   validation above and the production backends available on the host.
+1. Choose a revision, update `scripts/upstream.json` and the file hashes, then
+   run `python3 scripts/prepare.py` to fetch the pinned source files.
+2. Review upstream header and implementation changes. Update the matching
+   MoonBit declarations and C bridges directly, including new or removed APIs.
+3. Review callback/buffer retention, copy/drop functions, native integer widths,
+   platform conditions and compiler/linker flags. Update contracts and tests.
+4. Run the checks above, review `moon info` interface changes, and verify the
+   production backends on the supported platforms.
 
-After editing shared headers such as `native/common.h`, regenerate as well.
-Their digests are embedded in package-local headers so shared changes invalidate
-native compilation inputs.
+The upstream helper only fetches/verifies vendor files; it never edits bindings.

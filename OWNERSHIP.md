@@ -27,11 +27,11 @@ duplicates owned fields. The `unsafe_*` pointer helpers require live, correctly
 typed readable memory. Never change owned string/range pointers behind the
 binding's back; the destructor frees them using `free`.
 
-The mechanical copy/destructor policy is limited to audited field categories:
+Copy/destructor implementations cover the audited field categories:
 `const char*`, the three Sokol range structs, and nested aggregate values. The
 callback context types have explicit clone/drop code. Unknown pointers are
-unowned. The generator does not infer retention from a `make`, `setup` or
-`destroy` name.
+unowned. Resource retention is implemented explicitly in the native bridges;
+it does not follow automatically from a `make`, `setup` or `destroy` name.
 
 ## Graphics
 

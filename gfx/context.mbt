@@ -1,0 +1,1088 @@
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type SlotInfo
+
+///|
+extern "c" fn sg_slot_info_new() -> SlotInfo = "mb_gfx_sg_slot_info_new"
+
+///|
+pub fn SlotInfo::new() -> SlotInfo {
+  sg_slot_info_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_slot_info_copy(object_ : SlotInfo) -> SlotInfo = "mb_gfx_sg_slot_info_copy"
+
+///|
+pub fn SlotInfo::copy(self : SlotInfo) -> SlotInfo {
+  sg_slot_info_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_slot_info_native(object_ : SlotInfo) -> @native.Handle = "mb_gfx_sg_slot_info_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn SlotInfo::unsafe_native_handle(self : SlotInfo) -> @native.Handle {
+  sg_slot_info_native(self)
+}
+
+///|
+extern "c" fn sg_slot_info_from_native(ptr : @native.Handle) -> SlotInfo = "mb_gfx_sg_slot_info_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn SlotInfo::unsafe_from_native(ptr : @native.Handle) -> SlotInfo {
+  sg_slot_info_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_slot_info_get_state(object_ : SlotInfo) -> ResourceState = "mb_gfx_sg_slot_info_get_state"
+
+///|
+pub fn SlotInfo::state(self : SlotInfo) -> ResourceState {
+  sg_slot_info_get_state(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_slot_info_set_state(
+  object_ : SlotInfo,
+  replacement : ResourceState,
+) -> Unit = "mb_gfx_sg_slot_info_set_state"
+
+///|
+pub fn SlotInfo::set_state(self : SlotInfo, value : ResourceState) -> SlotInfo {
+  sg_slot_info_set_state(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_slot_info_get_res_id(object_ : SlotInfo) -> UInt32 = "mb_gfx_sg_slot_info_get_res_id"
+
+///|
+pub fn SlotInfo::res_id(self : SlotInfo) -> UInt32 {
+  sg_slot_info_get_res_id(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_slot_info_set_res_id(
+  object_ : SlotInfo,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_slot_info_set_res_id"
+
+///|
+pub fn SlotInfo::set_res_id(self : SlotInfo, value : UInt32) -> SlotInfo {
+  sg_slot_info_set_res_id(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_slot_info_get_uninit_count(object_ : SlotInfo) -> UInt32 = "mb_gfx_sg_slot_info_get_uninit_count"
+
+///|
+pub fn SlotInfo::uninit_count(self : SlotInfo) -> UInt32 {
+  sg_slot_info_get_uninit_count(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_slot_info_set_uninit_count(
+  object_ : SlotInfo,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_slot_info_set_uninit_count"
+
+///|
+pub fn SlotInfo::set_uninit_count(self : SlotInfo, value : UInt32) -> SlotInfo {
+  sg_slot_info_set_uninit_count(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type EnvironmentDefaults
+
+///|
+extern "c" fn sg_environment_defaults_new() -> EnvironmentDefaults = "mb_gfx_sg_environment_defaults_new"
+
+///|
+pub fn EnvironmentDefaults::new() -> EnvironmentDefaults {
+  sg_environment_defaults_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_defaults_copy(
+  object_ : EnvironmentDefaults,
+) -> EnvironmentDefaults = "mb_gfx_sg_environment_defaults_copy"
+
+///|
+pub fn EnvironmentDefaults::copy(
+  self : EnvironmentDefaults,
+) -> EnvironmentDefaults {
+  sg_environment_defaults_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_defaults_native(
+  object_ : EnvironmentDefaults,
+) -> @native.Handle = "mb_gfx_sg_environment_defaults_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn EnvironmentDefaults::unsafe_native_handle(
+  self : EnvironmentDefaults,
+) -> @native.Handle {
+  sg_environment_defaults_native(self)
+}
+
+///|
+extern "c" fn sg_environment_defaults_from_native(
+  ptr : @native.Handle,
+) -> EnvironmentDefaults = "mb_gfx_sg_environment_defaults_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn EnvironmentDefaults::unsafe_from_native(
+  ptr : @native.Handle,
+) -> EnvironmentDefaults {
+  sg_environment_defaults_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_defaults_get_color_format(
+  object_ : EnvironmentDefaults,
+) -> PixelFormat = "mb_gfx_sg_environment_defaults_get_color_format"
+
+///|
+pub fn EnvironmentDefaults::color_format(
+  self : EnvironmentDefaults,
+) -> PixelFormat {
+  sg_environment_defaults_get_color_format(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_defaults_set_color_format(
+  object_ : EnvironmentDefaults,
+  replacement : PixelFormat,
+) -> Unit = "mb_gfx_sg_environment_defaults_set_color_format"
+
+///|
+pub fn EnvironmentDefaults::set_color_format(
+  self : EnvironmentDefaults,
+  value : PixelFormat,
+) -> EnvironmentDefaults {
+  sg_environment_defaults_set_color_format(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_defaults_get_depth_format(
+  object_ : EnvironmentDefaults,
+) -> PixelFormat = "mb_gfx_sg_environment_defaults_get_depth_format"
+
+///|
+pub fn EnvironmentDefaults::depth_format(
+  self : EnvironmentDefaults,
+) -> PixelFormat {
+  sg_environment_defaults_get_depth_format(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_defaults_set_depth_format(
+  object_ : EnvironmentDefaults,
+  replacement : PixelFormat,
+) -> Unit = "mb_gfx_sg_environment_defaults_set_depth_format"
+
+///|
+pub fn EnvironmentDefaults::set_depth_format(
+  self : EnvironmentDefaults,
+  value : PixelFormat,
+) -> EnvironmentDefaults {
+  sg_environment_defaults_set_depth_format(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_defaults_get_sample_count(
+  object_ : EnvironmentDefaults,
+) -> Int32 = "mb_gfx_sg_environment_defaults_get_sample_count"
+
+///|
+pub fn EnvironmentDefaults::sample_count(self : EnvironmentDefaults) -> Int32 {
+  sg_environment_defaults_get_sample_count(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_defaults_set_sample_count(
+  object_ : EnvironmentDefaults,
+  replacement : Int32,
+) -> Unit = "mb_gfx_sg_environment_defaults_set_sample_count"
+
+///|
+pub fn EnvironmentDefaults::set_sample_count(
+  self : EnvironmentDefaults,
+  value : Int32,
+) -> EnvironmentDefaults {
+  sg_environment_defaults_set_sample_count(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type Environment
+
+///|
+extern "c" fn sg_environment_new() -> Environment = "mb_gfx_sg_environment_new"
+
+///|
+pub fn Environment::new() -> Environment {
+  sg_environment_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_copy(object_ : Environment) -> Environment = "mb_gfx_sg_environment_copy"
+
+///|
+pub fn Environment::copy(self : Environment) -> Environment {
+  sg_environment_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_native(object_ : Environment) -> @native.Handle = "mb_gfx_sg_environment_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn Environment::unsafe_native_handle(self : Environment) -> @native.Handle {
+  sg_environment_native(self)
+}
+
+///|
+extern "c" fn sg_environment_from_native(ptr : @native.Handle) -> Environment = "mb_gfx_sg_environment_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn Environment::unsafe_from_native(ptr : @native.Handle) -> Environment {
+  sg_environment_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_get_defaults(
+  object_ : Environment,
+) -> EnvironmentDefaults = "mb_gfx_sg_environment_get_defaults"
+
+///|
+pub fn Environment::defaults(self : Environment) -> EnvironmentDefaults {
+  sg_environment_get_defaults(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_environment_set_defaults(
+  object_ : Environment,
+  replacement : EnvironmentDefaults,
+) -> Unit = "mb_gfx_sg_environment_set_defaults"
+
+///|
+pub fn Environment::set_defaults(
+  self : Environment,
+  value : EnvironmentDefaults,
+) -> Environment {
+  sg_environment_set_defaults(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_get_metal(
+  object_ : Environment,
+) -> MetalEnvironment = "mb_gfx_sg_environment_get_metal"
+
+///|
+pub fn Environment::metal(self : Environment) -> MetalEnvironment {
+  sg_environment_get_metal(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_environment_set_metal(
+  object_ : Environment,
+  replacement : MetalEnvironment,
+) -> Unit = "mb_gfx_sg_environment_set_metal"
+
+///|
+pub fn Environment::set_metal(
+  self : Environment,
+  value : MetalEnvironment,
+) -> Environment {
+  sg_environment_set_metal(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_get_d3d11(
+  object_ : Environment,
+) -> D3d11Environment = "mb_gfx_sg_environment_get_d3d11"
+
+///|
+pub fn Environment::d3d11(self : Environment) -> D3d11Environment {
+  sg_environment_get_d3d11(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_environment_set_d3d11(
+  object_ : Environment,
+  replacement : D3d11Environment,
+) -> Unit = "mb_gfx_sg_environment_set_d3d11"
+
+///|
+pub fn Environment::set_d3d11(
+  self : Environment,
+  value : D3d11Environment,
+) -> Environment {
+  sg_environment_set_d3d11(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_get_wgpu(object_ : Environment) -> WgpuEnvironment = "mb_gfx_sg_environment_get_wgpu"
+
+///|
+pub fn Environment::wgpu(self : Environment) -> WgpuEnvironment {
+  sg_environment_get_wgpu(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_environment_set_wgpu(
+  object_ : Environment,
+  replacement : WgpuEnvironment,
+) -> Unit = "mb_gfx_sg_environment_set_wgpu"
+
+///|
+pub fn Environment::set_wgpu(
+  self : Environment,
+  value : WgpuEnvironment,
+) -> Environment {
+  sg_environment_set_wgpu(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_environment_get_vulkan(
+  object_ : Environment,
+) -> VulkanEnvironment = "mb_gfx_sg_environment_get_vulkan"
+
+///|
+pub fn Environment::vulkan(self : Environment) -> VulkanEnvironment {
+  sg_environment_get_vulkan(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_environment_set_vulkan(
+  object_ : Environment,
+  replacement : VulkanEnvironment,
+) -> Unit = "mb_gfx_sg_environment_set_vulkan"
+
+///|
+pub fn Environment::set_vulkan(
+  self : Environment,
+  value : VulkanEnvironment,
+) -> Environment {
+  sg_environment_set_vulkan(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type Allocator
+
+///|
+extern "c" fn sg_allocator_new() -> Allocator = "mb_gfx_sg_allocator_new"
+
+///|
+pub fn Allocator::new() -> Allocator {
+  sg_allocator_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_allocator_copy(object_ : Allocator) -> Allocator = "mb_gfx_sg_allocator_copy"
+
+///|
+pub fn Allocator::copy(self : Allocator) -> Allocator {
+  sg_allocator_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_allocator_native(object_ : Allocator) -> @native.Handle = "mb_gfx_sg_allocator_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn Allocator::unsafe_native_handle(self : Allocator) -> @native.Handle {
+  sg_allocator_native(self)
+}
+
+///|
+extern "c" fn sg_allocator_from_native(ptr : @native.Handle) -> Allocator = "mb_gfx_sg_allocator_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn Allocator::unsafe_from_native(ptr : @native.Handle) -> Allocator {
+  sg_allocator_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_allocator_get_alloc_fn(object_ : Allocator) -> @native.Handle = "mb_gfx_sg_allocator_get_alloc_fn"
+
+///|
+pub fn Allocator::alloc_fn(self : Allocator) -> @native.Handle {
+  sg_allocator_get_alloc_fn(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_allocator_set_alloc_fn(
+  object_ : Allocator,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_allocator_set_alloc_fn"
+
+///|
+pub fn Allocator::set_alloc_fn(
+  self : Allocator,
+  value : @native.Handle,
+) -> Allocator {
+  sg_allocator_set_alloc_fn(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_allocator_get_free_fn(object_ : Allocator) -> @native.Handle = "mb_gfx_sg_allocator_get_free_fn"
+
+///|
+pub fn Allocator::free_fn(self : Allocator) -> @native.Handle {
+  sg_allocator_get_free_fn(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_allocator_set_free_fn(
+  object_ : Allocator,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_allocator_set_free_fn"
+
+///|
+pub fn Allocator::set_free_fn(
+  self : Allocator,
+  value : @native.Handle,
+) -> Allocator {
+  sg_allocator_set_free_fn(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_allocator_get_user_data(object_ : Allocator) -> @native.Handle = "mb_gfx_sg_allocator_get_user_data"
+
+///|
+pub fn Allocator::user_data(self : Allocator) -> @native.Handle {
+  sg_allocator_get_user_data(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_allocator_set_user_data(
+  object_ : Allocator,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_allocator_set_user_data"
+
+///|
+pub fn Allocator::set_user_data(
+  self : Allocator,
+  value : @native.Handle,
+) -> Allocator {
+  sg_allocator_set_user_data(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type Logger
+
+///|
+extern "c" fn sg_logger_new() -> Logger = "mb_gfx_sg_logger_new"
+
+///|
+pub fn Logger::new() -> Logger {
+  sg_logger_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_logger_copy(object_ : Logger) -> Logger = "mb_gfx_sg_logger_copy"
+
+///|
+pub fn Logger::copy(self : Logger) -> Logger {
+  sg_logger_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_logger_native(object_ : Logger) -> @native.Handle = "mb_gfx_sg_logger_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn Logger::unsafe_native_handle(self : Logger) -> @native.Handle {
+  sg_logger_native(self)
+}
+
+///|
+extern "c" fn sg_logger_from_native(ptr : @native.Handle) -> Logger = "mb_gfx_sg_logger_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn Logger::unsafe_from_native(ptr : @native.Handle) -> Logger {
+  sg_logger_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_logger_get_func(object_ : Logger) -> @native.Handle = "mb_gfx_sg_logger_get_func"
+
+///|
+pub fn Logger::func(self : Logger) -> @native.Handle {
+  sg_logger_get_func(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_logger_set_func(
+  object_ : Logger,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_logger_set_func"
+
+///|
+pub fn Logger::set_func(self : Logger, value : @native.Handle) -> Logger {
+  sg_logger_set_func(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_logger_get_user_data(object_ : Logger) -> @native.Handle = "mb_gfx_sg_logger_get_user_data"
+
+///|
+pub fn Logger::user_data(self : Logger) -> @native.Handle {
+  sg_logger_get_user_data(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_logger_set_user_data(
+  object_ : Logger,
+  replacement : @native.Handle,
+) -> Unit = "mb_gfx_sg_logger_set_user_data"
+
+///|
+pub fn Logger::set_user_data(self : Logger, value : @native.Handle) -> Logger {
+  sg_logger_set_user_data(self, value)
+  self
+}
+
+///|
+extern "c" fn sg_logger_default() -> Logger = "mb_gfx_sg_logger_default"
+
+///|
+pub fn Logger::default() -> Logger {
+  sg_logger_default()
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type Desc
+
+///|
+extern "c" fn sg_desc_new() -> Desc = "mb_gfx_sg_desc_new"
+
+///|
+pub fn Desc::new() -> Desc {
+  sg_desc_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_copy(object_ : Desc) -> Desc = "mb_gfx_sg_desc_copy"
+
+///|
+pub fn Desc::copy(self : Desc) -> Desc {
+  sg_desc_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_native(object_ : Desc) -> @native.Handle = "mb_gfx_sg_desc_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn Desc::unsafe_native_handle(self : Desc) -> @native.Handle {
+  sg_desc_native(self)
+}
+
+///|
+extern "c" fn sg_desc_from_native(ptr : @native.Handle) -> Desc = "mb_gfx_sg_desc_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn Desc::unsafe_from_native(ptr : @native.Handle) -> Desc {
+  sg_desc_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_buffer_pool_size(object_ : Desc) -> Int32 = "mb_gfx_sg_desc_get_buffer_pool_size"
+
+///|
+pub fn Desc::buffer_pool_size(self : Desc) -> Int32 {
+  sg_desc_get_buffer_pool_size(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_set_buffer_pool_size(
+  object_ : Desc,
+  replacement : Int32,
+) -> Unit = "mb_gfx_sg_desc_set_buffer_pool_size"
+
+///|
+pub fn Desc::set_buffer_pool_size(self : Desc, value : Int32) -> Desc {
+  sg_desc_set_buffer_pool_size(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_image_pool_size(object_ : Desc) -> Int32 = "mb_gfx_sg_desc_get_image_pool_size"
+
+///|
+pub fn Desc::image_pool_size(self : Desc) -> Int32 {
+  sg_desc_get_image_pool_size(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_set_image_pool_size(
+  object_ : Desc,
+  replacement : Int32,
+) -> Unit = "mb_gfx_sg_desc_set_image_pool_size"
+
+///|
+pub fn Desc::set_image_pool_size(self : Desc, value : Int32) -> Desc {
+  sg_desc_set_image_pool_size(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_sampler_pool_size(object_ : Desc) -> Int32 = "mb_gfx_sg_desc_get_sampler_pool_size"
+
+///|
+pub fn Desc::sampler_pool_size(self : Desc) -> Int32 {
+  sg_desc_get_sampler_pool_size(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_set_sampler_pool_size(
+  object_ : Desc,
+  replacement : Int32,
+) -> Unit = "mb_gfx_sg_desc_set_sampler_pool_size"
+
+///|
+pub fn Desc::set_sampler_pool_size(self : Desc, value : Int32) -> Desc {
+  sg_desc_set_sampler_pool_size(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_shader_pool_size(object_ : Desc) -> Int32 = "mb_gfx_sg_desc_get_shader_pool_size"
+
+///|
+pub fn Desc::shader_pool_size(self : Desc) -> Int32 {
+  sg_desc_get_shader_pool_size(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_set_shader_pool_size(
+  object_ : Desc,
+  replacement : Int32,
+) -> Unit = "mb_gfx_sg_desc_set_shader_pool_size"
+
+///|
+pub fn Desc::set_shader_pool_size(self : Desc, value : Int32) -> Desc {
+  sg_desc_set_shader_pool_size(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_pipeline_pool_size(object_ : Desc) -> Int32 = "mb_gfx_sg_desc_get_pipeline_pool_size"
+
+///|
+pub fn Desc::pipeline_pool_size(self : Desc) -> Int32 {
+  sg_desc_get_pipeline_pool_size(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_set_pipeline_pool_size(
+  object_ : Desc,
+  replacement : Int32,
+) -> Unit = "mb_gfx_sg_desc_set_pipeline_pool_size"
+
+///|
+pub fn Desc::set_pipeline_pool_size(self : Desc, value : Int32) -> Desc {
+  sg_desc_set_pipeline_pool_size(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_view_pool_size(object_ : Desc) -> Int32 = "mb_gfx_sg_desc_get_view_pool_size"
+
+///|
+pub fn Desc::view_pool_size(self : Desc) -> Int32 {
+  sg_desc_get_view_pool_size(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_set_view_pool_size(
+  object_ : Desc,
+  replacement : Int32,
+) -> Unit = "mb_gfx_sg_desc_set_view_pool_size"
+
+///|
+pub fn Desc::set_view_pool_size(self : Desc, value : Int32) -> Desc {
+  sg_desc_set_view_pool_size(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_uniform_buffer_size(object_ : Desc) -> Int32 = "mb_gfx_sg_desc_get_uniform_buffer_size"
+
+///|
+pub fn Desc::uniform_buffer_size(self : Desc) -> Int32 {
+  sg_desc_get_uniform_buffer_size(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_set_uniform_buffer_size(
+  object_ : Desc,
+  replacement : Int32,
+) -> Unit = "mb_gfx_sg_desc_set_uniform_buffer_size"
+
+///|
+pub fn Desc::set_uniform_buffer_size(self : Desc, value : Int32) -> Desc {
+  sg_desc_set_uniform_buffer_size(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_max_commit_listeners(object_ : Desc) -> Int32 = "mb_gfx_sg_desc_get_max_commit_listeners"
+
+///|
+pub fn Desc::max_commit_listeners(self : Desc) -> Int32 {
+  sg_desc_get_max_commit_listeners(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_set_max_commit_listeners(
+  object_ : Desc,
+  replacement : Int32,
+) -> Unit = "mb_gfx_sg_desc_set_max_commit_listeners"
+
+///|
+pub fn Desc::set_max_commit_listeners(self : Desc, value : Int32) -> Desc {
+  sg_desc_set_max_commit_listeners(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_disable_validation(object_ : Desc) -> Bool = "mb_gfx_sg_desc_get_disable_validation"
+
+///|
+pub fn Desc::disable_validation(self : Desc) -> Bool {
+  sg_desc_get_disable_validation(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_set_disable_validation(
+  object_ : Desc,
+  replacement : Bool,
+) -> Unit = "mb_gfx_sg_desc_set_disable_validation"
+
+///|
+pub fn Desc::set_disable_validation(self : Desc, value : Bool) -> Desc {
+  sg_desc_set_disable_validation(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_enforce_portable_limits(object_ : Desc) -> Bool = "mb_gfx_sg_desc_get_enforce_portable_limits"
+
+///|
+pub fn Desc::enforce_portable_limits(self : Desc) -> Bool {
+  sg_desc_get_enforce_portable_limits(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_set_enforce_portable_limits(
+  object_ : Desc,
+  replacement : Bool,
+) -> Unit = "mb_gfx_sg_desc_set_enforce_portable_limits"
+
+///|
+pub fn Desc::set_enforce_portable_limits(self : Desc, value : Bool) -> Desc {
+  sg_desc_set_enforce_portable_limits(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_d3d11(object_ : Desc) -> D3d11Desc = "mb_gfx_sg_desc_get_d3d11"
+
+///|
+pub fn Desc::d3d11(self : Desc) -> D3d11Desc {
+  sg_desc_get_d3d11(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_desc_set_d3d11(
+  object_ : Desc,
+  replacement : D3d11Desc,
+) -> Unit = "mb_gfx_sg_desc_set_d3d11"
+
+///|
+pub fn Desc::set_d3d11(self : Desc, value : D3d11Desc) -> Desc {
+  sg_desc_set_d3d11(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_metal(object_ : Desc) -> MetalDesc = "mb_gfx_sg_desc_get_metal"
+
+///|
+pub fn Desc::metal(self : Desc) -> MetalDesc {
+  sg_desc_get_metal(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_desc_set_metal(
+  object_ : Desc,
+  replacement : MetalDesc,
+) -> Unit = "mb_gfx_sg_desc_set_metal"
+
+///|
+pub fn Desc::set_metal(self : Desc, value : MetalDesc) -> Desc {
+  sg_desc_set_metal(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_wgpu(object_ : Desc) -> WgpuDesc = "mb_gfx_sg_desc_get_wgpu"
+
+///|
+pub fn Desc::wgpu(self : Desc) -> WgpuDesc {
+  sg_desc_get_wgpu(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_desc_set_wgpu(object_ : Desc, replacement : WgpuDesc) -> Unit = "mb_gfx_sg_desc_set_wgpu"
+
+///|
+pub fn Desc::set_wgpu(self : Desc, value : WgpuDesc) -> Desc {
+  sg_desc_set_wgpu(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_vulkan(object_ : Desc) -> VulkanDesc = "mb_gfx_sg_desc_get_vulkan"
+
+///|
+pub fn Desc::vulkan(self : Desc) -> VulkanDesc {
+  sg_desc_get_vulkan(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_desc_set_vulkan(
+  object_ : Desc,
+  replacement : VulkanDesc,
+) -> Unit = "mb_gfx_sg_desc_set_vulkan"
+
+///|
+pub fn Desc::set_vulkan(self : Desc, value : VulkanDesc) -> Desc {
+  sg_desc_set_vulkan(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_allocator(object_ : Desc) -> Allocator = "mb_gfx_sg_desc_get_allocator"
+
+///|
+pub fn Desc::allocator(self : Desc) -> Allocator {
+  sg_desc_get_allocator(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_desc_set_allocator(
+  object_ : Desc,
+  replacement : Allocator,
+) -> Unit = "mb_gfx_sg_desc_set_allocator"
+
+///|
+pub fn Desc::set_allocator(self : Desc, value : Allocator) -> Desc {
+  sg_desc_set_allocator(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_logger(object_ : Desc) -> Logger = "mb_gfx_sg_desc_get_logger"
+
+///|
+pub fn Desc::logger(self : Desc) -> Logger {
+  sg_desc_get_logger(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_desc_set_logger(object_ : Desc, replacement : Logger) -> Unit = "mb_gfx_sg_desc_set_logger"
+
+///|
+pub fn Desc::set_logger(self : Desc, value : Logger) -> Desc {
+  sg_desc_set_logger(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_desc_get_environment(object_ : Desc) -> Environment = "mb_gfx_sg_desc_get_environment"
+
+///|
+pub fn Desc::environment(self : Desc) -> Environment {
+  sg_desc_get_environment(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_desc_set_environment(
+  object_ : Desc,
+  replacement : Environment,
+) -> Unit = "mb_gfx_sg_desc_set_environment"
+
+///|
+pub fn Desc::set_environment(self : Desc, value : Environment) -> Desc {
+  sg_desc_set_environment(self, value)
+  self
+}
+
+///|
+#borrow(desc)
+extern "c" fn sg_setup(desc : Desc) -> Unit = "mb_gfx_sg_setup"
+
+///|
+pub fn setup(desc : Desc) -> Unit {
+  sg_setup(desc)
+}
+
+///|
+extern "c" fn sg_isvalid() -> Bool = "mb_gfx_sg_isvalid"
+
+///|
+pub fn isvalid() -> Bool {
+  sg_isvalid()
+}
+
+///|
+extern "c" fn sg_reset_state_cache() -> Unit = "sg_reset_state_cache"
+
+///|
+pub fn reset_state_cache() -> Unit {
+  sg_reset_state_cache()
+}
+
+///|
+#borrow(name)
+extern "c" fn sg_push_debug_group(name : Bytes) -> Unit = "sg_push_debug_group"
+
+///|
+pub fn push_debug_group(name : String) -> Unit {
+  sg_push_debug_group(@native.cstring(name))
+}
+
+///|
+extern "c" fn sg_pop_debug_group() -> Unit = "sg_pop_debug_group"
+
+///|
+pub fn pop_debug_group() -> Unit {
+  sg_pop_debug_group()
+}
+
+///|
+extern "c" fn sg_query_desc() -> Desc = "mb_gfx_sg_query_desc"
+
+///|
+pub fn query_desc() -> Desc {
+  sg_query_desc()
+}
+
+///|
+extern "c" fn sg_query_pass_state() -> PassState = "sg_query_pass_state"
+
+///|
+pub fn query_pass_state() -> PassState {
+  sg_query_pass_state()
+}

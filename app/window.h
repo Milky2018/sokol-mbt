@@ -1,0 +1,48 @@
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_isvalid(void) {
+    return sapp_isvalid();
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_high_dpi(void) {
+    return sapp_high_dpi();
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_show_keyboard(int32_t show) {
+    sapp_show_keyboard((bool)show);
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_keyboard_shown(void) {
+    return sapp_keyboard_shown();
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_is_fullscreen(void) {
+    return sapp_is_fullscreen();
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_show_mouse(int32_t show) {
+    sapp_show_mouse((bool)show);
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_mouse_shown(void) {
+    return sapp_mouse_shown();
+}
+
+MOONBIT_FFI_EXPORT void mb_app_sapp_lock_mouse(int32_t lock) {
+    sapp_lock_mouse((bool)lock);
+}
+
+MOONBIT_FFI_EXPORT int32_t mb_app_sapp_mouse_locked(void) {
+    return sapp_mouse_locked();
+}
+
+MOONBIT_FFI_EXPORT sapp_desc *mb_app_sapp_query_desc(void) {
+    sapp_desc value = sapp_query_desc();
+    return mb_copy_sapp_desc(&value);
+}
+
+MOONBIT_FFI_EXPORT moonbit_bytes_t mb_app_sapp_get_clipboard_string(void) {
+    return mb_utf8(sapp_get_clipboard_string());
+}
+
+MOONBIT_FFI_EXPORT moonbit_bytes_t mb_app_sapp_get_dropped_file_path(int32_t index) {
+    return mb_utf8(sapp_get_dropped_file_path((int)index));
+}

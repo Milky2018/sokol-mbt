@@ -1,4 +1,4 @@
-#include "bindings.inc.h"
+#include "internal.h"
 MOONBIT_FFI_EXPORT int32_t mb_audio_push(float *samples) {
     int channels = saudio_channels();
     int n = Moonbit_array_length(samples);

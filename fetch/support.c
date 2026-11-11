@@ -1,4 +1,4 @@
-#include "bindings.inc.h"
+#include "internal.h"
 
 /* Only IO buffers and a callback reference survive send(). Sokol copies the
    path and userdata bytes synchronously (sokol_fetch.h:_sfetch_item_init). */

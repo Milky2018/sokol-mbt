@@ -1,0 +1,721 @@
+/* Native implementation and cross-file helper declarations. */
+
+#include "../native/common.h"
+
+/* Sokol configuration. */
+#define SOKOL_TRACE_HOOKS
+#define SOKOL_API_IMPL MOONBIT_FFI_EXPORT
+#define SOKOL_IMPL
+#include "../native/sokol_gfx.h"
+
+/* Copy and allocation helpers. */
+
+static void mb_clone_sg_allocator(sg_allocator *, const sg_allocator *);
+static void mb_drop_sg_allocator(void *);
+static sg_allocator *mb_new_sg_allocator(void);
+static sg_allocator *mb_copy_sg_allocator(const sg_allocator *);
+
+static void mb_clone_sg_attachments(sg_attachments *, const sg_attachments *);
+static void mb_drop_sg_attachments(void *);
+static sg_attachments *mb_new_sg_attachments(void);
+static sg_attachments *mb_copy_sg_attachments(const sg_attachments *);
+
+static void mb_clone_sg_bindings(sg_bindings *, const sg_bindings *);
+static void mb_drop_sg_bindings(void *);
+static sg_bindings *mb_new_sg_bindings(void);
+static sg_bindings *mb_copy_sg_bindings(const sg_bindings *);
+
+static void mb_clone_sg_blend_state(sg_blend_state *, const sg_blend_state *);
+static void mb_drop_sg_blend_state(void *);
+static sg_blend_state *mb_new_sg_blend_state(void);
+static sg_blend_state *mb_copy_sg_blend_state(const sg_blend_state *);
+
+static void mb_clone_sg_buffer_desc(sg_buffer_desc *, const sg_buffer_desc *);
+static void mb_drop_sg_buffer_desc(void *);
+static sg_buffer_desc *mb_new_sg_buffer_desc(void);
+static sg_buffer_desc *mb_copy_sg_buffer_desc(const sg_buffer_desc *);
+
+static void mb_clone_sg_buffer_image_location(sg_buffer_image_location *,
+                                              const sg_buffer_image_location *);
+static void mb_drop_sg_buffer_image_location(void *);
+static sg_buffer_image_location *mb_new_sg_buffer_image_location(void);
+static sg_buffer_image_location *mb_copy_sg_buffer_image_location(const sg_buffer_image_location *);
+
+static void mb_clone_sg_buffer_info(sg_buffer_info *, const sg_buffer_info *);
+static void mb_drop_sg_buffer_info(void *);
+static sg_buffer_info *mb_new_sg_buffer_info(void);
+static sg_buffer_info *mb_copy_sg_buffer_info(const sg_buffer_info *);
+
+static void mb_clone_sg_buffer_location(sg_buffer_location *, const sg_buffer_location *);
+static void mb_drop_sg_buffer_location(void *);
+static sg_buffer_location *mb_new_sg_buffer_location(void);
+static sg_buffer_location *mb_copy_sg_buffer_location(const sg_buffer_location *);
+
+static void mb_clone_sg_buffer_usage(sg_buffer_usage *, const sg_buffer_usage *);
+static void mb_drop_sg_buffer_usage(void *);
+static sg_buffer_usage *mb_new_sg_buffer_usage(void);
+static sg_buffer_usage *mb_copy_sg_buffer_usage(const sg_buffer_usage *);
+
+static void mb_clone_sg_buffer_view_desc(sg_buffer_view_desc *, const sg_buffer_view_desc *);
+static void mb_drop_sg_buffer_view_desc(void *);
+static sg_buffer_view_desc *mb_new_sg_buffer_view_desc(void);
+static sg_buffer_view_desc *mb_copy_sg_buffer_view_desc(const sg_buffer_view_desc *);
+
+static void mb_clone_sg_color(sg_color *, const sg_color *);
+static void mb_drop_sg_color(void *);
+static sg_color *mb_new_sg_color(void);
+static sg_color *mb_copy_sg_color(const sg_color *);
+
+static void mb_clone_sg_color_attachment_action(sg_color_attachment_action *,
+                                                const sg_color_attachment_action *);
+static void mb_drop_sg_color_attachment_action(void *);
+static sg_color_attachment_action *mb_new_sg_color_attachment_action(void);
+static sg_color_attachment_action *
+mb_copy_sg_color_attachment_action(const sg_color_attachment_action *);
+
+static void mb_clone_sg_color_target_state(sg_color_target_state *, const sg_color_target_state *);
+static void mb_drop_sg_color_target_state(void *);
+static sg_color_target_state *mb_new_sg_color_target_state(void);
+static sg_color_target_state *mb_copy_sg_color_target_state(const sg_color_target_state *);
+
+static void mb_clone_sg_commit_listener(sg_commit_listener *, const sg_commit_listener *);
+static void mb_drop_sg_commit_listener(void *);
+static sg_commit_listener *mb_new_sg_commit_listener(void);
+static sg_commit_listener *mb_copy_sg_commit_listener(const sg_commit_listener *);
+
+static void mb_clone_sg_copy_buffer_to_buffer_desc(sg_copy_buffer_to_buffer_desc *,
+                                                   const sg_copy_buffer_to_buffer_desc *);
+static void mb_drop_sg_copy_buffer_to_buffer_desc(void *);
+static sg_copy_buffer_to_buffer_desc *mb_new_sg_copy_buffer_to_buffer_desc(void);
+static sg_copy_buffer_to_buffer_desc *
+mb_copy_sg_copy_buffer_to_buffer_desc(const sg_copy_buffer_to_buffer_desc *);
+
+static void mb_clone_sg_copy_buffer_to_image_desc(sg_copy_buffer_to_image_desc *,
+                                                  const sg_copy_buffer_to_image_desc *);
+static void mb_drop_sg_copy_buffer_to_image_desc(void *);
+static sg_copy_buffer_to_image_desc *mb_new_sg_copy_buffer_to_image_desc(void);
+static sg_copy_buffer_to_image_desc *
+mb_copy_sg_copy_buffer_to_image_desc(const sg_copy_buffer_to_image_desc *);
+
+static void mb_clone_sg_copy_image_to_image_desc(sg_copy_image_to_image_desc *,
+                                                 const sg_copy_image_to_image_desc *);
+static void mb_drop_sg_copy_image_to_image_desc(void *);
+static sg_copy_image_to_image_desc *mb_new_sg_copy_image_to_image_desc(void);
+static sg_copy_image_to_image_desc *
+mb_copy_sg_copy_image_to_image_desc(const sg_copy_image_to_image_desc *);
+
+static void mb_clone_sg_d3d11_buffer_info(sg_d3d11_buffer_info *, const sg_d3d11_buffer_info *);
+static void mb_drop_sg_d3d11_buffer_info(void *);
+static sg_d3d11_buffer_info *mb_new_sg_d3d11_buffer_info(void);
+static sg_d3d11_buffer_info *mb_copy_sg_d3d11_buffer_info(const sg_d3d11_buffer_info *);
+
+static void mb_clone_sg_d3d11_desc(sg_d3d11_desc *, const sg_d3d11_desc *);
+static void mb_drop_sg_d3d11_desc(void *);
+static sg_d3d11_desc *mb_new_sg_d3d11_desc(void);
+static sg_d3d11_desc *mb_copy_sg_d3d11_desc(const sg_d3d11_desc *);
+
+static void mb_clone_sg_d3d11_environment(sg_d3d11_environment *, const sg_d3d11_environment *);
+static void mb_drop_sg_d3d11_environment(void *);
+static sg_d3d11_environment *mb_new_sg_d3d11_environment(void);
+static sg_d3d11_environment *mb_copy_sg_d3d11_environment(const sg_d3d11_environment *);
+
+static void mb_clone_sg_d3d11_image_info(sg_d3d11_image_info *, const sg_d3d11_image_info *);
+static void mb_drop_sg_d3d11_image_info(void *);
+static sg_d3d11_image_info *mb_new_sg_d3d11_image_info(void);
+static sg_d3d11_image_info *mb_copy_sg_d3d11_image_info(const sg_d3d11_image_info *);
+
+static void mb_clone_sg_d3d11_pipeline_info(sg_d3d11_pipeline_info *,
+                                            const sg_d3d11_pipeline_info *);
+static void mb_drop_sg_d3d11_pipeline_info(void *);
+static sg_d3d11_pipeline_info *mb_new_sg_d3d11_pipeline_info(void);
+static sg_d3d11_pipeline_info *mb_copy_sg_d3d11_pipeline_info(const sg_d3d11_pipeline_info *);
+
+static void mb_clone_sg_d3d11_sampler_info(sg_d3d11_sampler_info *, const sg_d3d11_sampler_info *);
+static void mb_drop_sg_d3d11_sampler_info(void *);
+static sg_d3d11_sampler_info *mb_new_sg_d3d11_sampler_info(void);
+static sg_d3d11_sampler_info *mb_copy_sg_d3d11_sampler_info(const sg_d3d11_sampler_info *);
+
+static void mb_clone_sg_d3d11_shader_info(sg_d3d11_shader_info *, const sg_d3d11_shader_info *);
+static void mb_drop_sg_d3d11_shader_info(void *);
+static sg_d3d11_shader_info *mb_new_sg_d3d11_shader_info(void);
+static sg_d3d11_shader_info *mb_copy_sg_d3d11_shader_info(const sg_d3d11_shader_info *);
+
+static void mb_clone_sg_d3d11_swapchain(sg_d3d11_swapchain *, const sg_d3d11_swapchain *);
+static void mb_drop_sg_d3d11_swapchain(void *);
+static sg_d3d11_swapchain *mb_new_sg_d3d11_swapchain(void);
+static sg_d3d11_swapchain *mb_copy_sg_d3d11_swapchain(const sg_d3d11_swapchain *);
+
+static void mb_clone_sg_d3d11_view_info(sg_d3d11_view_info *, const sg_d3d11_view_info *);
+static void mb_drop_sg_d3d11_view_info(void *);
+static sg_d3d11_view_info *mb_new_sg_d3d11_view_info(void);
+static sg_d3d11_view_info *mb_copy_sg_d3d11_view_info(const sg_d3d11_view_info *);
+
+static void mb_clone_sg_depth_attachment_action(sg_depth_attachment_action *,
+                                                const sg_depth_attachment_action *);
+static void mb_drop_sg_depth_attachment_action(void *);
+static sg_depth_attachment_action *mb_new_sg_depth_attachment_action(void);
+static sg_depth_attachment_action *
+mb_copy_sg_depth_attachment_action(const sg_depth_attachment_action *);
+
+static void mb_clone_sg_depth_state(sg_depth_state *, const sg_depth_state *);
+static void mb_drop_sg_depth_state(void *);
+static sg_depth_state *mb_new_sg_depth_state(void);
+static sg_depth_state *mb_copy_sg_depth_state(const sg_depth_state *);
+
+static void mb_clone_sg_desc(sg_desc *, const sg_desc *);
+static void mb_drop_sg_desc(void *);
+static sg_desc *mb_new_sg_desc(void);
+static sg_desc *mb_copy_sg_desc(const sg_desc *);
+
+static void mb_clone_sg_environment(sg_environment *, const sg_environment *);
+static void mb_drop_sg_environment(void *);
+static sg_environment *mb_new_sg_environment(void);
+static sg_environment *mb_copy_sg_environment(const sg_environment *);
+
+static void mb_clone_sg_environment_defaults(sg_environment_defaults *,
+                                             const sg_environment_defaults *);
+static void mb_drop_sg_environment_defaults(void *);
+static sg_environment_defaults *mb_new_sg_environment_defaults(void);
+static sg_environment_defaults *mb_copy_sg_environment_defaults(const sg_environment_defaults *);
+
+static void mb_clone_sg_features(sg_features *, const sg_features *);
+static void mb_drop_sg_features(void *);
+static sg_features *mb_new_sg_features(void);
+static sg_features *mb_copy_sg_features(const sg_features *);
+
+static void mb_clone_sg_frame_resource_stats(sg_frame_resource_stats *,
+                                             const sg_frame_resource_stats *);
+static void mb_drop_sg_frame_resource_stats(void *);
+static sg_frame_resource_stats *mb_new_sg_frame_resource_stats(void);
+static sg_frame_resource_stats *mb_copy_sg_frame_resource_stats(const sg_frame_resource_stats *);
+
+static void mb_clone_sg_frame_stats(sg_frame_stats *, const sg_frame_stats *);
+static void mb_drop_sg_frame_stats(void *);
+static sg_frame_stats *mb_new_sg_frame_stats(void);
+static sg_frame_stats *mb_copy_sg_frame_stats(const sg_frame_stats *);
+
+static void mb_clone_sg_frame_stats_d3d11(sg_frame_stats_d3d11 *, const sg_frame_stats_d3d11 *);
+static void mb_drop_sg_frame_stats_d3d11(void *);
+static sg_frame_stats_d3d11 *mb_new_sg_frame_stats_d3d11(void);
+static sg_frame_stats_d3d11 *mb_copy_sg_frame_stats_d3d11(const sg_frame_stats_d3d11 *);
+
+static void mb_clone_sg_frame_stats_d3d11_bindings(sg_frame_stats_d3d11_bindings *,
+                                                   const sg_frame_stats_d3d11_bindings *);
+static void mb_drop_sg_frame_stats_d3d11_bindings(void *);
+static sg_frame_stats_d3d11_bindings *mb_new_sg_frame_stats_d3d11_bindings(void);
+static sg_frame_stats_d3d11_bindings *
+mb_copy_sg_frame_stats_d3d11_bindings(const sg_frame_stats_d3d11_bindings *);
+
+static void mb_clone_sg_frame_stats_d3d11_draw(sg_frame_stats_d3d11_draw *,
+                                               const sg_frame_stats_d3d11_draw *);
+static void mb_drop_sg_frame_stats_d3d11_draw(void *);
+static sg_frame_stats_d3d11_draw *mb_new_sg_frame_stats_d3d11_draw(void);
+static sg_frame_stats_d3d11_draw *
+mb_copy_sg_frame_stats_d3d11_draw(const sg_frame_stats_d3d11_draw *);
+
+static void mb_clone_sg_frame_stats_d3d11_pass(sg_frame_stats_d3d11_pass *,
+                                               const sg_frame_stats_d3d11_pass *);
+static void mb_drop_sg_frame_stats_d3d11_pass(void *);
+static sg_frame_stats_d3d11_pass *mb_new_sg_frame_stats_d3d11_pass(void);
+static sg_frame_stats_d3d11_pass *
+mb_copy_sg_frame_stats_d3d11_pass(const sg_frame_stats_d3d11_pass *);
+
+static void mb_clone_sg_frame_stats_d3d11_pipeline(sg_frame_stats_d3d11_pipeline *,
+                                                   const sg_frame_stats_d3d11_pipeline *);
+static void mb_drop_sg_frame_stats_d3d11_pipeline(void *);
+static sg_frame_stats_d3d11_pipeline *mb_new_sg_frame_stats_d3d11_pipeline(void);
+static sg_frame_stats_d3d11_pipeline *
+mb_copy_sg_frame_stats_d3d11_pipeline(const sg_frame_stats_d3d11_pipeline *);
+
+static void mb_clone_sg_frame_stats_gl(sg_frame_stats_gl *, const sg_frame_stats_gl *);
+static void mb_drop_sg_frame_stats_gl(void *);
+static sg_frame_stats_gl *mb_new_sg_frame_stats_gl(void);
+static sg_frame_stats_gl *mb_copy_sg_frame_stats_gl(const sg_frame_stats_gl *);
+
+static void mb_clone_sg_frame_stats_metal(sg_frame_stats_metal *, const sg_frame_stats_metal *);
+static void mb_drop_sg_frame_stats_metal(void *);
+static sg_frame_stats_metal *mb_new_sg_frame_stats_metal(void);
+static sg_frame_stats_metal *mb_copy_sg_frame_stats_metal(const sg_frame_stats_metal *);
+
+static void mb_clone_sg_frame_stats_metal_bindings(sg_frame_stats_metal_bindings *,
+                                                   const sg_frame_stats_metal_bindings *);
+static void mb_drop_sg_frame_stats_metal_bindings(void *);
+static sg_frame_stats_metal_bindings *mb_new_sg_frame_stats_metal_bindings(void);
+static sg_frame_stats_metal_bindings *
+mb_copy_sg_frame_stats_metal_bindings(const sg_frame_stats_metal_bindings *);
+
+static void mb_clone_sg_frame_stats_metal_idpool(sg_frame_stats_metal_idpool *,
+                                                 const sg_frame_stats_metal_idpool *);
+static void mb_drop_sg_frame_stats_metal_idpool(void *);
+static sg_frame_stats_metal_idpool *mb_new_sg_frame_stats_metal_idpool(void);
+static sg_frame_stats_metal_idpool *
+mb_copy_sg_frame_stats_metal_idpool(const sg_frame_stats_metal_idpool *);
+
+static void mb_clone_sg_frame_stats_metal_pipeline(sg_frame_stats_metal_pipeline *,
+                                                   const sg_frame_stats_metal_pipeline *);
+static void mb_drop_sg_frame_stats_metal_pipeline(void *);
+static sg_frame_stats_metal_pipeline *mb_new_sg_frame_stats_metal_pipeline(void);
+static sg_frame_stats_metal_pipeline *
+mb_copy_sg_frame_stats_metal_pipeline(const sg_frame_stats_metal_pipeline *);
+
+static void mb_clone_sg_frame_stats_metal_uniforms(sg_frame_stats_metal_uniforms *,
+                                                   const sg_frame_stats_metal_uniforms *);
+static void mb_drop_sg_frame_stats_metal_uniforms(void *);
+static sg_frame_stats_metal_uniforms *mb_new_sg_frame_stats_metal_uniforms(void);
+static sg_frame_stats_metal_uniforms *
+mb_copy_sg_frame_stats_metal_uniforms(const sg_frame_stats_metal_uniforms *);
+
+static void mb_clone_sg_frame_stats_vk(sg_frame_stats_vk *, const sg_frame_stats_vk *);
+static void mb_drop_sg_frame_stats_vk(void *);
+static sg_frame_stats_vk *mb_new_sg_frame_stats_vk(void);
+static sg_frame_stats_vk *mb_copy_sg_frame_stats_vk(const sg_frame_stats_vk *);
+
+static void mb_clone_sg_frame_stats_wgpu(sg_frame_stats_wgpu *, const sg_frame_stats_wgpu *);
+static void mb_drop_sg_frame_stats_wgpu(void *);
+static sg_frame_stats_wgpu *mb_new_sg_frame_stats_wgpu(void);
+static sg_frame_stats_wgpu *mb_copy_sg_frame_stats_wgpu(const sg_frame_stats_wgpu *);
+
+static void mb_clone_sg_frame_stats_wgpu_bindings(sg_frame_stats_wgpu_bindings *,
+                                                  const sg_frame_stats_wgpu_bindings *);
+static void mb_drop_sg_frame_stats_wgpu_bindings(void *);
+static sg_frame_stats_wgpu_bindings *mb_new_sg_frame_stats_wgpu_bindings(void);
+static sg_frame_stats_wgpu_bindings *
+mb_copy_sg_frame_stats_wgpu_bindings(const sg_frame_stats_wgpu_bindings *);
+
+static void mb_clone_sg_frame_stats_wgpu_uniforms(sg_frame_stats_wgpu_uniforms *,
+                                                  const sg_frame_stats_wgpu_uniforms *);
+static void mb_drop_sg_frame_stats_wgpu_uniforms(void *);
+static sg_frame_stats_wgpu_uniforms *mb_new_sg_frame_stats_wgpu_uniforms(void);
+static sg_frame_stats_wgpu_uniforms *
+mb_copy_sg_frame_stats_wgpu_uniforms(const sg_frame_stats_wgpu_uniforms *);
+
+static void mb_clone_sg_gl_buffer_info(sg_gl_buffer_info *, const sg_gl_buffer_info *);
+static void mb_drop_sg_gl_buffer_info(void *);
+static sg_gl_buffer_info *mb_new_sg_gl_buffer_info(void);
+static sg_gl_buffer_info *mb_copy_sg_gl_buffer_info(const sg_gl_buffer_info *);
+
+static void mb_clone_sg_gl_image_info(sg_gl_image_info *, const sg_gl_image_info *);
+static void mb_drop_sg_gl_image_info(void *);
+static sg_gl_image_info *mb_new_sg_gl_image_info(void);
+static sg_gl_image_info *mb_copy_sg_gl_image_info(const sg_gl_image_info *);
+
+static void mb_clone_sg_gl_sampler_info(sg_gl_sampler_info *, const sg_gl_sampler_info *);
+static void mb_drop_sg_gl_sampler_info(void *);
+static sg_gl_sampler_info *mb_new_sg_gl_sampler_info(void);
+static sg_gl_sampler_info *mb_copy_sg_gl_sampler_info(const sg_gl_sampler_info *);
+
+static void mb_clone_sg_gl_shader_info(sg_gl_shader_info *, const sg_gl_shader_info *);
+static void mb_drop_sg_gl_shader_info(void *);
+static sg_gl_shader_info *mb_new_sg_gl_shader_info(void);
+static sg_gl_shader_info *mb_copy_sg_gl_shader_info(const sg_gl_shader_info *);
+
+static void mb_clone_sg_gl_swapchain(sg_gl_swapchain *, const sg_gl_swapchain *);
+static void mb_drop_sg_gl_swapchain(void *);
+static sg_gl_swapchain *mb_new_sg_gl_swapchain(void);
+static sg_gl_swapchain *mb_copy_sg_gl_swapchain(const sg_gl_swapchain *);
+
+static void mb_clone_sg_gl_view_info(sg_gl_view_info *, const sg_gl_view_info *);
+static void mb_drop_sg_gl_view_info(void *);
+static sg_gl_view_info *mb_new_sg_gl_view_info(void);
+static sg_gl_view_info *mb_copy_sg_gl_view_info(const sg_gl_view_info *);
+
+static void mb_clone_sg_glsl_shader_uniform(sg_glsl_shader_uniform *,
+                                            const sg_glsl_shader_uniform *);
+static void mb_drop_sg_glsl_shader_uniform(void *);
+static sg_glsl_shader_uniform *mb_new_sg_glsl_shader_uniform(void);
+static sg_glsl_shader_uniform *mb_copy_sg_glsl_shader_uniform(const sg_glsl_shader_uniform *);
+
+static void mb_clone_sg_image_desc(sg_image_desc *, const sg_image_desc *);
+static void mb_drop_sg_image_desc(void *);
+static sg_image_desc *mb_new_sg_image_desc(void);
+static sg_image_desc *mb_copy_sg_image_desc(const sg_image_desc *);
+
+static void mb_clone_sg_image_extent(sg_image_extent *, const sg_image_extent *);
+static void mb_drop_sg_image_extent(void *);
+static sg_image_extent *mb_new_sg_image_extent(void);
+static sg_image_extent *mb_copy_sg_image_extent(const sg_image_extent *);
+
+static void mb_clone_sg_image_info(sg_image_info *, const sg_image_info *);
+static void mb_drop_sg_image_info(void *);
+static sg_image_info *mb_new_sg_image_info(void);
+static sg_image_info *mb_copy_sg_image_info(const sg_image_info *);
+
+static void mb_clone_sg_image_location(sg_image_location *, const sg_image_location *);
+static void mb_drop_sg_image_location(void *);
+static sg_image_location *mb_new_sg_image_location(void);
+static sg_image_location *mb_copy_sg_image_location(const sg_image_location *);
+
+static void mb_clone_sg_image_usage(sg_image_usage *, const sg_image_usage *);
+static void mb_drop_sg_image_usage(void *);
+static sg_image_usage *mb_new_sg_image_usage(void);
+static sg_image_usage *mb_copy_sg_image_usage(const sg_image_usage *);
+
+static void mb_clone_sg_image_view_desc(sg_image_view_desc *, const sg_image_view_desc *);
+static void mb_drop_sg_image_view_desc(void *);
+static sg_image_view_desc *mb_new_sg_image_view_desc(void);
+static sg_image_view_desc *mb_copy_sg_image_view_desc(const sg_image_view_desc *);
+
+static void mb_clone_sg_limits(sg_limits *, const sg_limits *);
+static void mb_drop_sg_limits(void *);
+static sg_limits *mb_new_sg_limits(void);
+static sg_limits *mb_copy_sg_limits(const sg_limits *);
+
+static void mb_clone_sg_logger(sg_logger *, const sg_logger *);
+static void mb_drop_sg_logger(void *);
+static sg_logger *mb_new_sg_logger(void);
+static sg_logger *mb_copy_sg_logger(const sg_logger *);
+
+static void mb_clone_sg_metal_desc(sg_metal_desc *, const sg_metal_desc *);
+static void mb_drop_sg_metal_desc(void *);
+static sg_metal_desc *mb_new_sg_metal_desc(void);
+static sg_metal_desc *mb_copy_sg_metal_desc(const sg_metal_desc *);
+
+static void mb_clone_sg_metal_environment(sg_metal_environment *, const sg_metal_environment *);
+static void mb_drop_sg_metal_environment(void *);
+static sg_metal_environment *mb_new_sg_metal_environment(void);
+static sg_metal_environment *mb_copy_sg_metal_environment(const sg_metal_environment *);
+
+static void mb_clone_sg_metal_swapchain(sg_metal_swapchain *, const sg_metal_swapchain *);
+static void mb_drop_sg_metal_swapchain(void *);
+static sg_metal_swapchain *mb_new_sg_metal_swapchain(void);
+static sg_metal_swapchain *mb_copy_sg_metal_swapchain(const sg_metal_swapchain *);
+
+static void mb_clone_sg_mtl_buffer_info(sg_mtl_buffer_info *, const sg_mtl_buffer_info *);
+static void mb_drop_sg_mtl_buffer_info(void *);
+static sg_mtl_buffer_info *mb_new_sg_mtl_buffer_info(void);
+static sg_mtl_buffer_info *mb_copy_sg_mtl_buffer_info(const sg_mtl_buffer_info *);
+
+static void mb_clone_sg_mtl_image_info(sg_mtl_image_info *, const sg_mtl_image_info *);
+static void mb_drop_sg_mtl_image_info(void *);
+static sg_mtl_image_info *mb_new_sg_mtl_image_info(void);
+static sg_mtl_image_info *mb_copy_sg_mtl_image_info(const sg_mtl_image_info *);
+
+static void mb_clone_sg_mtl_pipeline_info(sg_mtl_pipeline_info *, const sg_mtl_pipeline_info *);
+static void mb_drop_sg_mtl_pipeline_info(void *);
+static sg_mtl_pipeline_info *mb_new_sg_mtl_pipeline_info(void);
+static sg_mtl_pipeline_info *mb_copy_sg_mtl_pipeline_info(const sg_mtl_pipeline_info *);
+
+static void mb_clone_sg_mtl_sampler_info(sg_mtl_sampler_info *, const sg_mtl_sampler_info *);
+static void mb_drop_sg_mtl_sampler_info(void *);
+static sg_mtl_sampler_info *mb_new_sg_mtl_sampler_info(void);
+static sg_mtl_sampler_info *mb_copy_sg_mtl_sampler_info(const sg_mtl_sampler_info *);
+
+static void mb_clone_sg_mtl_shader_info(sg_mtl_shader_info *, const sg_mtl_shader_info *);
+static void mb_drop_sg_mtl_shader_info(void *);
+static sg_mtl_shader_info *mb_new_sg_mtl_shader_info(void);
+static sg_mtl_shader_info *mb_copy_sg_mtl_shader_info(const sg_mtl_shader_info *);
+
+static void
+mb_clone_sg_mtl_shader_threads_per_threadgroup(sg_mtl_shader_threads_per_threadgroup *,
+                                               const sg_mtl_shader_threads_per_threadgroup *);
+static void mb_drop_sg_mtl_shader_threads_per_threadgroup(void *);
+static sg_mtl_shader_threads_per_threadgroup *mb_new_sg_mtl_shader_threads_per_threadgroup(void);
+static sg_mtl_shader_threads_per_threadgroup *
+mb_copy_sg_mtl_shader_threads_per_threadgroup(const sg_mtl_shader_threads_per_threadgroup *);
+
+static void mb_clone_sg_pass(sg_pass *, const sg_pass *);
+static void mb_drop_sg_pass(void *);
+static sg_pass *mb_new_sg_pass(void);
+static sg_pass *mb_copy_sg_pass(const sg_pass *);
+
+static void mb_clone_sg_pass_action(sg_pass_action *, const sg_pass_action *);
+static void mb_drop_sg_pass_action(void *);
+static sg_pass_action *mb_new_sg_pass_action(void);
+static sg_pass_action *mb_copy_sg_pass_action(const sg_pass_action *);
+
+static void mb_clone_sg_pipeline_desc(sg_pipeline_desc *, const sg_pipeline_desc *);
+static void mb_drop_sg_pipeline_desc(void *);
+static sg_pipeline_desc *mb_new_sg_pipeline_desc(void);
+static sg_pipeline_desc *mb_copy_sg_pipeline_desc(const sg_pipeline_desc *);
+
+static void mb_clone_sg_pipeline_info(sg_pipeline_info *, const sg_pipeline_info *);
+static void mb_drop_sg_pipeline_info(void *);
+static sg_pipeline_info *mb_new_sg_pipeline_info(void);
+static sg_pipeline_info *mb_copy_sg_pipeline_info(const sg_pipeline_info *);
+
+static void mb_clone_sg_pixelformat_info(sg_pixelformat_info *, const sg_pixelformat_info *);
+static void mb_drop_sg_pixelformat_info(void *);
+static sg_pixelformat_info *mb_new_sg_pixelformat_info(void);
+static sg_pixelformat_info *mb_copy_sg_pixelformat_info(const sg_pixelformat_info *);
+
+static void mb_clone_sg_range(sg_range *, const sg_range *);
+static void mb_drop_sg_range(void *);
+static sg_range *mb_new_sg_range(void);
+static sg_range *mb_copy_sg_range(const sg_range *);
+
+static void mb_clone_sg_sampler_desc(sg_sampler_desc *, const sg_sampler_desc *);
+static void mb_drop_sg_sampler_desc(void *);
+static sg_sampler_desc *mb_new_sg_sampler_desc(void);
+static sg_sampler_desc *mb_copy_sg_sampler_desc(const sg_sampler_desc *);
+
+static void mb_clone_sg_sampler_info(sg_sampler_info *, const sg_sampler_info *);
+static void mb_drop_sg_sampler_info(void *);
+static sg_sampler_info *mb_new_sg_sampler_info(void);
+static sg_sampler_info *mb_copy_sg_sampler_info(const sg_sampler_info *);
+
+static void mb_clone_sg_shader_desc(sg_shader_desc *, const sg_shader_desc *);
+static void mb_drop_sg_shader_desc(void *);
+static sg_shader_desc *mb_new_sg_shader_desc(void);
+static sg_shader_desc *mb_copy_sg_shader_desc(const sg_shader_desc *);
+
+static void mb_clone_sg_shader_function(sg_shader_function *, const sg_shader_function *);
+static void mb_drop_sg_shader_function(void *);
+static sg_shader_function *mb_new_sg_shader_function(void);
+static sg_shader_function *mb_copy_sg_shader_function(const sg_shader_function *);
+
+static void mb_clone_sg_shader_info(sg_shader_info *, const sg_shader_info *);
+static void mb_drop_sg_shader_info(void *);
+static sg_shader_info *mb_new_sg_shader_info(void);
+static sg_shader_info *mb_copy_sg_shader_info(const sg_shader_info *);
+
+static void mb_clone_sg_shader_sampler(sg_shader_sampler *, const sg_shader_sampler *);
+static void mb_drop_sg_shader_sampler(void *);
+static sg_shader_sampler *mb_new_sg_shader_sampler(void);
+static sg_shader_sampler *mb_copy_sg_shader_sampler(const sg_shader_sampler *);
+
+static void mb_clone_sg_shader_storage_buffer_view(sg_shader_storage_buffer_view *,
+                                                   const sg_shader_storage_buffer_view *);
+static void mb_drop_sg_shader_storage_buffer_view(void *);
+static sg_shader_storage_buffer_view *mb_new_sg_shader_storage_buffer_view(void);
+static sg_shader_storage_buffer_view *
+mb_copy_sg_shader_storage_buffer_view(const sg_shader_storage_buffer_view *);
+
+static void mb_clone_sg_shader_storage_image_view(sg_shader_storage_image_view *,
+                                                  const sg_shader_storage_image_view *);
+static void mb_drop_sg_shader_storage_image_view(void *);
+static sg_shader_storage_image_view *mb_new_sg_shader_storage_image_view(void);
+static sg_shader_storage_image_view *
+mb_copy_sg_shader_storage_image_view(const sg_shader_storage_image_view *);
+
+static void mb_clone_sg_shader_texture_sampler_pair(sg_shader_texture_sampler_pair *,
+                                                    const sg_shader_texture_sampler_pair *);
+static void mb_drop_sg_shader_texture_sampler_pair(void *);
+static sg_shader_texture_sampler_pair *mb_new_sg_shader_texture_sampler_pair(void);
+static sg_shader_texture_sampler_pair *
+mb_copy_sg_shader_texture_sampler_pair(const sg_shader_texture_sampler_pair *);
+
+static void mb_clone_sg_shader_texture_view(sg_shader_texture_view *,
+                                            const sg_shader_texture_view *);
+static void mb_drop_sg_shader_texture_view(void *);
+static sg_shader_texture_view *mb_new_sg_shader_texture_view(void);
+static sg_shader_texture_view *mb_copy_sg_shader_texture_view(const sg_shader_texture_view *);
+
+static void mb_clone_sg_shader_uniform_block(sg_shader_uniform_block *,
+                                             const sg_shader_uniform_block *);
+static void mb_drop_sg_shader_uniform_block(void *);
+static sg_shader_uniform_block *mb_new_sg_shader_uniform_block(void);
+static sg_shader_uniform_block *mb_copy_sg_shader_uniform_block(const sg_shader_uniform_block *);
+
+static void mb_clone_sg_shader_vertex_attr(sg_shader_vertex_attr *, const sg_shader_vertex_attr *);
+static void mb_drop_sg_shader_vertex_attr(void *);
+static sg_shader_vertex_attr *mb_new_sg_shader_vertex_attr(void);
+static sg_shader_vertex_attr *mb_copy_sg_shader_vertex_attr(const sg_shader_vertex_attr *);
+
+static void mb_clone_sg_shader_view(sg_shader_view *, const sg_shader_view *);
+static void mb_drop_sg_shader_view(void *);
+static sg_shader_view *mb_new_sg_shader_view(void);
+static sg_shader_view *mb_copy_sg_shader_view(const sg_shader_view *);
+
+static void mb_clone_sg_slot_info(sg_slot_info *, const sg_slot_info *);
+static void mb_drop_sg_slot_info(void *);
+static sg_slot_info *mb_new_sg_slot_info(void);
+static sg_slot_info *mb_copy_sg_slot_info(const sg_slot_info *);
+
+static void mb_clone_sg_stats(sg_stats *, const sg_stats *);
+static void mb_drop_sg_stats(void *);
+static sg_stats *mb_new_sg_stats(void);
+static sg_stats *mb_copy_sg_stats(const sg_stats *);
+
+static void mb_clone_sg_stencil_attachment_action(sg_stencil_attachment_action *,
+                                                  const sg_stencil_attachment_action *);
+static void mb_drop_sg_stencil_attachment_action(void *);
+static sg_stencil_attachment_action *mb_new_sg_stencil_attachment_action(void);
+static sg_stencil_attachment_action *
+mb_copy_sg_stencil_attachment_action(const sg_stencil_attachment_action *);
+
+static void mb_clone_sg_stencil_face_state(sg_stencil_face_state *, const sg_stencil_face_state *);
+static void mb_drop_sg_stencil_face_state(void *);
+static sg_stencil_face_state *mb_new_sg_stencil_face_state(void);
+static sg_stencil_face_state *mb_copy_sg_stencil_face_state(const sg_stencil_face_state *);
+
+static void mb_clone_sg_stencil_state(sg_stencil_state *, const sg_stencil_state *);
+static void mb_drop_sg_stencil_state(void *);
+static sg_stencil_state *mb_new_sg_stencil_state(void);
+static sg_stencil_state *mb_copy_sg_stencil_state(const sg_stencil_state *);
+
+static void mb_clone_sg_swapchain(sg_swapchain *, const sg_swapchain *);
+static void mb_drop_sg_swapchain(void *);
+static sg_swapchain *mb_new_sg_swapchain(void);
+static sg_swapchain *mb_copy_sg_swapchain(const sg_swapchain *);
+
+static void mb_clone_sg_texture_view_desc(sg_texture_view_desc *, const sg_texture_view_desc *);
+static void mb_drop_sg_texture_view_desc(void *);
+static sg_texture_view_desc *mb_new_sg_texture_view_desc(void);
+static sg_texture_view_desc *mb_copy_sg_texture_view_desc(const sg_texture_view_desc *);
+
+static void mb_clone_sg_texture_view_range(sg_texture_view_range *, const sg_texture_view_range *);
+static void mb_drop_sg_texture_view_range(void *);
+static sg_texture_view_range *mb_new_sg_texture_view_range(void);
+static sg_texture_view_range *mb_copy_sg_texture_view_range(const sg_texture_view_range *);
+
+static void mb_clone_sg_total_resource_stats(sg_total_resource_stats *,
+                                             const sg_total_resource_stats *);
+static void mb_drop_sg_total_resource_stats(void *);
+static sg_total_resource_stats *mb_new_sg_total_resource_stats(void);
+static sg_total_resource_stats *mb_copy_sg_total_resource_stats(const sg_total_resource_stats *);
+
+static void mb_clone_sg_total_stats(sg_total_stats *, const sg_total_stats *);
+static void mb_drop_sg_total_stats(void *);
+static sg_total_stats *mb_new_sg_total_stats(void);
+static sg_total_stats *mb_copy_sg_total_stats(const sg_total_stats *);
+
+static void mb_clone_sg_trace_hooks(sg_trace_hooks *, const sg_trace_hooks *);
+static void mb_drop_sg_trace_hooks(void *);
+static sg_trace_hooks *mb_new_sg_trace_hooks(void);
+static sg_trace_hooks *mb_copy_sg_trace_hooks(const sg_trace_hooks *);
+
+static void mb_clone_sg_vertex_attr_state(sg_vertex_attr_state *, const sg_vertex_attr_state *);
+static void mb_drop_sg_vertex_attr_state(void *);
+static sg_vertex_attr_state *mb_new_sg_vertex_attr_state(void);
+static sg_vertex_attr_state *mb_copy_sg_vertex_attr_state(const sg_vertex_attr_state *);
+
+static void mb_clone_sg_vertex_buffer_layout_state(sg_vertex_buffer_layout_state *,
+                                                   const sg_vertex_buffer_layout_state *);
+static void mb_drop_sg_vertex_buffer_layout_state(void *);
+static sg_vertex_buffer_layout_state *mb_new_sg_vertex_buffer_layout_state(void);
+static sg_vertex_buffer_layout_state *
+mb_copy_sg_vertex_buffer_layout_state(const sg_vertex_buffer_layout_state *);
+
+static void mb_clone_sg_vertex_layout_state(sg_vertex_layout_state *,
+                                            const sg_vertex_layout_state *);
+static void mb_drop_sg_vertex_layout_state(void *);
+static sg_vertex_layout_state *mb_new_sg_vertex_layout_state(void);
+static sg_vertex_layout_state *mb_copy_sg_vertex_layout_state(const sg_vertex_layout_state *);
+
+static void mb_clone_sg_view_desc(sg_view_desc *, const sg_view_desc *);
+static void mb_drop_sg_view_desc(void *);
+static sg_view_desc *mb_new_sg_view_desc(void);
+static sg_view_desc *mb_copy_sg_view_desc(const sg_view_desc *);
+
+static void mb_clone_sg_view_info(sg_view_info *, const sg_view_info *);
+static void mb_drop_sg_view_info(void *);
+static sg_view_info *mb_new_sg_view_info(void);
+static sg_view_info *mb_copy_sg_view_info(const sg_view_info *);
+
+static void mb_clone_sg_vulkan_desc(sg_vulkan_desc *, const sg_vulkan_desc *);
+static void mb_drop_sg_vulkan_desc(void *);
+static sg_vulkan_desc *mb_new_sg_vulkan_desc(void);
+static sg_vulkan_desc *mb_copy_sg_vulkan_desc(const sg_vulkan_desc *);
+
+static void mb_clone_sg_vulkan_environment(sg_vulkan_environment *, const sg_vulkan_environment *);
+static void mb_drop_sg_vulkan_environment(void *);
+static sg_vulkan_environment *mb_new_sg_vulkan_environment(void);
+static sg_vulkan_environment *mb_copy_sg_vulkan_environment(const sg_vulkan_environment *);
+
+static void mb_clone_sg_vulkan_swapchain(sg_vulkan_swapchain *, const sg_vulkan_swapchain *);
+static void mb_drop_sg_vulkan_swapchain(void *);
+static sg_vulkan_swapchain *mb_new_sg_vulkan_swapchain(void);
+static sg_vulkan_swapchain *mb_copy_sg_vulkan_swapchain(const sg_vulkan_swapchain *);
+
+static void mb_clone_sg_wgpu_buffer_info(sg_wgpu_buffer_info *, const sg_wgpu_buffer_info *);
+static void mb_drop_sg_wgpu_buffer_info(void *);
+static sg_wgpu_buffer_info *mb_new_sg_wgpu_buffer_info(void);
+static sg_wgpu_buffer_info *mb_copy_sg_wgpu_buffer_info(const sg_wgpu_buffer_info *);
+
+static void mb_clone_sg_wgpu_desc(sg_wgpu_desc *, const sg_wgpu_desc *);
+static void mb_drop_sg_wgpu_desc(void *);
+static sg_wgpu_desc *mb_new_sg_wgpu_desc(void);
+static sg_wgpu_desc *mb_copy_sg_wgpu_desc(const sg_wgpu_desc *);
+
+static void mb_clone_sg_wgpu_environment(sg_wgpu_environment *, const sg_wgpu_environment *);
+static void mb_drop_sg_wgpu_environment(void *);
+static sg_wgpu_environment *mb_new_sg_wgpu_environment(void);
+static sg_wgpu_environment *mb_copy_sg_wgpu_environment(const sg_wgpu_environment *);
+
+static void mb_clone_sg_wgpu_image_info(sg_wgpu_image_info *, const sg_wgpu_image_info *);
+static void mb_drop_sg_wgpu_image_info(void *);
+static sg_wgpu_image_info *mb_new_sg_wgpu_image_info(void);
+static sg_wgpu_image_info *mb_copy_sg_wgpu_image_info(const sg_wgpu_image_info *);
+
+static void mb_clone_sg_wgpu_pipeline_info(sg_wgpu_pipeline_info *, const sg_wgpu_pipeline_info *);
+static void mb_drop_sg_wgpu_pipeline_info(void *);
+static sg_wgpu_pipeline_info *mb_new_sg_wgpu_pipeline_info(void);
+static sg_wgpu_pipeline_info *mb_copy_sg_wgpu_pipeline_info(const sg_wgpu_pipeline_info *);
+
+static void mb_clone_sg_wgpu_sampler_info(sg_wgpu_sampler_info *, const sg_wgpu_sampler_info *);
+static void mb_drop_sg_wgpu_sampler_info(void *);
+static sg_wgpu_sampler_info *mb_new_sg_wgpu_sampler_info(void);
+static sg_wgpu_sampler_info *mb_copy_sg_wgpu_sampler_info(const sg_wgpu_sampler_info *);
+
+static void mb_clone_sg_wgpu_shader_info(sg_wgpu_shader_info *, const sg_wgpu_shader_info *);
+static void mb_drop_sg_wgpu_shader_info(void *);
+static sg_wgpu_shader_info *mb_new_sg_wgpu_shader_info(void);
+static sg_wgpu_shader_info *mb_copy_sg_wgpu_shader_info(const sg_wgpu_shader_info *);
+
+static void mb_clone_sg_wgpu_swapchain(sg_wgpu_swapchain *, const sg_wgpu_swapchain *);
+static void mb_drop_sg_wgpu_swapchain(void *);
+static sg_wgpu_swapchain *mb_new_sg_wgpu_swapchain(void);
+static sg_wgpu_swapchain *mb_copy_sg_wgpu_swapchain(const sg_wgpu_swapchain *);
+
+static void mb_clone_sg_wgpu_view_info(sg_wgpu_view_info *, const sg_wgpu_view_info *);
+static void mb_drop_sg_wgpu_view_info(void *);
+static sg_wgpu_view_info *mb_new_sg_wgpu_view_info(void);
+static sg_wgpu_view_info *mb_copy_sg_wgpu_view_info(const sg_wgpu_view_info *);
+
+static void mb_clone_sg_write_buffer_desc(sg_write_buffer_desc *, const sg_write_buffer_desc *);
+static void mb_drop_sg_write_buffer_desc(void *);
+static sg_write_buffer_desc *mb_new_sg_write_buffer_desc(void);
+static sg_write_buffer_desc *mb_copy_sg_write_buffer_desc(const sg_write_buffer_desc *);
+
+static void mb_clone_sg_write_buffer_source(sg_write_buffer_source *,
+                                            const sg_write_buffer_source *);
+static void mb_drop_sg_write_buffer_source(void *);
+static sg_write_buffer_source *mb_new_sg_write_buffer_source(void);
+static sg_write_buffer_source *mb_copy_sg_write_buffer_source(const sg_write_buffer_source *);
+
+static void mb_clone_sg_write_image_desc(sg_write_image_desc *, const sg_write_image_desc *);
+static void mb_drop_sg_write_image_desc(void *);
+static sg_write_image_desc *mb_new_sg_write_image_desc(void);
+static sg_write_image_desc *mb_copy_sg_write_image_desc(const sg_write_image_desc *);
+
+static void mb_clone_sg_write_image_source(sg_write_image_source *, const sg_write_image_source *);
+static void mb_drop_sg_write_image_source(void *);
+static sg_write_image_source *mb_new_sg_write_image_source(void);
+static sg_write_image_source *mb_copy_sg_write_image_source(const sg_write_image_source *);
+
+/* Managed callback helpers. */
+
+static void mb_clone_sg_commit_listener_callbacks(sg_commit_listener *, const sg_commit_listener *);
+static void mb_drop_sg_commit_listener_callbacks(sg_commit_listener *);
+static int mb_managed_sg_commit_listener(const sg_commit_listener *);
+
+static void mb_clone_sg_trace_hooks_callbacks(sg_trace_hooks *, const sg_trace_hooks *);
+static void mb_drop_sg_trace_hooks_callbacks(sg_trace_hooks *);
+static int mb_managed_sg_trace_hooks(const sg_trace_hooks *);
+
+/* Feature implementations. */
+#include "context.h"
+#include "pass.h"
+#include "render_state.h"
+#include "buffer.h"
+#include "upload.h"
+#include "view.h"
+#include "data.h"
+#include "commit_listener.h"
+#include "d3d11.h"
+#include "capabilities.h"
+#include "statistics.h"
+#include "d3d11_statistics.h"
+#include "gl.h"
+#include "metal_statistics.h"
+#include "vulkan.h"
+#include "wgpu_statistics.h"
+#include "shader_reflection.h"
+#include "image.h"
+#include "metal.h"
+#include "pipeline.h"
+#include "sampler.h"
+#include "shader.h"
+#include "trace_hooks.h"
+#include "vertex_layout.h"
+#include "wgpu.h"

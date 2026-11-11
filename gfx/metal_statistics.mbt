@@ -1,0 +1,1379 @@
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type FrameStatsMetalIdpool
+
+///|
+extern "c" fn sg_frame_stats_metal_idpool_new() -> FrameStatsMetalIdpool = "mb_gfx_sg_frame_stats_metal_idpool_new"
+
+///|
+pub fn FrameStatsMetalIdpool::new() -> FrameStatsMetalIdpool {
+  sg_frame_stats_metal_idpool_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_idpool_copy(
+  object_ : FrameStatsMetalIdpool,
+) -> FrameStatsMetalIdpool = "mb_gfx_sg_frame_stats_metal_idpool_copy"
+
+///|
+pub fn FrameStatsMetalIdpool::copy(
+  self : FrameStatsMetalIdpool,
+) -> FrameStatsMetalIdpool {
+  sg_frame_stats_metal_idpool_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_idpool_native(
+  object_ : FrameStatsMetalIdpool,
+) -> @native.Handle = "mb_gfx_sg_frame_stats_metal_idpool_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn FrameStatsMetalIdpool::unsafe_native_handle(
+  self : FrameStatsMetalIdpool,
+) -> @native.Handle {
+  sg_frame_stats_metal_idpool_native(self)
+}
+
+///|
+extern "c" fn sg_frame_stats_metal_idpool_from_native(
+  ptr : @native.Handle,
+) -> FrameStatsMetalIdpool = "mb_gfx_sg_frame_stats_metal_idpool_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn FrameStatsMetalIdpool::unsafe_from_native(
+  ptr : @native.Handle,
+) -> FrameStatsMetalIdpool {
+  sg_frame_stats_metal_idpool_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_idpool_get_num_added(
+  object_ : FrameStatsMetalIdpool,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_idpool_get_num_added"
+
+///|
+pub fn FrameStatsMetalIdpool::num_added(self : FrameStatsMetalIdpool) -> UInt32 {
+  sg_frame_stats_metal_idpool_get_num_added(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_idpool_set_num_added(
+  object_ : FrameStatsMetalIdpool,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_idpool_set_num_added"
+
+///|
+pub fn FrameStatsMetalIdpool::set_num_added(
+  self : FrameStatsMetalIdpool,
+  value : UInt32,
+) -> FrameStatsMetalIdpool {
+  sg_frame_stats_metal_idpool_set_num_added(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_idpool_get_num_released(
+  object_ : FrameStatsMetalIdpool,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_idpool_get_num_released"
+
+///|
+pub fn FrameStatsMetalIdpool::num_released(
+  self : FrameStatsMetalIdpool,
+) -> UInt32 {
+  sg_frame_stats_metal_idpool_get_num_released(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_idpool_set_num_released(
+  object_ : FrameStatsMetalIdpool,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_idpool_set_num_released"
+
+///|
+pub fn FrameStatsMetalIdpool::set_num_released(
+  self : FrameStatsMetalIdpool,
+  value : UInt32,
+) -> FrameStatsMetalIdpool {
+  sg_frame_stats_metal_idpool_set_num_released(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_idpool_get_num_garbage_collected(
+  object_ : FrameStatsMetalIdpool,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_idpool_get_num_garbage_collected"
+
+///|
+pub fn FrameStatsMetalIdpool::num_garbage_collected(
+  self : FrameStatsMetalIdpool,
+) -> UInt32 {
+  sg_frame_stats_metal_idpool_get_num_garbage_collected(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_idpool_set_num_garbage_collected(
+  object_ : FrameStatsMetalIdpool,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_idpool_set_num_garbage_collected"
+
+///|
+pub fn FrameStatsMetalIdpool::set_num_garbage_collected(
+  self : FrameStatsMetalIdpool,
+  value : UInt32,
+) -> FrameStatsMetalIdpool {
+  sg_frame_stats_metal_idpool_set_num_garbage_collected(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type FrameStatsMetalPipeline
+
+///|
+extern "c" fn sg_frame_stats_metal_pipeline_new() -> FrameStatsMetalPipeline = "mb_gfx_sg_frame_stats_metal_pipeline_new"
+
+///|
+pub fn FrameStatsMetalPipeline::new() -> FrameStatsMetalPipeline {
+  sg_frame_stats_metal_pipeline_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_copy(
+  object_ : FrameStatsMetalPipeline,
+) -> FrameStatsMetalPipeline = "mb_gfx_sg_frame_stats_metal_pipeline_copy"
+
+///|
+pub fn FrameStatsMetalPipeline::copy(
+  self : FrameStatsMetalPipeline,
+) -> FrameStatsMetalPipeline {
+  sg_frame_stats_metal_pipeline_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_native(
+  object_ : FrameStatsMetalPipeline,
+) -> @native.Handle = "mb_gfx_sg_frame_stats_metal_pipeline_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn FrameStatsMetalPipeline::unsafe_native_handle(
+  self : FrameStatsMetalPipeline,
+) -> @native.Handle {
+  sg_frame_stats_metal_pipeline_native(self)
+}
+
+///|
+extern "c" fn sg_frame_stats_metal_pipeline_from_native(
+  ptr : @native.Handle,
+) -> FrameStatsMetalPipeline = "mb_gfx_sg_frame_stats_metal_pipeline_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn FrameStatsMetalPipeline::unsafe_from_native(
+  ptr : @native.Handle,
+) -> FrameStatsMetalPipeline {
+  sg_frame_stats_metal_pipeline_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_get_num_set_blend_color(
+  object_ : FrameStatsMetalPipeline,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_pipeline_get_num_set_blend_color"
+
+///|
+pub fn FrameStatsMetalPipeline::num_set_blend_color(
+  self : FrameStatsMetalPipeline,
+) -> UInt32 {
+  sg_frame_stats_metal_pipeline_get_num_set_blend_color(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_set_num_set_blend_color(
+  object_ : FrameStatsMetalPipeline,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_pipeline_set_num_set_blend_color"
+
+///|
+pub fn FrameStatsMetalPipeline::set_num_set_blend_color(
+  self : FrameStatsMetalPipeline,
+  value : UInt32,
+) -> FrameStatsMetalPipeline {
+  sg_frame_stats_metal_pipeline_set_num_set_blend_color(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_get_num_set_cull_mode(
+  object_ : FrameStatsMetalPipeline,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_pipeline_get_num_set_cull_mode"
+
+///|
+pub fn FrameStatsMetalPipeline::num_set_cull_mode(
+  self : FrameStatsMetalPipeline,
+) -> UInt32 {
+  sg_frame_stats_metal_pipeline_get_num_set_cull_mode(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_set_num_set_cull_mode(
+  object_ : FrameStatsMetalPipeline,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_pipeline_set_num_set_cull_mode"
+
+///|
+pub fn FrameStatsMetalPipeline::set_num_set_cull_mode(
+  self : FrameStatsMetalPipeline,
+  value : UInt32,
+) -> FrameStatsMetalPipeline {
+  sg_frame_stats_metal_pipeline_set_num_set_cull_mode(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_get_num_set_front_facing_winding(
+  object_ : FrameStatsMetalPipeline,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_pipeline_get_num_set_front_facing_winding"
+
+///|
+pub fn FrameStatsMetalPipeline::num_set_front_facing_winding(
+  self : FrameStatsMetalPipeline,
+) -> UInt32 {
+  sg_frame_stats_metal_pipeline_get_num_set_front_facing_winding(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_set_num_set_front_facing_winding(
+  object_ : FrameStatsMetalPipeline,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_pipeline_set_num_set_front_facing_winding"
+
+///|
+pub fn FrameStatsMetalPipeline::set_num_set_front_facing_winding(
+  self : FrameStatsMetalPipeline,
+  value : UInt32,
+) -> FrameStatsMetalPipeline {
+  sg_frame_stats_metal_pipeline_set_num_set_front_facing_winding(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_get_num_set_stencil_reference_value(
+  object_ : FrameStatsMetalPipeline,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_pipeline_get_num_set_stencil_reference_value"
+
+///|
+pub fn FrameStatsMetalPipeline::num_set_stencil_reference_value(
+  self : FrameStatsMetalPipeline,
+) -> UInt32 {
+  sg_frame_stats_metal_pipeline_get_num_set_stencil_reference_value(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_set_num_set_stencil_reference_value(
+  object_ : FrameStatsMetalPipeline,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_pipeline_set_num_set_stencil_reference_value"
+
+///|
+pub fn FrameStatsMetalPipeline::set_num_set_stencil_reference_value(
+  self : FrameStatsMetalPipeline,
+  value : UInt32,
+) -> FrameStatsMetalPipeline {
+  sg_frame_stats_metal_pipeline_set_num_set_stencil_reference_value(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_get_num_set_depth_bias(
+  object_ : FrameStatsMetalPipeline,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_pipeline_get_num_set_depth_bias"
+
+///|
+pub fn FrameStatsMetalPipeline::num_set_depth_bias(
+  self : FrameStatsMetalPipeline,
+) -> UInt32 {
+  sg_frame_stats_metal_pipeline_get_num_set_depth_bias(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_set_num_set_depth_bias(
+  object_ : FrameStatsMetalPipeline,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_pipeline_set_num_set_depth_bias"
+
+///|
+pub fn FrameStatsMetalPipeline::set_num_set_depth_bias(
+  self : FrameStatsMetalPipeline,
+  value : UInt32,
+) -> FrameStatsMetalPipeline {
+  sg_frame_stats_metal_pipeline_set_num_set_depth_bias(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_get_num_set_render_pipeline_state(
+  object_ : FrameStatsMetalPipeline,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_pipeline_get_num_set_render_pipeline_state"
+
+///|
+pub fn FrameStatsMetalPipeline::num_set_render_pipeline_state(
+  self : FrameStatsMetalPipeline,
+) -> UInt32 {
+  sg_frame_stats_metal_pipeline_get_num_set_render_pipeline_state(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_set_num_set_render_pipeline_state(
+  object_ : FrameStatsMetalPipeline,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_pipeline_set_num_set_render_pipeline_state"
+
+///|
+pub fn FrameStatsMetalPipeline::set_num_set_render_pipeline_state(
+  self : FrameStatsMetalPipeline,
+  value : UInt32,
+) -> FrameStatsMetalPipeline {
+  sg_frame_stats_metal_pipeline_set_num_set_render_pipeline_state(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_get_num_set_depth_stencil_state(
+  object_ : FrameStatsMetalPipeline,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_pipeline_get_num_set_depth_stencil_state"
+
+///|
+pub fn FrameStatsMetalPipeline::num_set_depth_stencil_state(
+  self : FrameStatsMetalPipeline,
+) -> UInt32 {
+  sg_frame_stats_metal_pipeline_get_num_set_depth_stencil_state(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_pipeline_set_num_set_depth_stencil_state(
+  object_ : FrameStatsMetalPipeline,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_pipeline_set_num_set_depth_stencil_state"
+
+///|
+pub fn FrameStatsMetalPipeline::set_num_set_depth_stencil_state(
+  self : FrameStatsMetalPipeline,
+  value : UInt32,
+) -> FrameStatsMetalPipeline {
+  sg_frame_stats_metal_pipeline_set_num_set_depth_stencil_state(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type FrameStatsMetalBindings
+
+///|
+extern "c" fn sg_frame_stats_metal_bindings_new() -> FrameStatsMetalBindings = "mb_gfx_sg_frame_stats_metal_bindings_new"
+
+///|
+pub fn FrameStatsMetalBindings::new() -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_copy(
+  object_ : FrameStatsMetalBindings,
+) -> FrameStatsMetalBindings = "mb_gfx_sg_frame_stats_metal_bindings_copy"
+
+///|
+pub fn FrameStatsMetalBindings::copy(
+  self : FrameStatsMetalBindings,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_native(
+  object_ : FrameStatsMetalBindings,
+) -> @native.Handle = "mb_gfx_sg_frame_stats_metal_bindings_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn FrameStatsMetalBindings::unsafe_native_handle(
+  self : FrameStatsMetalBindings,
+) -> @native.Handle {
+  sg_frame_stats_metal_bindings_native(self)
+}
+
+///|
+extern "c" fn sg_frame_stats_metal_bindings_from_native(
+  ptr : @native.Handle,
+) -> FrameStatsMetalBindings = "mb_gfx_sg_frame_stats_metal_bindings_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn FrameStatsMetalBindings::unsafe_from_native(
+  ptr : @native.Handle,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_set_vertex_buffer(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_set_vertex_buffer"
+
+///|
+pub fn FrameStatsMetalBindings::num_set_vertex_buffer(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_set_vertex_buffer(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_set_vertex_buffer(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_set_vertex_buffer"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_set_vertex_buffer(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_set_vertex_buffer(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_set_vertex_buffer_offset(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_set_vertex_buffer_offset"
+
+///|
+pub fn FrameStatsMetalBindings::num_set_vertex_buffer_offset(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_set_vertex_buffer_offset(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_set_vertex_buffer_offset(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_set_vertex_buffer_offset"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_set_vertex_buffer_offset(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_set_vertex_buffer_offset(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_skip_redundant_vertex_buffer(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_skip_redundant_vertex_buffer"
+
+///|
+pub fn FrameStatsMetalBindings::num_skip_redundant_vertex_buffer(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_skip_redundant_vertex_buffer(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_skip_redundant_vertex_buffer(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_skip_redundant_vertex_buffer"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_skip_redundant_vertex_buffer(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_skip_redundant_vertex_buffer(
+    self, value,
+  )
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_set_vertex_texture(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_set_vertex_texture"
+
+///|
+pub fn FrameStatsMetalBindings::num_set_vertex_texture(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_set_vertex_texture(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_set_vertex_texture(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_set_vertex_texture"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_set_vertex_texture(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_set_vertex_texture(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_skip_redundant_vertex_texture(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_skip_redundant_vertex_texture"
+
+///|
+pub fn FrameStatsMetalBindings::num_skip_redundant_vertex_texture(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_skip_redundant_vertex_texture(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_skip_redundant_vertex_texture(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_skip_redundant_vertex_texture"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_skip_redundant_vertex_texture(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_skip_redundant_vertex_texture(
+    self, value,
+  )
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_set_vertex_sampler_state(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_set_vertex_sampler_state"
+
+///|
+pub fn FrameStatsMetalBindings::num_set_vertex_sampler_state(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_set_vertex_sampler_state(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_set_vertex_sampler_state(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_set_vertex_sampler_state"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_set_vertex_sampler_state(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_set_vertex_sampler_state(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_skip_redundant_vertex_sampler_state(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_skip_redundant_vertex_sampler_state"
+
+///|
+pub fn FrameStatsMetalBindings::num_skip_redundant_vertex_sampler_state(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_skip_redundant_vertex_sampler_state(
+    self,
+  )
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_skip_redundant_vertex_sampler_state(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_skip_redundant_vertex_sampler_state"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_skip_redundant_vertex_sampler_state(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_skip_redundant_vertex_sampler_state(
+    self, value,
+  )
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_set_fragment_buffer(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_set_fragment_buffer"
+
+///|
+pub fn FrameStatsMetalBindings::num_set_fragment_buffer(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_set_fragment_buffer(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_set_fragment_buffer(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_set_fragment_buffer"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_set_fragment_buffer(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_set_fragment_buffer(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_set_fragment_buffer_offset(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_set_fragment_buffer_offset"
+
+///|
+pub fn FrameStatsMetalBindings::num_set_fragment_buffer_offset(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_set_fragment_buffer_offset(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_set_fragment_buffer_offset(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_set_fragment_buffer_offset"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_set_fragment_buffer_offset(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_set_fragment_buffer_offset(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_skip_redundant_fragment_buffer(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_skip_redundant_fragment_buffer"
+
+///|
+pub fn FrameStatsMetalBindings::num_skip_redundant_fragment_buffer(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_skip_redundant_fragment_buffer(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_skip_redundant_fragment_buffer(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_skip_redundant_fragment_buffer"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_skip_redundant_fragment_buffer(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_skip_redundant_fragment_buffer(
+    self, value,
+  )
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_set_fragment_texture(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_set_fragment_texture"
+
+///|
+pub fn FrameStatsMetalBindings::num_set_fragment_texture(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_set_fragment_texture(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_set_fragment_texture(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_set_fragment_texture"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_set_fragment_texture(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_set_fragment_texture(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_skip_redundant_fragment_texture(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_skip_redundant_fragment_texture"
+
+///|
+pub fn FrameStatsMetalBindings::num_skip_redundant_fragment_texture(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_skip_redundant_fragment_texture(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_skip_redundant_fragment_texture(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_skip_redundant_fragment_texture"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_skip_redundant_fragment_texture(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_skip_redundant_fragment_texture(
+    self, value,
+  )
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_set_fragment_sampler_state(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_set_fragment_sampler_state"
+
+///|
+pub fn FrameStatsMetalBindings::num_set_fragment_sampler_state(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_set_fragment_sampler_state(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_set_fragment_sampler_state(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_set_fragment_sampler_state"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_set_fragment_sampler_state(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_set_fragment_sampler_state(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_skip_redundant_fragment_sampler_state(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_skip_redundant_fragment_sampler_state"
+
+///|
+pub fn FrameStatsMetalBindings::num_skip_redundant_fragment_sampler_state(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_skip_redundant_fragment_sampler_state(
+    self,
+  )
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_skip_redundant_fragment_sampler_state(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_skip_redundant_fragment_sampler_state"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_skip_redundant_fragment_sampler_state(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_skip_redundant_fragment_sampler_state(
+    self, value,
+  )
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_set_compute_buffer(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_set_compute_buffer"
+
+///|
+pub fn FrameStatsMetalBindings::num_set_compute_buffer(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_set_compute_buffer(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_set_compute_buffer(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_set_compute_buffer"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_set_compute_buffer(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_set_compute_buffer(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_set_compute_buffer_offset(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_set_compute_buffer_offset"
+
+///|
+pub fn FrameStatsMetalBindings::num_set_compute_buffer_offset(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_set_compute_buffer_offset(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_set_compute_buffer_offset(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_set_compute_buffer_offset"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_set_compute_buffer_offset(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_set_compute_buffer_offset(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_skip_redundant_compute_buffer(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_skip_redundant_compute_buffer"
+
+///|
+pub fn FrameStatsMetalBindings::num_skip_redundant_compute_buffer(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_skip_redundant_compute_buffer(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_skip_redundant_compute_buffer(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_skip_redundant_compute_buffer"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_skip_redundant_compute_buffer(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_skip_redundant_compute_buffer(
+    self, value,
+  )
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_set_compute_texture(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_set_compute_texture"
+
+///|
+pub fn FrameStatsMetalBindings::num_set_compute_texture(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_set_compute_texture(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_set_compute_texture(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_set_compute_texture"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_set_compute_texture(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_set_compute_texture(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_skip_redundant_compute_texture(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_skip_redundant_compute_texture"
+
+///|
+pub fn FrameStatsMetalBindings::num_skip_redundant_compute_texture(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_skip_redundant_compute_texture(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_skip_redundant_compute_texture(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_skip_redundant_compute_texture"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_skip_redundant_compute_texture(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_skip_redundant_compute_texture(
+    self, value,
+  )
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_set_compute_sampler_state(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_set_compute_sampler_state"
+
+///|
+pub fn FrameStatsMetalBindings::num_set_compute_sampler_state(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_set_compute_sampler_state(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_set_compute_sampler_state(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_set_compute_sampler_state"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_set_compute_sampler_state(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_set_compute_sampler_state(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_get_num_skip_redundant_compute_sampler_state(
+  object_ : FrameStatsMetalBindings,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_bindings_get_num_skip_redundant_compute_sampler_state"
+
+///|
+pub fn FrameStatsMetalBindings::num_skip_redundant_compute_sampler_state(
+  self : FrameStatsMetalBindings,
+) -> UInt32 {
+  sg_frame_stats_metal_bindings_get_num_skip_redundant_compute_sampler_state(
+    self,
+  )
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_bindings_set_num_skip_redundant_compute_sampler_state(
+  object_ : FrameStatsMetalBindings,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_bindings_set_num_skip_redundant_compute_sampler_state"
+
+///|
+pub fn FrameStatsMetalBindings::set_num_skip_redundant_compute_sampler_state(
+  self : FrameStatsMetalBindings,
+  value : UInt32,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_bindings_set_num_skip_redundant_compute_sampler_state(
+    self, value,
+  )
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type FrameStatsMetalUniforms
+
+///|
+extern "c" fn sg_frame_stats_metal_uniforms_new() -> FrameStatsMetalUniforms = "mb_gfx_sg_frame_stats_metal_uniforms_new"
+
+///|
+pub fn FrameStatsMetalUniforms::new() -> FrameStatsMetalUniforms {
+  sg_frame_stats_metal_uniforms_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_uniforms_copy(
+  object_ : FrameStatsMetalUniforms,
+) -> FrameStatsMetalUniforms = "mb_gfx_sg_frame_stats_metal_uniforms_copy"
+
+///|
+pub fn FrameStatsMetalUniforms::copy(
+  self : FrameStatsMetalUniforms,
+) -> FrameStatsMetalUniforms {
+  sg_frame_stats_metal_uniforms_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_uniforms_native(
+  object_ : FrameStatsMetalUniforms,
+) -> @native.Handle = "mb_gfx_sg_frame_stats_metal_uniforms_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn FrameStatsMetalUniforms::unsafe_native_handle(
+  self : FrameStatsMetalUniforms,
+) -> @native.Handle {
+  sg_frame_stats_metal_uniforms_native(self)
+}
+
+///|
+extern "c" fn sg_frame_stats_metal_uniforms_from_native(
+  ptr : @native.Handle,
+) -> FrameStatsMetalUniforms = "mb_gfx_sg_frame_stats_metal_uniforms_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn FrameStatsMetalUniforms::unsafe_from_native(
+  ptr : @native.Handle,
+) -> FrameStatsMetalUniforms {
+  sg_frame_stats_metal_uniforms_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_uniforms_get_num_set_vertex_buffer_offset(
+  object_ : FrameStatsMetalUniforms,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_uniforms_get_num_set_vertex_buffer_offset"
+
+///|
+pub fn FrameStatsMetalUniforms::num_set_vertex_buffer_offset(
+  self : FrameStatsMetalUniforms,
+) -> UInt32 {
+  sg_frame_stats_metal_uniforms_get_num_set_vertex_buffer_offset(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_uniforms_set_num_set_vertex_buffer_offset(
+  object_ : FrameStatsMetalUniforms,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_uniforms_set_num_set_vertex_buffer_offset"
+
+///|
+pub fn FrameStatsMetalUniforms::set_num_set_vertex_buffer_offset(
+  self : FrameStatsMetalUniforms,
+  value : UInt32,
+) -> FrameStatsMetalUniforms {
+  sg_frame_stats_metal_uniforms_set_num_set_vertex_buffer_offset(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_uniforms_get_num_set_fragment_buffer_offset(
+  object_ : FrameStatsMetalUniforms,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_uniforms_get_num_set_fragment_buffer_offset"
+
+///|
+pub fn FrameStatsMetalUniforms::num_set_fragment_buffer_offset(
+  self : FrameStatsMetalUniforms,
+) -> UInt32 {
+  sg_frame_stats_metal_uniforms_get_num_set_fragment_buffer_offset(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_uniforms_set_num_set_fragment_buffer_offset(
+  object_ : FrameStatsMetalUniforms,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_uniforms_set_num_set_fragment_buffer_offset"
+
+///|
+pub fn FrameStatsMetalUniforms::set_num_set_fragment_buffer_offset(
+  self : FrameStatsMetalUniforms,
+  value : UInt32,
+) -> FrameStatsMetalUniforms {
+  sg_frame_stats_metal_uniforms_set_num_set_fragment_buffer_offset(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_uniforms_get_num_set_compute_buffer_offset(
+  object_ : FrameStatsMetalUniforms,
+) -> UInt32 = "mb_gfx_sg_frame_stats_metal_uniforms_get_num_set_compute_buffer_offset"
+
+///|
+pub fn FrameStatsMetalUniforms::num_set_compute_buffer_offset(
+  self : FrameStatsMetalUniforms,
+) -> UInt32 {
+  sg_frame_stats_metal_uniforms_get_num_set_compute_buffer_offset(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_uniforms_set_num_set_compute_buffer_offset(
+  object_ : FrameStatsMetalUniforms,
+  replacement : UInt32,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_uniforms_set_num_set_compute_buffer_offset"
+
+///|
+pub fn FrameStatsMetalUniforms::set_num_set_compute_buffer_offset(
+  self : FrameStatsMetalUniforms,
+  value : UInt32,
+) -> FrameStatsMetalUniforms {
+  sg_frame_stats_metal_uniforms_set_num_set_compute_buffer_offset(self, value)
+  self
+}
+
+///|
+/// Owned C value. copy() creates an independent copy.
+pub type FrameStatsMetal
+
+///|
+extern "c" fn sg_frame_stats_metal_new() -> FrameStatsMetal = "mb_gfx_sg_frame_stats_metal_new"
+
+///|
+pub fn FrameStatsMetal::new() -> FrameStatsMetal {
+  sg_frame_stats_metal_new()
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_copy(
+  object_ : FrameStatsMetal,
+) -> FrameStatsMetal = "mb_gfx_sg_frame_stats_metal_copy"
+
+///|
+pub fn FrameStatsMetal::copy(self : FrameStatsMetal) -> FrameStatsMetal {
+  sg_frame_stats_metal_copy(self)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_native(
+  object_ : FrameStatsMetal,
+) -> @native.Handle = "mb_gfx_sg_frame_stats_metal_native"
+
+///|
+/// Unowned pointer. Keep this object alive across the native operation.
+pub fn FrameStatsMetal::unsafe_native_handle(
+  self : FrameStatsMetal,
+) -> @native.Handle {
+  sg_frame_stats_metal_native(self)
+}
+
+///|
+extern "c" fn sg_frame_stats_metal_from_native(
+  ptr : @native.Handle,
+) -> FrameStatsMetal = "mb_gfx_sg_frame_stats_metal_from_native"
+
+///|
+/// The pointer and its owned string/range fields must be readable for this call.
+pub fn FrameStatsMetal::unsafe_from_native(
+  ptr : @native.Handle,
+) -> FrameStatsMetal {
+  sg_frame_stats_metal_from_native(ptr)
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_get_idpool(
+  object_ : FrameStatsMetal,
+) -> FrameStatsMetalIdpool = "mb_gfx_sg_frame_stats_metal_get_idpool"
+
+///|
+pub fn FrameStatsMetal::idpool(self : FrameStatsMetal) -> FrameStatsMetalIdpool {
+  sg_frame_stats_metal_get_idpool(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_frame_stats_metal_set_idpool(
+  object_ : FrameStatsMetal,
+  replacement : FrameStatsMetalIdpool,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_set_idpool"
+
+///|
+pub fn FrameStatsMetal::set_idpool(
+  self : FrameStatsMetal,
+  value : FrameStatsMetalIdpool,
+) -> FrameStatsMetal {
+  sg_frame_stats_metal_set_idpool(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_get_pipeline(
+  object_ : FrameStatsMetal,
+) -> FrameStatsMetalPipeline = "mb_gfx_sg_frame_stats_metal_get_pipeline"
+
+///|
+pub fn FrameStatsMetal::pipeline(
+  self : FrameStatsMetal,
+) -> FrameStatsMetalPipeline {
+  sg_frame_stats_metal_get_pipeline(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_frame_stats_metal_set_pipeline(
+  object_ : FrameStatsMetal,
+  replacement : FrameStatsMetalPipeline,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_set_pipeline"
+
+///|
+pub fn FrameStatsMetal::set_pipeline(
+  self : FrameStatsMetal,
+  value : FrameStatsMetalPipeline,
+) -> FrameStatsMetal {
+  sg_frame_stats_metal_set_pipeline(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_get_bindings(
+  object_ : FrameStatsMetal,
+) -> FrameStatsMetalBindings = "mb_gfx_sg_frame_stats_metal_get_bindings"
+
+///|
+pub fn FrameStatsMetal::bindings(
+  self : FrameStatsMetal,
+) -> FrameStatsMetalBindings {
+  sg_frame_stats_metal_get_bindings(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_frame_stats_metal_set_bindings(
+  object_ : FrameStatsMetal,
+  replacement : FrameStatsMetalBindings,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_set_bindings"
+
+///|
+pub fn FrameStatsMetal::set_bindings(
+  self : FrameStatsMetal,
+  value : FrameStatsMetalBindings,
+) -> FrameStatsMetal {
+  sg_frame_stats_metal_set_bindings(self, value)
+  self
+}
+
+///|
+#borrow(object_)
+extern "c" fn sg_frame_stats_metal_get_uniforms(
+  object_ : FrameStatsMetal,
+) -> FrameStatsMetalUniforms = "mb_gfx_sg_frame_stats_metal_get_uniforms"
+
+///|
+pub fn FrameStatsMetal::uniforms(
+  self : FrameStatsMetal,
+) -> FrameStatsMetalUniforms {
+  sg_frame_stats_metal_get_uniforms(self)
+}
+
+///|
+#borrow(object_, replacement)
+extern "c" fn sg_frame_stats_metal_set_uniforms(
+  object_ : FrameStatsMetal,
+  replacement : FrameStatsMetalUniforms,
+) -> Unit = "mb_gfx_sg_frame_stats_metal_set_uniforms"
+
+///|
+pub fn FrameStatsMetal::set_uniforms(
+  self : FrameStatsMetal,
+  value : FrameStatsMetalUniforms,
+) -> FrameStatsMetal {
+  sg_frame_stats_metal_set_uniforms(self, value)
+  self
+}

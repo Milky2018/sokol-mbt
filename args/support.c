@@ -1,4 +1,4 @@
-#include "bindings.inc.h"
+#include "internal.h"
 MOONBIT_FFI_EXPORT void mb_args_setup(sargs_desc *desc, moonbit_bytes_t *args) {
     sargs_desc d = *desc;
     d.argc = Moonbit_array_length(args);

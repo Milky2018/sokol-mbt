@@ -6,4 +6,5 @@ supported_targets = "native"
 
 options(
   "native-stub": [ "handle.c" ],
+  link: { "native": { "stub-cc-flags": "${build.SOKOL_HEADER_FLAGS}" } },
 )

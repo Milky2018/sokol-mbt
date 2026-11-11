@@ -1,0 +1,134 @@
+static void mb_clone_sg_color(sg_color *dst, const sg_color *src) {
+    *dst = *src;
+}
+
+static void mb_drop_sg_color(void *object) {
+    (void)object;
+}
+
+_Static_assert(_Alignof(sg_color) <= _Alignof(void *), "external payload alignment");
+
+static sg_color *mb_new_sg_color(void) {
+    return mb_object_new(sizeof(sg_color), mb_drop_sg_color);
+}
+
+static sg_color *mb_copy_sg_color(const sg_color *source) {
+    sg_color *result = mb_new_sg_color();
+    mb_clone_sg_color(result, source);
+    return result;
+}
+
+static void mb_clone_sg_range(sg_range *dst, const sg_range *src) {
+    *dst = *src;
+    dst->ptr = mb_copy(src->ptr, src->size);
+}
+
+static void mb_drop_sg_range(void *object) {
+    sg_range *value = object;
+    free((void *)value->ptr);
+}
+
+_Static_assert(_Alignof(sg_range) <= _Alignof(void *), "external payload alignment");
+
+static sg_range *mb_new_sg_range(void) {
+    return mb_object_new(sizeof(sg_range), mb_drop_sg_range);
+}
+
+static sg_range *mb_copy_sg_range(const sg_range *source) {
+    sg_range *result = mb_new_sg_range();
+    mb_clone_sg_range(result, source);
+    return result;
+}
+
+MOONBIT_FFI_EXPORT sg_range *mb_gfx_sg_range_new(void) {
+    return mb_new_sg_range();
+}
+
+MOONBIT_FFI_EXPORT sg_range *mb_gfx_sg_range_copy(sg_range *self) {
+    return mb_copy_sg_range(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_range_native(sg_range *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_range *mb_gfx_sg_range_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_range(ptr);
+}
+
+MOONBIT_FFI_EXPORT moonbit_bytes_t mb_gfx_sg_range_bytes(sg_range *self) {
+    return mb_bytes(self->ptr, self->size);
+}
+
+MOONBIT_FFI_EXPORT sg_range *mb_gfx_sg_range_data(moonbit_bytes_t data) {
+
+    sg_range source = {.ptr = data, .size = Moonbit_array_length(data)};
+    return mb_copy_sg_range(&source);
+}
+
+MOONBIT_FFI_EXPORT uint64_t mb_gfx_sg_range_get_size(sg_range *self) {
+    sg_range *value = self;
+    return value->size;
+}
+
+MOONBIT_FFI_EXPORT sg_color *mb_gfx_sg_color_new(void) {
+    return mb_new_sg_color();
+}
+
+MOONBIT_FFI_EXPORT sg_color *mb_gfx_sg_color_copy(sg_color *self) {
+    return mb_copy_sg_color(self);
+}
+
+MOONBIT_FFI_EXPORT void *mb_gfx_sg_color_native(sg_color *self) {
+    return self;
+}
+
+MOONBIT_FFI_EXPORT sg_color *mb_gfx_sg_color_from_native(void *ptr) {
+    if (!ptr) {
+        abort();
+    }
+    return mb_copy_sg_color(ptr);
+}
+
+MOONBIT_FFI_EXPORT float mb_gfx_sg_color_get_r(sg_color *self) {
+    sg_color *value = self;
+    return value->r;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_color_set_r(sg_color *self, float replacement) {
+    sg_color *value = self;
+    value->r = (float)replacement;
+}
+
+MOONBIT_FFI_EXPORT float mb_gfx_sg_color_get_g(sg_color *self) {
+    sg_color *value = self;
+    return value->g;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_color_set_g(sg_color *self, float replacement) {
+    sg_color *value = self;
+    value->g = (float)replacement;
+}
+
+MOONBIT_FFI_EXPORT float mb_gfx_sg_color_get_b(sg_color *self) {
+    sg_color *value = self;
+    return value->b;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_color_set_b(sg_color *self, float replacement) {
+    sg_color *value = self;
+    value->b = (float)replacement;
+}
+
+MOONBIT_FFI_EXPORT float mb_gfx_sg_color_get_a(sg_color *self) {
+    sg_color *value = self;
+    return value->a;
+}
+
+MOONBIT_FFI_EXPORT void mb_gfx_sg_color_set_a(sg_color *self, float replacement) {
+    sg_color *value = self;
+    value->a = (float)replacement;
+}

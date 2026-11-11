@@ -5,9 +5,9 @@ fetch, time, args, log, and glue**. The binding covers 261 upstream functions,
 172 structures, and 42 enum types at the pinned revision
 `93aa187b5d387cc24b7290b3ca3f13f61e139e7c`.
 
-Sokol's implementation is vendored under `native/`; normal builds do not fetch
-sources, run Clang's AST parser, or regenerate bindings. Moon executes
-`build.mbtx` to supply platform compiler and linker flags.
+Sokol's implementation is vendored under `native/`. MoonBit declarations and C
+bridges are maintained directly in this repository. Moon executes `build.mbtx`
+to supply platform compiler and linker flags; builds do not fetch source files.
 
 ## Build and run
 
@@ -83,8 +83,9 @@ are read-only snapshots. Internal canaries and raw range pointer setters
 are intentionally hidden. Enum types retain upstream integer values and expose
 `to_int()`. Native pointer/callback fields use `@native.Handle`; they require
 native interoperability lifetime discipline. Generated `pkg.generated.mbti`
-files document every public signature. `scripts/coverage.json` records all 261 interfaces: 80 direct native calls,
-aggregate/bool/width adapters, and the explicit callback/IO bridges.
+files document the public signatures available on the current platform. The
+binding includes 80 direct native calls, aggregate/bool/width adapters, and
+explicit callback/IO bridges.
 
 Platform-specific entry points are checked at compile time. Win32 and D3D11
 functions use `#cfg(platform="windows")`; native macOS/iOS, X11, Android, EGL,
@@ -103,8 +104,7 @@ fn native_window() -> @native.Handle {
 ```
 
 The checked-in `app` and `gfx` interfaces describe non-Windows exports; on
-Windows, `moon info` produces the corresponding Windows interface. The coverage
-inventory still records all upstream declarations across both configurations.
+Windows, `moon info` produces the corresponding Windows interface.
 
 ## Descriptors and data ownership
 
@@ -239,13 +239,12 @@ for native integrations through explicit unowned handles.
 
 ## Maintainer validation
 
-See [MAINTAINING.md](MAINTAINING.md) for the source map, handwritten/generated
-boundaries, and the development-only formatter setup used by the generator.
+See [MAINTAINING.md](MAINTAINING.md) for the source map and validation workflow.
+Edit the MoonBit and C sources directly. No binding generator, Clang AST parser
+or pinned C formatter is required.
 
 ```sh
 python3 scripts/prepare.py --check
-python3 scripts/check_bindings.py
-python3 scripts/generate.py --check # requires the maintenance tools above
 python3 scripts/check_platform_api.py
 moon check --target all --warn-list +73
 SOKOL_HEADLESS=1 moon test --target native
@@ -270,16 +269,14 @@ their arguments, and the C bridges release their temporary references after the
 call. The lifecycle regressions exercise this convention in Debug and Release.
 
 To update Sokol: choose an upstream revision, update `scripts/upstream.json` and
-its per-file SHA-256 hashes, run `scripts/prepare.py`, then
-`python3 scripts/inspect_api.py` (requires Clang) and `python3 scripts/generate.py`.
-Review the API coverage report and generated interfaces, adapt handwritten
-lifetime bridges if signatures changed, and run the validation commands above.
-Re-run the generator after editing shared C helper/header inputs as well; their
-content digests are embedded in package-local `bindings.inc.h` files so changes
-invalidate native build inputs. The `.inc.h` suffix is required because Moon
-tracks package-local header files, not arbitrary include-fragment extensions.
-The generator normalizes C ABI boundaries; it does not copy MoonBit's internal
-record layout or expose C aggregate-by-value ABI assumptions.
+its per-file SHA-256 hashes, then run `python3 scripts/prepare.py`. Review the
+upstream header changes and update the corresponding MoonBit declarations and C
+bridges directly, including ownership contracts and tests. Run the validation
+commands above and inspect the public interface changes from `moon info`.
+`build.mbtx` fingerprints shared native headers in the compiler arguments, so
+header edits trigger C recompilation without rewriting any binding source.
+The bridges normalize C ABI boundaries; they do not rely on MoonBit's internal
+record layout matching C aggregates.
 
 The bindings are Apache-2.0 licensed. Vendored Sokol retains its original zlib
 license and copyright notices in `native/SOKOL-LICENSE` and each header.
